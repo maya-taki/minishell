@@ -10,17 +10,41 @@ OBJ_DIR			= build
 INCLUDE_DIRS	= includes $(LIBFT_DIR)/includes
 INCLUDES		= $(foreach dir,$(INCLUDE_DIRS), -I$(dir))
 
-GREEN 		:= \033[0;32m
-YELLOW		:= \033[0;33m
-RED			:= \033[0;31m
-BLUE		:= \033[0;34m
-RESET		:= \033[0m
-
-0,
+GREEN			:= \033[0;32m
+YELLOW			:= \033[0;33m
+RED				:= \033[0;31m
+BLUE			:= \033[0;34m
+RESET			:= \033[0m
 
 
+SRC				= \
+					sources/lexer.c \
+					sources/main.c
+
+OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
+
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_FLAGS) -o $(NAME)
+
+$(OBJ_DIR)/%.o: %.C
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR) --silent	
+
+all: $(NAME) $(OBJ) $(LIBFT)
 
 
-all: $(NAME)
 
-fclean: $
+clean:
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) clean -C $(LIBFT_DIR) --silent
+
+fclean: clean
+	@rm -f $(NAME)
+	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
+
+re: fclean all
+
+.PHONY: norminette make fclean clean re
