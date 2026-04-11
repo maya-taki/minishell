@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/08 22:00:23 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/10 20:39:13 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libft/libft.h"
+# include "../printf/ft_printf.h"
+# include "structs.h"
 
 #endif

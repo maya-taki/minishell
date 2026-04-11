@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/08 22:10:11 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/10 18:56:06 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "shell.h"
+#ifndef STRUCTS_H
+# define STRUCTS_H
+
+#include "shell.h"
 
 typedef enum e_token_type
 {
@@ -29,6 +32,9 @@ typedef enum e_token_type
 
 typedef struct s_token
 {
-	char			*value;
 	t_token_type	type;
-}	t_token;
+	char			*value;
+	struct s_token 	*next;
+} t_token;
+
+#endif
