@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/11 11:56:18 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:02:46 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
-	struct s_token 	*next;
+	struct s_token	*next;
 } t_token;
 
 #endif
