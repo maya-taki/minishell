@@ -1,40 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/11 11:56:18 by mtakiyos         ###   ########.fr       */
+/*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
+/*   Updated: 2026/04/11 20:36:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../includes/shell.h"
 
-#include "shell.h"
-
-typedef enum e_token_type
+int	is_operator(char c)
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_OR,
-	TOKEN_AND,
-	// TOKEN_SINGLE_QUOTE,
-	// TOKEN_DOUBLE_QUOTE,
-	// TOKEN_VAR,
-}	t_token_type;
+	return (c == '|' || c == '&' || c == '<' || c == '>');
+}
 
-typedef struct s_token
+int	skip_spaces(char *input, int *i)
 {
-	t_token_type	type;
-	char			*value;
-	struct s_token 	*next;
-} t_token;
-
-#endif
+	while (input[*i] && (input[*i] == ' '))
+		(*i)++;
+	return (*i);
+}

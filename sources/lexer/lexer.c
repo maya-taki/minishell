@@ -3,56 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/10 20:42:26 by loena            ###   ########.fr       */
+/*   Updated: 2026/04/11 20:59:31 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../includes/shell.h"
 
-int is_operator(char c)
+t_token	*new_token(t_token_type type, char *value)
 {
-	return (c == '|' || c == '&' || c == '<' || c == '>');	
-}
-
-int is_space(char c)
-{
-	return (c == '/t' || c == ' ' || c == '/v');
-}
-
-void	*read_input_redir(t_token **head, char *input, int *i)
-{
-	if (input[*i + 1] == '<')
-	{
-		add_token(head, new_token(TOKEN_HEREDOC, ft_strdup("<<")));
-		*i += 2;
-	}
-}
-
-void	add_token()
-
-t_token	*lexer(char *input, int i)
-{
-	
 	t_token	*token;
 
-	if (!check_input(input)) //TODO
+
+	token = malloc(sizeof(t_token));
+	if (!token)
 		return (NULL);
-	token = NULL;
-	
+	token->type = type;
+	token->value = ft_strdup(value);
+	token->next = NULL;
 	return (token);
 }
 
-	// WORD,
-	// PIPE,
-	// REDIR_IN,
-	// REDIR_OUT,
-	// REDIR_APPEND,
-	// HEREDOC,
-	// SINGLE_QUOTE,
-	// DOUBLE_QUOTE,
-	// VAR,
-	// AND,
-	// OR,
+void	add_token(t_token **head, t_token *new)
+{
+	t_token	*tmp;
+
+
+	if (!(*head)->value)
+	{
+		*head = new;
+		return ;
+	}
+	tmp = *head;
+	while (tmp->next)
+	{
+		printf("%d %s ADD TOKEN\n",new->type, new->value);
+		tmp = tmp->next;
+	}
+	tmp->next = new;
+	
+}
+
+t_token	*lexer(char *input)
+{
+	t_token	*tokens;
+	int		i;
+	
+	i = 0;
+	tokens = malloc(sizeof(t_token));
+	handle_inputs(tokens, input, &i);
+	return (tokens);
+}
