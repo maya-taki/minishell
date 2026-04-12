@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/11 21:01:57 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/12 15:05:59 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	read_input_word(t_token **head, char *input)
 void	handle_inputs(t_token *tokens, char *input, int *i)
 {
 	if (!input)
-		return ;		
+		return ;
 	if (input[*i] == '>')
 		read_input_redir_out(&tokens, input, i);
 	else if (input[*i] == '<')
