@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/11 11:56:18 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:40:14 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_token_type
 	TOKEN_HEREDOC,
 	TOKEN_OR,
 	TOKEN_AND,
+	TOKEN_UNCHECKED_AND,
 	// TOKEN_SINGLE_QUOTE,
 	// TOKEN_DOUBLE_QUOTE,
 	// TOKEN_VAR,
