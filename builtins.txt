@@ -1,0 +1,42 @@
+Builtins que sao executados no processo pai
+cd
+export
+unset
+exit
+
+Contudo se tiver pipe na linha, todos os comandos vao ter que ser processos filhos
+
+Builtins que sao executados no processo filho (fork), nao alteram o estado global
+
+echo
+pwd
+env
+
+Comandos que seram executados com execv
+ls
+grep
+cat
+wc
+awk
+sed
+chmod
+mkdir
+rm...
+
+---
+Seria algo tipo
+
+if (tem_pipe)
+	exec_na_pipeline
+else
+	if (builtin)
+		if (exec_pai)
+			exec_pai
+		else
+			fork_e_executar
+	else
+		fork_e_execve
+---
+
+
+Enquanto nao definimos como os dados serao tratados fazer os builtin separadamente
