@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/12 17:20:27 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/15 20:19:29 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	main(int ac, char **av)
 {
-	char *word = "<< || && >> & < > |";
-	t_token *token;
-	t_token *tmp;
+	char	*word = "||";
+	t_token	*token;
+	t_token	*tmp;
 
 	token = lexer(word);
 	tmp = token;
 	(void)ac;
 	(void)av;
-	while (tmp->value)
+	while (tmp)
 	{
-		printf("%d %s test\n", tmp->type, tmp->value);
+		//printf("[%d] %s\n", tmp->type, tmp->value);
 		tmp = tmp->next;
 	}
 	return (OK);
