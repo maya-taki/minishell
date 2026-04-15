@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/11 20:34:31 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/15 12:12:29 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ void	read_input_and(t_token **head, char *input, int *i);
 void	read_input_redir_in(t_token **head, char *input, int *i);
 void	read_input_redir_out(t_token **head, char *input, int *i);
 void	read_input_word(t_token **head, char *input);
+
+// testes exec
+t_cmd *create_test_cmd(void);
 
 #endif
