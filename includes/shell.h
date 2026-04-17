@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/15 20:22:37 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:15:18 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHELL_H
 
 # include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
 # include <sys/ioctl.h>
@@ -24,7 +25,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-# include "../printf/include/ft_printf.h"
+# include "../printf/ft_printf.h"
 # include "structs.h"
 # include "error_handler.h"
 

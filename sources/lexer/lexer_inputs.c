@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/15 20:22:32 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/16 21:59:06 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*read_input_error()
 {
-	return (ft_putstr_fd("syntax error\n", ERROR), NULL);
+	return (printf("syntax error\n"), NULL);
 }
 
 
