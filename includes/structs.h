@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/17 00:05:11 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/17 19:30:52 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef enum e_token_type
 	TOKEN_OR,
 	TOKEN_AND,
 	TOKEN_UNCHECKED_AND,
-	// TOKEN_SINGLE_QUOTE,
-	// TOKEN_DOUBLE_QUOTE,
+	TOKEN_SINGLE_QUOTE,
+	TOKEN_DOUBLE_QUOTE,
 	// TOKEN_VAR,
 }	t_token_type;
 
