@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/17 19:34:34 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/17 20:04:59 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,7 @@ void	read_input_word(t_token **head, char *input, int *i)
 	add_token(head, new_token(TOKEN_WORD, input));
 }
 
-int	is_quote(t_token **head, char *input, int *i)
-{
-	if (input[*i] == '"')
-	{
-		add_token(head, new_token(TOKEN_DOUBLE_QUOTE, '"'));
-		(*i) += 1;
-	}
-	else if (input[*i] == '\'')
-	{
-		add_token(head, new_token(TOKEN_SINGLE_QUOTE, '\''));
-		(*i) += 1;
-	}
-}
+
 
 void	handle_inputs(t_token *tokens, char *input, int *i)
 {
