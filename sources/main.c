@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/17 18:55:37 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/18 18:13:48 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(void)
 	t_token	*tokens;	
 	
 	using_history();
+	// validate_argc(ac, av);
 	while (1)
 	{
 		mini.input = readline("> ");

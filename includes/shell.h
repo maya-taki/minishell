@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/17 19:11:43 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/18 19:17:21 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,18 @@
 t_token	*new_token(t_token_type type, char *value);
 t_token	*lexer(char *input);
 void	add_token(t_token **head, t_token *new);
-void	handle_inputs(t_token *token, char *input, int *i);
 int		invalid_operator(char *c, int i);
-int		skip_spaces(char *input, int *i);
+int		is_space(char c);
 int		is_invalid(char c);
 int		is_quote(char c);
+int		is_operator(char c);
+void	handle_operator(t_token *tokens, char *input, int *i);
+void	handle_word(t_token **head, char *input, int *i);
 
-void	read_input_redir_in(t_token **head, char *input, int *i);
-void	read_input_redir_out(t_token **head, char *input, int *i);
-void	read_input_word(t_token **head, char *input, int *i);
+// void	read_input_redir_in(t_token **head, char *input, int *i);
+// void	read_input_redir_out(t_token **head, char *input, int *i);
+
+void	print_tokens(t_token *head);
+void	validate_argc(int ac, char **av);
 
 #endif

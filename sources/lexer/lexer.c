@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/17 19:29:40 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/18 19:17:37 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,42 @@ void	add_token(t_token **head, t_token *new)
 	tmp->next = new;
 }
 
+void	print_tokens(t_token *head)
+{
+	t_token	*temp;
+
+	if (!head)
+		return ;
+	temp = head;
+	if(temp != NULL)
+	{
+		printf(G"Value: %s\nType: %d\n"RST, temp->value, temp->type);
+		temp = temp->next;
+	}
+}
+
 t_token	*lexer(char *input)
 {
 	t_token	*tokens;
-	//char	*space;
+	char	*tmp;
 	int		i;
 
 	i = 0;
+	tmp = ft_strtrim(input, " \r\t");
 	tokens = malloc(sizeof(t_token));
 	while (input[i] != '\0')
 	{
-		//if (!is_quote())
-		//space = ft_strtrim(input, " \t\r\n");
-		// if (space)
-		// 	input++;
+		while (is_space(tmp[i]) == 1)
+			i++;
 		if (invalid_operator(input, i))
 			return (NULL);
-		handle_inputs(tokens, input, &i);
+		if (is_operator(tmp[i]))
+			handle_operator(tokens, input, &i);
+		else
+			handle_word(&tokens, input, &i);
 	}
+	free(tmp);
 	return (tokens);
 }
 
-//esquece || e &&
+// if (!quote) && 
