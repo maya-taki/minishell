@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/18 19:43:44 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/20 20:35:37 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,15 @@ void	handle_word(t_token **head, char *input, int *i)
 	{
 		if (!quote && (input[*i] == '\'' || input[*i] == '"'))
 			quote = input[*i];
-		else if (quote && (input[*i] = quote))
+		else if (quote && (input[*i] == quote))
 			quote = 0;
-		if (!quote && (is_space(input[*i]) && is_operator(input[*i])))
+		if (!quote && (is_space(input[*i]) || is_operator(input[*i])))
 			break ;
 		(*i)++;
 	}
 	substr = ft_substr(input, start, *i - start);
 	add_token(head, new_token(TOKEN_WORD, substr));
 }
-
 
 void	handle_operator(t_token *tokens, char *input, int *i)
 {
@@ -80,4 +79,3 @@ void	handle_operator(t_token *tokens, char *input, int *i)
 	else if (input[*i] == '|')
 		read_input_pipe(&tokens, i);
 }
-
