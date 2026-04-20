@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/15 12:26:01 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/19 19:42:14 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ t_cmd *create_test_cmd(void)
 	return (cmd);
 }
 
-void	execute(t_cmd cmd)
-{
-	if (cmd.builtin == ECHO)
-		//executar builtin
 
+
+void	execute(t_cmd *cmd)
+{
+	if (cmd->builtin != NONE)
+		exec_builtin(cmd);
+	else
+		exec_external(cmd);
 }
