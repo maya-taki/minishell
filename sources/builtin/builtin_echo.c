@@ -6,42 +6,50 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 12:01:34 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/19 21:22:54 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/19 22:33:38 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-// typedef struct s_cmd
-// {
-// 	char			**argv;
-// 	t_builtin		builtin;
-// 	t_redir			*redir;
-// 	struct s_cmd	*next;
-// }	t_cmd;
+static int	verify_flag_n(char *str);
 
-int	verify_flag_n(char **argv)
+int	builtin_echo(t_cmd *cmd)
+{
+	int	i;
+	int	no_newline;
+
+	i = 1;
+	no_newline = 0;
+	while (cmd->args[i] && verify_flag_n(cmd->args[i]))
+	{
+		no_newline = 1;
+		i++;
+	}
+	while (cmd->args[i])
+	{
+		ft_printf("%s", cmd->args[i]);
+		if (cmd->args[i + 1] != NULL)
+			ft_printf(" ");
+		i++;
+	}
+	if (!no_newline)
+		ft_printf("\n");
+	return (0);
+}
+
+static int	verify_flag_n(char *str)
 {
 	int	i;
 	
-	
-	while ()
-	{
-		/* code */
-	}
-	
-
-}
-void	builtin_echo(t_cmd *cmd)
-{
-	int	newline;
-
-	if (cmd->argv[1] == )
-}
-
-t_cmd	*exec_bultin(t_cmd *cmd)
-{
-	// decide qual func_builtin chamar
-	if (cmd->builtin == ECHO)
-		builtin_echo(cmd);
+	i = 0;
+	if (str[i] == '-' && str[i + 1])
+		i++;
+	else
+		return (0);
+	while (str[i] == 'n')
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
 }

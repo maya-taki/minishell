@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/12 15:05:59 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:40:32 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	read_input_and(t_token **head, char *input, int *i)
 	}
 	else
 	{
-		add_token(head, new_token(TOKEN_OR, "&"));
+		add_token(head, new_token(TOKEN_UNCHECKED_AND, "&"));
 		(*i) += 1;
 	}
 }
@@ -56,7 +56,7 @@ void	read_input_redir_in(t_token **head, char *input, int *i)
 
 void	read_input_redir_out(t_token **head, char *input, int *i)
 {
-	if (input[*i + 1] == '<')
+	if (input[*i + 1] == '>')
 	{
 		add_token(head, new_token(TOKEN_REDIR_APPEND, ">>"));
 		*i += 2;

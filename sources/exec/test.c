@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/19 19:42:14 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/19 22:27:29 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,12 @@ t_cmd *create_test_cmd(void)
 	return (cmd);
 }
 
-
+t_cmd	*exec_bultin(t_cmd *cmd)
+{
+	// decide qual func_builtin chamar
+	if (cmd->builtin == ECHO)
+		builtin_echo(cmd);
+}
 
 void	execute(t_cmd *cmd)
 {

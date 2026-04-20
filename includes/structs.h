@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/15 12:15:56 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/19 22:33:44 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ typedef struct s_redir
 // parser da maya vai entregar os dados pro meu executor no formato t_cmd
 typedef struct s_cmd
 {
-	char			**argv;
+	char			**args;
 	t_builtin		builtin;
 	t_redir			*redir;
 	struct s_cmd	*next;
 
 }	t_cmd;
-
 
 #endif
