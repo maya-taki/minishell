@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/18 19:17:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:56:21 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
-# include "../printf/include/ft_printf.h"
+# include "../libftprintf/project/libft/libft.h"
+# include "../libftprintf/project/src/ft_printf.h"
 # include "structs.h"
 # include "error_handler.h"
 
