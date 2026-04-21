@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/07/30 16:19:25 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/07/30 16:19:26 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	t_cmd *cmd;
+	int	i;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }

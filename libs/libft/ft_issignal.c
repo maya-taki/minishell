@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_issignal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2026/01/26 03:41:04 by otton-sousa       #+#    #+#             */
+/*   Updated: 2026/02/08 16:51:31 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+int	ft_issignal(int c)
 {
-	t_cmd *cmd;
-
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	if (c == '+')
+		return (1);
+	else if (c == '-')
+		return (-1);
+	else
+		return (0);
 }

@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/07/30 16:20:26 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/07/30 16:20:28 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+void	ft_putnbr_fd(int n, int fd)
 {
-	t_cmd *cmd;
+	long long	nb;
+	char		res;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	nb = n;
+	if (nb < 0)
+	{
+		write(fd, "-", 1);
+		nb *= -1;
+	}
+	if (nb >= 10)
+	{
+		ft_putnbr_fd(nb / 10, fd);
+	}
+	res = (nb % 10) + '0';
+	write(fd, &res, 1);
 }

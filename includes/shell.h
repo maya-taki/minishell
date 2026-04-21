@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/15 12:12:29 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/20 23:48:58 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
-# include "../printf/ft_printf.h"
+# include "../libs/libft/libft.h"
+# include "../libs/ft_printf/ft_printf.h"
 # include "structs.h"
 # include "error_handler.h"
 
@@ -43,6 +43,11 @@ void	read_input_redir_out(t_token **head, char *input, int *i);
 void	read_input_word(t_token **head, char *input);
 
 // testes exec
-t_cmd *create_test_cmd(void);
+int		builtin_echo(t_cmd *cmd);
+t_cmd	*exec_bultin(t_cmd *cmd);
+void	execute(t_cmd *cmd);
+t_cmd	*create_test_cmd(void);
+
+
 
 #endif

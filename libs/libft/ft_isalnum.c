@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/07/21 16:51:13 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/07/21 16:51:17 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
-
-// adaptando a main para os testes do executor
-int main(void)
+int	ft_isalnum(int c)
 {
-	t_cmd *cmd;
-
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	if (((c >= 'a' && c <= 'z')
+			|| (c >= 'A' && c <= 'Z'))
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	else
+		return (0);
 }

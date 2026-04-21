@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/08/14 13:22:08 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/08/14 13:22:10 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "ft_printf.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+int	ft_print_char(char c)
 {
-	t_cmd *cmd;
-
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	ft_putchar_fd(c, 1);
+	return (1);
 }

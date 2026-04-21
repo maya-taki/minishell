@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/08/14 15:48:04 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/08/14 15:48:06 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "ft_printf.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+int	ft_print_unsigned(unsigned int n, int fd)
 {
-	t_cmd *cmd;
+	int	count;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	count = 0;
+	if (n >= 10)
+	{
+		count += ft_print_unsigned(n / 10, fd);
+	}
+	ft_putchar_fd(n % 10 + '0', fd);
+	count++;
+	return (count);
 }

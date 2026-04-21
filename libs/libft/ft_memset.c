@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/07/21 18:18:43 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/07/21 18:18:56 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	t_cmd *cmd;
+	unsigned char	*ptr;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	ptr = (unsigned char *)s;
+	while (n--)
+	{
+		*ptr = (unsigned char)c;
+		ptr++;
+	}
+	return (s);
 }

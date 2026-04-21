@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_pointer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/08/14 14:52:54 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/08/14 14:52:56 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "ft_printf.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+int	ft_print_pointer(unsigned long ptr)
 {
-	t_cmd *cmd;
+	int				count;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	if (!ptr)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
+	write(1, "0x", 2);
+	count = 2;
+	count += ft_print_hex(ptr, 1, 0);
+	return (count);
 }

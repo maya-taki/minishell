@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enum.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 10:57:53 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/15 12:24:32 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/20 23:38:45 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_token_type
 	TOKEN_HEREDOC,
 	TOKEN_OR,
 	TOKEN_AND,
+	TOKEN_UNCHECKED_AND,
 	// TOKEN_SINGLE_QUOTE,
 	// TOKEN_DOUBLE_QUOTE,
 	// TOKEN_VAR,

@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_nbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/08/14 15:27:34 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/08/14 15:27:47 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "ft_printf.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+int	ft_print_nbr(long nb)
 {
-	t_cmd *cmd;
+	int		i;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	i = 0;
+	ft_putnbr_fd(nb, 1);
+	if (nb < 0)
+	{
+		nb *= -1;
+		i++;
+	}
+	while (nb >= 10)
+	{
+		nb = nb / 10;
+		i++;
+	}
+	i++;
+	return (i);
 }

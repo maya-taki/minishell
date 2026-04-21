@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 22:39:11 by otton-sousa      ###   ########.fr       */
+/*   Created: 2025/07/25 16:27:47 by osousa-d          #+#    #+#             */
+/*   Updated: 2025/07/25 16:27:48 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-// adaptando a main para os testes do executor
-int main(void)
+void	*ft_memchr(const void *src, int c, size_t n)
 {
-	t_cmd *cmd;
+	size_t			i;
+	unsigned char	*s;
 
-	cmd = create_test_cmd();
-	execute(cmd);
-	return (0);
+	s = (unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		if ((unsigned char)c == s[i])
+			return ((void *)(s + i));
+		i++;
+	}
+	return (NULL);
 }
