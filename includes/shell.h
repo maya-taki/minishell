@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 23:48:58 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/04/22 11:46:42 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	read_input_word(t_token **head, char *input);
 
 // testes exec
 int		builtin_echo(t_cmd *cmd);
-t_cmd	*exec_bultin(t_cmd *cmd);
+void	exec_bultin(t_cmd *cmd);
 void	execute(t_cmd *cmd);
 t_cmd	*create_test_cmd(void);
 
