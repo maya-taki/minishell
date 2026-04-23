@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 18:56:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:30:21 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ void	handle_word(t_token **head, char *input, int *i);
 
 void	print_tokens(t_token *head);
 void	validate_argc(int ac, char **av);
+
+int		verify_syntax(t_mini *mini);
 
 #endif

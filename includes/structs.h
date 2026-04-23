@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/17 20:10:17 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:04:51 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_APPEND,
 	TOKEN_HEREDOC,
-	TOKEN_OR,
-	TOKEN_AND,
-	TOKEN_UNCHECKED_AND,
 	TOKEN_SINGLE_QUOTE,
 	TOKEN_DOUBLE_QUOTE,
-	// TOKEN_VAR,
 }	t_token_type;
 
 typedef struct s_token

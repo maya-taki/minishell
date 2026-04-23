@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 20:07:45 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:44:14 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(void)
 	{
 		mini.input = readline("> ");
 		tokens = lexer(mini.input);
+		// verify_syntax(lexer(tokens));
 		if (!tokens)
 		{
 			printf(RED"%s"RST, "[ERROR] Syntax Error.\n");
@@ -32,7 +33,7 @@ int	main(void)
 			break ;
 		if (*mini.input != '\0')
 			add_history(mini.input);
-		printf("%s\n", mini.input);
+		//ft_printf("%s\n", mini.input);
 		free(mini.input);
 	}
 	clear_history();

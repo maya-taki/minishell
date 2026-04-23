@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/20 20:35:37 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:43:30 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,28 @@ static void	read_input_pipe(t_token **head, int *i)
 
 void	handle_word(t_token **head, char *input, int *i)
 {
-	char	quote;
 	int		start;
-	char	*substr;
+	int		in_single;
+	int		in_double;
+	char	*word;
 	
-	quote = 0;
+	in_single = 0;
+	in_double = 0;
 	start = *i;
-	while (input[*i])
+	while ((input[*i]) && (in_single || in_double
+			|| !is_operator(input[*i])
+			|| !is_space(input[*i])))
 	{
-		if (!quote && (input[*i] == '\'' || input[*i] == '"'))
-			quote = input[*i];
-		else if (quote && (input[*i] == quote))
-			quote = 0;
-		if (!quote && (is_space(input[*i]) || is_operator(input[*i])))
-			break ;
+		if (input[*i] == '\'' && !in_double)
+			in_single = !in_single;
+		if (input[*i] == '"' && !in_single)
+			in_double = !in_double;
 		(*i)++;
 	}
-	substr = ft_substr(input, start, *i - start);
-	add_token(head, new_token(TOKEN_WORD, substr));
+	word = ft_substr(input, start, *i - start);
+	if (!word)
+		return ;
+	add_token(head, new_token(TOKEN_WORD, word));
 }
 
 void	handle_operator(t_token *tokens, char *input, int *i)
