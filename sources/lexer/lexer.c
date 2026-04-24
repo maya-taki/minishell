@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/23 20:54:34 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/24 14:47:29 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,23 @@ void	add_token(t_token **head, t_token *new)
 // 	}
 // }
 
+static int	is_quote_closed(char *input, int i)
+{
+	int counter;
+
+	counter = 0;
+	while (input[i])
+	{
+		if (input[i] == '"')
+			counter++;
+		i++;
+	}
+	if (counter % 2 == 0) //is quote closed? 
+		return (1);
+	else
+		return (0);
+}
+
 t_token	*lexer(char *input)
 {
 	t_token	*tokens;
@@ -67,7 +84,7 @@ t_token	*lexer(char *input)
 	{
 		while (is_space(tmp[i]) == 1)
 			i++;
-		if (invalid_operator(input, 0)) //TODO: needs to activate only if outside quotes
+		if (!is_quote_closed(input, 0) && invalid_operator(input, 0)) //TODO: needs to activate only if outside quotes
 			return (NULL);
 		if (is_operator(tmp[i]))
 			handle_operator(tokens, input, &i);

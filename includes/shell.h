@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/23 19:30:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/24 14:13:49 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	add_token(t_token **head, t_token *new);
 int		invalid_operator(char *c, int i);
 int		is_space(char c);
 int		is_invalid(char c);
-int		is_quote(char c);
 int		is_operator(char c);
 void	handle_operator(t_token *tokens, char *input, int *i);
 void	handle_word(t_token **head, char *input, int *i);

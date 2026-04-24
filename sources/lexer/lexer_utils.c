@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/23 20:57:31 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/24 14:07:11 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,15 @@ int	is_operator(char c)
 
 int	invalid_operator(char *c, int i)
 {
-	int	quote;
-
-	quote = 1;
-	while (c[i] && quote == 1)
+	while (c[i])
 	{
-		if (c[i] == '"')
-			quote *= -1;
-		if (c[i] == '|' && quote == -1)
+		if (c[i] == '|')
 		{
 			if (c[i + 1] == '|')
 				return (1);
 		}
-		else if (c[i] == '&' && quote == -1)
-		{
+		else if (c[i] == '&')
 			return (1);
-		}
 		i++;
 	}
 	return (0);
