@@ -20,6 +20,7 @@ SRC				= \
 					sources/lexer/lexer.c \
 					sources/lexer/lexer_inputs.c \
 					sources/lexer/lexer_utils.c \
+					sources/lexer/tokens.c \
 					sources/main.c
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
