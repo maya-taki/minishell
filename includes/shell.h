@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/27 19:50:16 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/28 20:05:27 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void			print_tokens(t_token *head);
 void			validate_argc(int ac, char **av);
 t_token_type	id_token_type(char *str, int *i);
 t_token			*next_token(char *input, int *i);
+int				is_inside_quotes(char *c, int i, int double_quote, int single_quote);
 
-
-int		verify_syntax(t_mini *mini);
-void	free_tokens(t_token *tokens);
+int				verify_syntax(t_mini *mini);
+void			free_tokens(t_token *tokens);
 
 #endif

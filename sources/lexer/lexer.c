@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/27 19:51:36 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/28 20:43:19 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_token	*lexer(char *input, int i)
 
 	if (!input)
 		return (NULL);
+	tokens = NULL;
 	head = NULL;
 	res = ft_strtrim(input, " \r\t");
 	while (res[i])
@@ -36,6 +37,9 @@ t_token	*lexer(char *input, int i)
 		}
 		add_token(&head, tokens);
 	}
-	ft_printf("%d\n", tokens->type);
+	// ft_printf("%d\n", tokens->type);
 	return (head);
 }
+
+
+// if (!is_inside_quotes(res, 0) && is_operator(res[i]));

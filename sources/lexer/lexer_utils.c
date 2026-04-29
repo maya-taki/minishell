@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/24 14:07:11 by loena            ###   ########.fr       */
+/*   Updated: 2026/04/28 20:59:01 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,52 @@ int	is_space(char c)
 	return (c == ' ' || c == '\n' || c == '\t');
 }
 
-// void	validate_argc(int ac, char **av)
+//TODO: make a function to determine if operator is inside or outside quotes
+
+// void	is_inside_quotes(char *c, int i, int double_quote, int single_quote)
 // {
-// 	if ((ac =! 1) && av[1])
+// 	while (c[i])
 // 	{
-// 		printf(RED"Invalid input. Correct usage: ./minishell\n"RST);
-// 		exit(1);
+// 		if (c[i] == '\'' || c[i] == '"')
+// 		{
+// 			if (c[i] == '\'')
+// 				single_quote++;
+// 			else
+// 				double_quote++;
+// 			i++;
+// 		}
+// 		if (c[i] == '\'' || c[i] == '"')
+// 		{
+// 			if (c[i] == '\'')
+// 				single_quote--;
+// 			else
+// 				double_quote--;
+// 			i++;
+// 		}
 // 	}
+// 	if (single_quote == 0 || double_quote == 0)
+// 		return (1);
+// 	return (0);
 // }
+
+void	quote_state(char *c, t_quote_state *state)
+{
+	int	i;
+	
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] == '\'' && state != QUOTE_NONE)
+			state = QUOTE_SINGLE;
+		else if ()
+		else if (c[i] == '"' && state != QUOTE_DOUBLE)
+			state = QUOTE_DOUBLE;	
+		
+	}
+}
+
+
+//if operator is inside quotes, they don't act like operators, so I can just use an int to determine
+//if quotes exist and if they are closed (1 if closed, 0 if no quotes, -1 if unclosed)
+
+//TODO: if invalid operator && outside quotes, return syntax error
