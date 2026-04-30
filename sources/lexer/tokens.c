@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:25:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/27 19:00:50 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/29 21:02:18 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_token	*next_token(char *input, int *i)
 		token = new_token(type, value);
 		free(value);
 	}
+	free(value);
 	return (token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/27 16:25:42 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/29 21:01:37 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ char	*handle_word(char *input, int *i)
 	in_double = 0;
 	start = *i;
 	while ((input[*i]) && (in_single || in_double
-			|| !is_operator(input[*i])
-			|| !is_space(input[*i])))
+			&& !is_operator(input[*i])
+			&& !is_space(input[*i])))
 	{
 		if (input[*i] == '\'' && !in_double)
 			in_single = !in_single;

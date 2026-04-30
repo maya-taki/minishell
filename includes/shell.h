@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/28 20:05:27 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:48:21 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,26 @@
 #define RST		"\033[0m"
 
 /*###LEXER###*/
-t_token	*new_token(t_token_type type, char *value);
-t_token	*lexer(char *input, int i);
-void	add_token(t_token **head, t_token *new);
-int		invalid_operator(char *c, int i);
-int		is_space(char c);
-int		is_invalid(char c);
-int		is_operator(char c);
-char	*handle_word(char *input, int *i);
+t_token			*lexer(char *input, int i);
+int				invalid_operator(char *c, int i);
+int				is_space(char c);
+int				is_invalid(char c);
+int				is_operator(char c);
+char			*handle_word(char *input, int *i);
 
-// void	read_input_redir_in(t_token **head, char *input, int *i);
-// void	read_input_redir_out(t_token **head, char *input, int *i);
 
-void			print_tokens(t_token *head);
-void			validate_argc(int ac, char **av);
 t_token_type	id_token_type(char *str, int *i);
 t_token			*next_token(char *input, int *i);
-int				is_inside_quotes(char *c, int i, int double_quote, int single_quote);
 
-int				verify_syntax(t_mini *mini);
+void			update_quote_state(char c, t_quote_state *state);
+int				validade_quotes(char *input);
+
+
 void			free_tokens(t_token *tokens);
+t_token			*new_token(t_token_type type, char *value);
+void			add_token(t_token **head, t_token *new);
+
+//void			validate_argc(int ac, char **av);
+//int			verify_syntax(t_mini *mini);
 
 #endif
