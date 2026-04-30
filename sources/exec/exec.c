@@ -6,20 +6,11 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/22 11:16:15 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:56:57 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-
-// typedef struct s_cmd
-// {
-// 	char			**argv;
-// 	t_builtin		builtin;
-// 	t_redir			*redir;
-// 	struct s_cmd	*next;
-// }	t_cmd;
 
 // typedef enum e_builtin
 // {
@@ -48,17 +39,21 @@ t_cmd *create_test_cmd(void)
 	return (cmd);
 }
 
-void	exec_builtin(t_cmd *cmd)
+void	exec_builtin(t_shell *shell)
 {
 	// decide qual func_builtin chamar
-	if (cmd->builtin == ECHO)
-		builtin_echo(cmd);
+	if (shell->cmd->builtin == ECHO)
+		builtin_echo(shell->cmd);
+	if (shell->cmd->builtin == PWD)
+		builtin_pwd();
+	if (shell->cmd->builtin == CD)
+		builtin_cd(shell->cmd, shell->env);
 }
 
-void	execute(t_cmd *cmd)
+void	execute(t_shell *shell)
 {
-	if (cmd->builtin != NONE)
-		exec_builtin(cmd);
+	if (shell->cmd->builtin != NONE)
+		exec_builtin(shell);
 	// else
 	// 	exec_external(cmd);
 }

@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 21:00:11 by osousa-d         ###   ########.fr       */
+/*   Created: 2026/04/29 19:03:52 by osousa-d          #+#    #+#             */
+/*   Updated: 2026/04/29 20:57:17 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../includes/shell.h"
 
-// adaptando a main para os testes do executor
-
-int main(int argc, char **argv, char **envp)
+int	builtin_cd(t_cmd *cmd, t_env **env)
 {
-	(void)argc;
-	(void)argv;
-	t_shell	*shell;
-	char	*input;
-
-	init_shell(&shell, envp);
-	while (1)
-	{
-		input = readline("minishell> ");
-		if (!input)
-			break;
-		shell->cmd = init_cmd(input);
-
-		execute(shell);
-		free(input);
-	}
-	return (0);
+	
 }

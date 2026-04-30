@@ -35,6 +35,7 @@ SRC				= \
 					sources/lexer/lexer_inputs.c \
 					sources/lexer/lexer_utils.c \
 					sources/builtin/builtin_echo.c \
+					sources/builtin/builtin_pwd.c \
 					sources/exec/exec.c \
 					sources/main.c
 

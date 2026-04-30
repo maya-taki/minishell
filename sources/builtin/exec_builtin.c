@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 21:00:11 by osousa-d         ###   ########.fr       */
+/*   Created: 2026/04/29 19:33:55 by osousa-d          #+#    #+#             */
+/*   Updated: 2026/04/29 19:34:12 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../includes/shell.h"
 
-// adaptando a main para os testes do executor
-
-int main(int argc, char **argv, char **envp)
+t_builtin get_builtin(char *arg)
 {
-	(void)argc;
-	(void)argv;
-	t_shell	*shell;
-	char	*input;
-
-	init_shell(&shell, envp);
-	while (1)
-	{
-		input = readline("minishell> ");
-		if (!input)
-			break;
-		shell->cmd = init_cmd(input);
-
-		execute(shell);
-		free(input);
-	}
-	return (0);
+	if (ft_strcmp(arg, "echo") == 0)
+		return (ECHO);
+	if (ft_strcmp(arg, "cd") == 0)
+		return (CD);
+	if (ft_strcmp(arg, "pwd") == 0)
+		return (PWD);
+	else
+		return (NONE);
 }

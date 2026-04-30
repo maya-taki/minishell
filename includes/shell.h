@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/22 11:46:42 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:58:06 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ void	read_input_redir_in(t_token **head, char *input, int *i);
 void	read_input_redir_out(t_token **head, char *input, int *i);
 void	read_input_word(t_token **head, char *input);
 
-// testes exec
+// Builtins
 int		builtin_echo(t_cmd *cmd);
+int		builtin_pwd(void);
+int		builtin_cd(t_cmd *cmd, t_env **env);
+
 void	exec_bultin(t_cmd *cmd);
-void	execute(t_cmd *cmd);
+void	execute(t_shell *shell);
 t_cmd	*create_test_cmd(void);
 
 

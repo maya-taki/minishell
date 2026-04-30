@@ -1,3 +1,23 @@
+ordem
+
+1. echo X
+2. pwd X
+3. env 
+4. exit
+5. unset
+6. export
+7. cd
+
+FAZER O PRINTF COM FD
+------------------------
+Fazer
+funcao que libera checa e libera tudo (reduzir main)
+funcao que atribui para o nosso t_cmd (reduzir main)
+funcao que faz os forks ---------
+funcao que 
+--------------------------------------------
+
+
 Builtins que sao executados no processo pai
 cd
 export

@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 21:00:11 by osousa-d         ###   ########.fr       */
+/*   Created: 2026/04/29 19:34:32 by osousa-d          #+#    #+#             */
+/*   Updated: 2026/04/29 19:36:33 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../includes/shell.h"
 
-// adaptando a main para os testes do executor
-
-int main(int argc, char **argv, char **envp)
+void	free_args(char **args)
 {
-	(void)argc;
-	(void)argv;
-	t_shell	*shell;
-	char	*input;
+	int	i;
 
-	init_shell(&shell, envp);
-	while (1)
+	if (!args)
+		return ;
+	i = 0;
+	while (args[i])
 	{
-		input = readline("minishell> ");
-		if (!input)
-			break;
-		shell->cmd = init_cmd(input);
-
-		execute(shell);
-		free(input);
+		free(args[i]);
+		i++;
 	}
-	return (0);
+	free(args);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return;
+	if (cmd->args)
+		free_args(cmd->args);
+	free(cmd);
 }
