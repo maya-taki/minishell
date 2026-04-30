@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 19:49:16 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/30 19:37:28 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,33 @@ t_token	*lexer(char *input, int i)
 
 	if (!input)
 		return (NULL);
-	tokens = NULL;
-	head = NULL;
 	res = ft_strtrim(input, " \r\t");
+	if (!res)
+		return (NULL);
+	i = 0;
+	if (!were_quotes_closed(res) || is_invalid_operator(res))
+	{
+		free(res);
+		return (NULL);
+	}
+	head = NULL;
 	while (res[i])
 	{
-		if (validade_quotes(res) == 1)
+		if (res[i] && is_space(res[i]))
+			i++;
+		if (!res[i])
+			break ;
+		tokens = read_token(res, &i);
+		if (!tokens)
 		{
-			while (is_space(res[i]) == 1)
-				i++;
-			if (!res[i])
-				return (NULL);
-			tokens = next_token(res, &i);
-			if (!tokens)
-			{
-				free_tokens(tokens);
-				return (NULL);
-			}
-			add_token(&head, tokens);
-		}
-		else
+			free_tokens(head);
+			free(res);
 			return (NULL);
+		}
+		add_token(&head, tokens);
+		ft_printf(G"%d\n%s\n"RST, tokens->type, tokens->value);
 	}
+	free(res);
 	return (head);
 }
 

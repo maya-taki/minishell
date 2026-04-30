@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:25:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 21:02:18 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/30 19:44:10 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	add_token(t_token **head, t_token *new_token)
 	current->next = new_token;
 }
 
-t_token_type	id_token_type(char *str, int *i)
+t_token_type	id_token_type(char *c, int *i)
 {
-	if (str[*i] == '|')
+	if (c[*i] == '|')
 		return (TOKEN_PIPE);
-	else if (str[*i] == '>')
+	else if (c[*i] == '>')
 	{
-		if (str[*i + 1] == '>')
+		if (c[*i + 1] == '>')
 		{
 			(*i)++;
 			return (TOKEN_REDIR_APPEND);
@@ -59,9 +59,9 @@ t_token_type	id_token_type(char *str, int *i)
 		else
 			return (TOKEN_REDIR_OUT);
 	}
-	else if (str[*i] == '<')
+	else if (c[*i] == '<')
 	{
-		if (str[*i + 1] == '<')
+		if (c[*i + 1] == '<')
 		{
 			(*i)++;
 			return (TOKEN_HEREDOC);
@@ -73,7 +73,7 @@ t_token_type	id_token_type(char *str, int *i)
 		return (TOKEN_WORD);
 }
 
-t_token	*next_token(char *input, int *i)
+t_token	*read_token(char *input, int *i)
 {
 	t_token_type	type;
 	t_token			*token;
@@ -82,7 +82,8 @@ t_token	*next_token(char *input, int *i)
 	type = id_token_type(input, i);
 	if (type != TOKEN_WORD)
 	{
-		token = new_token(type, NULL);
+		value = &input[*i];
+		token = new_token(type, value);
 		(*i)++;
 	}
 	else
@@ -93,7 +94,6 @@ t_token	*next_token(char *input, int *i)
 		token = new_token(type, value);
 		free(value);
 	}
-	free(value);
 	return (token);
 }
 
@@ -101,7 +101,7 @@ void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 	
-	while (tokens->next)
+	while (tokens)
 	{
 		tmp = tokens->next;
 		free(tokens->value);

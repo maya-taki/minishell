@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 21:00:44 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/30 19:29:55 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,21 @@ int	is_operator(char c)
 	return (c == '|' || c == '>' || c == '<');
 }
 
-int	invalid_operator(char *c, int i)
+// if invalid_operator == 1 && state == quote_none
+// return syntax error
+
+int	is_invalid_operator(char *c)
 {
+	t_quote_state	state;
+	int				i;
+	
+	state = QUOTE_NONE;
+	i = 0;
 	while (c[i])
 	{
-		if (c[i] == '|')
-		{
-			if (c[i + 1] == '|')
-				return (1);
-		}
+		update_quote_state(c[i], &state);
+		if (c[i] == '|' && C[i + 1] == '|')
+			return (1);
 		else if (c[i] == '&')
 			return (1);
 		i++;
@@ -40,17 +46,17 @@ int	is_space(char c)
 
 void	update_quote_state(char c, t_quote_state *state)
 {
-	if (c == '\'' && *state != QUOTE_NONE)
+	if (c == '\'' && *state == QUOTE_NONE)
 		*state = QUOTE_SINGLE;
 	else if (c == '\'' && *state == QUOTE_SINGLE)
 		*state = QUOTE_NONE;
-	else if (c == '"' && *state != QUOTE_NONE)
+	else if (c == '"' && *state == QUOTE_NONE)
 		*state = QUOTE_DOUBLE;
 	else if (c == '"' && *state == QUOTE_DOUBLE)
 		*state = QUOTE_NONE;
 }
 
-int		validade_quotes(char *input)
+int		were_quotes_closed(char *input)
 {
 	t_quote_state	state;
 	int				i;
@@ -62,9 +68,9 @@ int		validade_quotes(char *input)
 		update_quote_state(input[i], &state);
 		i++;
 	}
-	if (state != QUOTE_NONE)
-		return (0);
-	return (1);
+	if (state == QUOTE_NONE)
+		return (1);
+	return (0);
 }
 
 //TODO: if invalid operator && outside quotes, return syntax error

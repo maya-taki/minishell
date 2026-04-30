@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 19:48:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/04/30 19:25:29 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,17 @@
 
 /*###LEXER###*/
 t_token			*lexer(char *input, int i);
-int				invalid_operator(char *c, int i);
+int				is_invalid_operator(char *c);
 int				is_space(char c);
-int				is_invalid(char c);
 int				is_operator(char c);
 char			*handle_word(char *input, int *i);
 
 
-t_token_type	id_token_type(char *str, int *i);
-t_token			*next_token(char *input, int *i);
+t_token_type	id_token_type(char *c, int *i);
+t_token			*read_token(char *input, int *i);
 
 void			update_quote_state(char c, t_quote_state *state);
-int				validade_quotes(char *input);
+int				were_quotes_closed(char *input);
 
 
 void			free_tokens(t_token *tokens);
