@@ -6,49 +6,62 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/02 17:10:56 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 19:45:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-t_token	*lexer(char *input, int i)
+static int	validate_input(char *input)
 {
-	t_token *head;
-	t_token	*tokens;
-	char	*res;
+	if (!were_quotes_closed(input))
+		return (0);
+	if (is_invalid_operator(input))
+		return (0);
+	return (1);
+}
 
-	if (!input)
-		return (NULL);
-	res = ft_strtrim(input, " \r\t");
-	if (!res)
-		return (NULL);
-	i = 0;
-	if (!were_quotes_closed(res) || is_invalid_operator(res))
-	{
-		ft_printf("syntax error\n");
-		free(res);
-		return (NULL);
-	}
+static t_token	*tokenize_input(char *input)
+{
+	t_token	*head;
+	t_token	*token;
+	int		i;
+
 	head = NULL;
-	while (res[i])
+	i = 0;
+	while (input[i])
 	{
-		if (res[i] && is_space(res[i]))
+		if (is_space(input[i]))
 			i++;
-		if (!res[i])
-			break ;
-		tokens = read_token(res, &i);
-		if (!tokens)
+		token = read_token(input, &i);
+		if (!token)
 		{
 			free_tokens(head);
-			free(res);
 			return (NULL);
 		}
-		add_token(&head, tokens);
-		ft_printf(G"%d\n%s\n"RST, tokens->type, tokens->value);
+		add_token(&head, token);
+		ft_printf(G"type: %d\nvalue: %s\n"RST, token->type, token->value);
 	}
-	free(res);
 	return (head);
 }
 
+t_token	*lexer(char *input)
+{
+	char	*trimmed;
+	t_token	*tokens;
 
+	if (!input)
+		return (NULL);
+	trimmed = ft_strtrim(input, " \r\t");
+	if (!trimmed)
+		return (NULL);
+	if (!validate_input(trimmed))
+	{
+		ft_printf("syntax error\n");
+		free(trimmed);
+		return (NULL);
+	}
+	tokens = tokenize_input(trimmed);
+	free(trimmed);
+	return (tokens);
+}

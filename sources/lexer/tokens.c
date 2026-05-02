@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:25:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/02 17:17:04 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 20:00:22 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,14 @@ t_token_type	id_token_type(char *c, int *i)
 	else if (c[*i] == '>')
 	{
 		if (c[*i + 1] == '>')
-		{
-			(*i)++;
 			return (TOKEN_REDIR_APPEND);
-		}
 		else
 			return (TOKEN_REDIR_OUT);
 	}
 	else if (c[*i] == '<')
 	{
 		if (c[*i + 1] == '<')
-		{
-			(*i)++;
 			return (TOKEN_HEREDOC);
-		}
 		else
 			return (TOKEN_REDIR_IN);
 	}
@@ -73,28 +67,35 @@ t_token_type	id_token_type(char *c, int *i)
 		return (TOKEN_WORD);
 }
 
+static t_token	*treat_operator(t_token_type type, char *input, int *i)
+{
+	int		len;
+	char	*value;
+	t_token	*token;
+
+	len = 1;
+	if (type == TOKEN_HEREDOC || type == TOKEN_REDIR_APPEND)
+		len = 2;
+	value = ft_substr(input, *i, len);	
+	if (!value)
+		return (NULL);
+	token = new_token(type, value);
+	free(value);
+	if (len == 2)
+		(*i)++;
+	(*i)++;
+	return (token);
+}
+
 t_token	*read_token(char *input, int *i)
 {
 	t_token_type	type;
 	t_token			*token;
 	char			*value;
-	int				len;
 	
 	type = id_token_type(input, i);
 	if (type != TOKEN_WORD)
-	{
-		len = 1;
-		if (type == TOKEN_HEREDOC || type == TOKEN_REDIR_APPEND)
-			len = 2;
-		value = ft_substr(input, *i, len);	
-		if (!value)
-			return (NULL);
-		token = new_token(type, value);
-		free(value);
-		if (len == 2)
-			(*i)++;
-		(*i)++;
-	}
+		return (treat_operator(type, input, i));
 	else
 	{
 		value = handle_word(input, i);
@@ -102,8 +103,8 @@ t_token	*read_token(char *input, int *i)
 			return (NULL);
 		token = new_token(type, value);
 		free(value);
+		return (token);
 	}
-	return (token);
 }
 
 void	free_tokens(t_token *tokens)

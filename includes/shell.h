@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/30 19:25:29 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 19:35:02 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 #define RST		"\033[0m"
 
 /*###LEXER###*/
-t_token			*lexer(char *input, int i);
+t_token			*lexer(char *input);
 int				is_invalid_operator(char *c);
 int				is_space(char c);
 int				is_operator(char c);
