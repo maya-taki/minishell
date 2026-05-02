@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:25:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/30 19:44:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 17:17:04 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,21 @@ t_token	*read_token(char *input, int *i)
 	t_token_type	type;
 	t_token			*token;
 	char			*value;
+	int				len;
 	
 	type = id_token_type(input, i);
 	if (type != TOKEN_WORD)
 	{
-		value = &input[*i];
+		len = 1;
+		if (type == TOKEN_HEREDOC || type == TOKEN_REDIR_APPEND)
+			len = 2;
+		value = ft_substr(input, *i, len);	
+		if (!value)
+			return (NULL);
 		token = new_token(type, value);
+		free(value);
+		if (len == 2)
+			(*i)++;
 		(*i)++;
 	}
 	else
@@ -109,17 +118,3 @@ void	free_tokens(t_token *tokens)
 		tokens = tmp;
 	}
 }
-
-// void	print_tokens(t_token *head)
-// {
-// 	t_token	*temp;
-
-// 	if (!head)
-// 		return ;
-// 	temp = head;
-// 	if(temp != NULL)
-// 	{
-// 		printf(G"Value: %s\nType: %d\n"RST, temp->value, temp->type);
-// 		temp = temp->next;
-// 	}
-// }

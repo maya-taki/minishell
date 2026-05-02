@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/30 19:37:28 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 17:10:56 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_token	*lexer(char *input, int i)
 	i = 0;
 	if (!were_quotes_closed(res) || is_invalid_operator(res))
 	{
+		ft_printf("syntax error\n");
 		free(res);
 		return (NULL);
 	}
@@ -51,4 +52,3 @@ t_token	*lexer(char *input, int i)
 }
 
 
-// if (!is_inside_quotes(res, 0) && is_operator(res[i]));

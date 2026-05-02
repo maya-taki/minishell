@@ -6,11 +6,13 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/30 19:29:55 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 15:18:19 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+
+int	is_invalid_operator(char *c);
 
 int	is_operator(char c)
 {
@@ -30,10 +32,15 @@ int	is_invalid_operator(char *c)
 	while (c[i])
 	{
 		update_quote_state(c[i], &state);
-		if (c[i] == '|' && C[i + 1] == '|')
-			return (1);
-		else if (c[i] == '&')
-			return (1);
+		if (state == QUOTE_NONE)
+		{
+			if (c[i] == '|' && c[i + 1] == '|')
+				return (1);
+			else if (c[i] == '&')
+				return (1);
+		}
+		else		
+			return (0);
 		i++;
 	}
 	return (0);

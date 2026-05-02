@@ -6,14 +6,11 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/30 19:33:57 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/02 15:40:04 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-// if invalid_operator == 1 && state == quote_none
-// return syntax error
 
 char	*handle_word(char *input, int *i)
 {
