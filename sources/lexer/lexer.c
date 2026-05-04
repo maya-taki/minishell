@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/02 19:45:17 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/04 18:18:19 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 static int	validate_input(char *input)
 {
-	if (!were_quotes_closed(input))
-		return (0);
-	if (is_invalid_operator(input))
+	if (is_invalid_operator(input) || !were_quotes_closed(input))
 		return (0);
 	return (1);
 }
@@ -57,7 +55,7 @@ t_token	*lexer(char *input)
 		return (NULL);
 	if (!validate_input(trimmed))
 	{
-		ft_printf("syntax error\n");
+		ft_printf(RED"syntax error\n"RST);
 		free(trimmed);
 		return (NULL);
 	}
