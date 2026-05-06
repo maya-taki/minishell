@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/28 20:26:13 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/05 22:28:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,18 @@ typedef struct s_env
 	struct s_env	*next;
 } t_env;
 
+typedef struct s_redir
+{
+	t_token_type	*type;
+	char			*file;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	char			**cmd_args;
 	char			*cmd_path;
-	int				fd_in;
-	int				fd_out;
+	t_redir	 		*redirs;
 	struct s_cmd	*next;
 } t_cmd;
 
