@@ -6,26 +6,26 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:11:17 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/15 20:18:18 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/07 20:06:48 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_HANDLER_H
 # define ERROR_HANDLER_H
 
-# define ERR_MALLOC "Error: memory allocation failure.\n";
-# define ERR_UNCLOSED_QUOTE "Error: unclosed Quote.\n";
-# define ERR_SYNTAX "Error: syntax Failure.\n";
-# define ERR_HEREDOC "Error: heredoc failure.\n";
-# define ERR_INVALID_CHAR "Error: invalid character.\n";
-# define ERR_CMD "Error: command not found.\n";
-# define INVALID_REDIR "Error: invalid redirection.\n";
-
 typedef enum e_error_type
 {
-	ERROR = -1,
-	OK = 0,
-	FAIL = 1
-} t_error_type;
+	ERR_NONE,
+	ERR_SYNTAX,
+	ERR_CMD_NOT_FOUND,
+	ERR_NO_FILE,
+	ERR_PERMISSION,
+	ERR_MALLOC,
+	ERR_TOO_MANY_ARGS,
+	ERR_NUM_REQUIRED,
+	ERR_NOT_VALID_ID,
+	ERR_HOME_NOT_SET,
+	ERR_OLDPWD_NOT_SET
+}	t_error_type;
 
 # endif
