@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/06 17:24:19 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/07 19:08:51 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	open_file(int *fd_ptr, char *path, int flags)
 {
 	if (*fd_ptr > 2)
-		close(fd_ptr);	
-	fd_ptr = open(path, flags, 0644);
+		close(*fd_ptr);	
+	*fd_ptr = open(path, flags, 0644);
 	if (*fd_ptr == -1)
 	{
 		perror(path);
@@ -25,7 +25,7 @@ int	open_file(int *fd_ptr, char *path, int flags)
 	return (0);
 }
 
-int count_cmdS(t_token *token_list)
+int count_cmds(t_token *token_list)
 {
 	int		len;
 	t_token	*tmp;
@@ -34,7 +34,7 @@ int count_cmdS(t_token *token_list)
 	tmp = token_list;
 	while (tmp)
 	{
-		if (tmp->type != TOKEN_PIPE)
+		if (tmp->type == TOKEN_PIPE)
 			len++;
 		tmp = tmp->next;
 	}
@@ -43,9 +43,23 @@ int count_cmdS(t_token *token_list)
 
 int count_words(t_token *token)
 {
-	int	words;
-	words = 0;
+	int		counter;
+	t_token	*tmp;
 
-	
-	return (words);
+	counter = 0;
+	tmp = token;
+
+	while (tmp && tmp->type != TOKEN_PIPE)
+	{
+		if (tmp->type == TOKEN_WORD)
+			counter++;
+		if (tmp->type >= TOKEN_REDIR_IN && tmp->type <= TOKEN_HEREDOC)
+		{
+			tmp = tmp->next;
+			continue;
+		}
+		tmp = tmp->next;
+	}
+	return (counter);
 }
+
