@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 19:48:12 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 19:43:46 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(void)
 	{
 		mini.input = readline("Minishell$ ");
 		tokens = lexer(mini.input);
+		if (validate_syntax(tokens) != 1)
+			return (ERR_NONE);
 		if (*mini.input != '\0')
 			add_history(mini.input);
 		free(tokens);

@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 19:18:00 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:27:23 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ t_token	*lexer(char *input)
 {
 	char	*trimmed;
 	t_token	*tokens;
-	int		wordcounter;
-	int		cmdcounter;
+	// int		wordcounter;
 
 	if (!input)
 		return (NULL);
@@ -59,11 +58,11 @@ t_token	*lexer(char *input)
 	{
 		ft_printf(RED"syntax error\n"RST);
 		free(trimmed);
-		return (ERR_SYNTAX);
+		return (NULL);
 	}
 	tokens = tokenize_input(trimmed);
-	wordcounter = count_words(tokens);
-	ft_printf("words %d\n", wordcounter);
+	// wordcounter = count_words(tokens);
+	// ft_printf("words %d\n", wordcounter);
 	free(trimmed);
 	return (tokens);
 }
