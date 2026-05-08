@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/29 21:12:26 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/08 19:25:10 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,33 @@ t_cmd	*init_cmd(char *input)
 
 static t_env	*init_env(char **envp)
 {
-	t_env	*node_env;
+	t_env	*current;
+	t_env	*head;
+	t_env	*last;
+	char	*equal;
 	int		i;
 
 	i = 0;
+	head = NULL;
 	while (envp[i])
 	{
-		node_env = malloc(sizeof(t_env));
-		if (node_env)
+		current = malloc(sizeof(t_env));
+		if (!current)
 			return (NULL);
-			
+		parser_env_line(envp[i], current);
+		if (!head)
+			head = current;
+		head = current;
+		last = current;
 		i++;
 	}
-	
-	return (env);
+	return (head);
 }
 
 t_shell	*init_shell(t_shell *shell, char **envp)
 {
-	
 	shell->env = init_env(envp);
-	
+	shell->cmd = 
 	// iniciar as variaveis da estrutura t_shell
 	
 }
