@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 20:49:02 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 01:39:18 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,26 @@ int	handle_error(t_error_type error, char *cmd, char *context)
 
 	msg = error_msg(error);
 	if (!msg)
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (cmd)
 	{
 			ft_putstr_fd(cmd, STDERR_FILENO);
 			ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (context && error != ERR_SYNTAX)
-	
+	{
+		ft_putstr_fd(context, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putstr_fd((char *)msg, STDERR_FILENO);
 	if (context && error == ERR_SYNTAX)
-	
+		ft_putstr_fd(context, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (1);
+}
+
+void	exit_error(t_error_type error, char *cmd, char *context, int code)
+{
+	handle_error(error, cmd, context);
+	exit(code);
 }
