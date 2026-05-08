@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 19:12:56 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:13:31 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int count_words(t_token *token)
 	{
 		if (tmp->type == TOKEN_WORD)
 			counter++;
-		if (tmp->type >= TOKEN_REDIR_IN && tmp->type <= TOKEN_HEREDOC)
+		if (is_redir(token))
 		{
 			tmp = tmp->next;
 			continue;

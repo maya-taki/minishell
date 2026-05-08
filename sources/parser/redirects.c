@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:32:53 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 19:14:07 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:12:57 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,10 @@
 // 		return (handle_input());
 // }
 
-// static int	is_redir(t_token *token)
-// {
-// 	if (token->type == TOKEN_HEREDOC)
-// 		return (1);
-// 	if (token->type == TOKEN_REDIR_OUT)
-// 		return (1);
-// 	if (token->type == TOKEN_REDIR_APPEND)
-// 		return (1);
-// 	if (token->type == TOKEN_REDIR_IN)
-// 		return (1);
-// 	return (0);
-// }
+int	is_redir(t_token *token)
+{
+	return (token->type == TOKEN_HEREDOC
+			|| token->type == TOKEN_REDIR_OUT
+			|| token->type == TOKEN_REDIR_APPEND
+			|| token->type == TOKEN_REDIR_IN);
+}

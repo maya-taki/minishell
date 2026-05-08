@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 17:41:38 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:17:53 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,27 @@
 #define RED		"\033[0;31m"
 #define RST		"\033[0m"
 
-/*###LEXER###*/
+/*#LEXER#*/
 t_token			*lexer(char *input);
 int				is_invalid_operator(char *c);
 int				is_space(char c);
 int				is_operator(char c);
 char			*handle_word(char *input, int *i);
-
-
-t_token_type	id_token_type(char *c, int *i);
-t_token			*read_token(char *input, int *i);
-
 void			update_quote_state(char c, t_quote_state *state);
 int				were_quotes_closed(char *input);
-
-
-void			free_tokens(t_token *tokens);
 t_token			*new_token(t_token_type type, char *value);
+t_token_type	id_token_type(char *c, int *i);
+t_token			*read_token(char *input, int *i);
 void			add_token(t_token **head, t_token *new);
+void			free_tokens(t_token *tokens);
 
-//void			validate_argc(int ac, char **av);
-//int			verify_syntax(t_mini *mini);
-
-
-/*###PARSER###*/
-int				open_file(int *fd_ptr, char *path, int flags);
+/*#PARSER#*/
+int				validate_syntax(t_token *token);
 int				count_cmds(t_token *token_list);
 int				count_words(t_token *token);
+int				is_redir(t_token *token);
 
-
-
+/*###EXPANDER###*/
+int				open_file(int *fd_ptr, char *path, int flags);
 
 #endif
