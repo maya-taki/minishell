@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/08 19:57:35 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/08 21:24:42 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			add_token(t_token **head, t_token *new);
 void			free_tokens(t_token *tokens);
 
 /*#PARSER#*/
-int				validate_syntax(t_mini *mini);
+int				validate_syntax(t_token *tokens);
 int				count_cmds(t_token *token_list);
 int				count_words(t_token *token);
 int				is_redir(t_token *token);
