@@ -3,31 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 22:29:37 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/08 21:30:42 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/09 16:28:13 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int	validate_syntax(t_token *tokens)
-{
-	t_token	*tmp;
+//int	validate_syntax(t_token *tokens)
+//{
+//	t_token	*tmp;
 	
-	tmp = tokens;
-	if (!tmp)
-		return (1);
-	if (tmp->type == TOKEN_PIPE)
-		return (ERR_SYNTAX);
-	while (tmp)
-	{
-		if (!tmp->next && tmp->type != TOKEN_WORD)
-			return (ERR_SYNTAX);
-		if (tmp->type == TOKEN_PIPE && tmp->next->type == TOKEN_PIPE)
-			return (ERR_SYNTAX);
-		tmp = tmp->next;
-	}
-	return (1);
-}
+//	tmp = tokens;
+//	if (!tmp)
+//		return (ERR_NONE);
+//	if (tmp->type == TOKEN_PIPE)
+//		return (ERR_SYNTAX);
+//	while (tmp)
+//	{
+//		if (is_redir(tmp) && (!tmp->next || tmp->next->type != TOKEN_WORD))
+//			return (ERR_SYNTAX);
+//		if (tmp->type == TOKEN_PIPE && tmp->next
+//			&& tmp->next->type == TOKEN_PIPE)
+//			return (ERR_SYNTAX);
+//		tmp = tmp->next;
+//	}
+//	return (1);
+//}

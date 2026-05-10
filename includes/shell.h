@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/08 21:24:42 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/09 16:12:06 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,10 @@ int				is_redir(t_token *token);
 
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
+
+
+/*###UTILS###*/
+const char		*error_msg(t_error_type error);
+int				handle_error(t_error_type error, char *cmd, char *context);
 
 #endif

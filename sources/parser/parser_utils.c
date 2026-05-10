@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/08 17:13:31 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/09 16:41:53 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,15 @@ int count_words(t_token *token)
 
 	while (tmp && tmp->type != TOKEN_PIPE)
 	{
-		if (tmp->type == TOKEN_WORD)
-			counter++;
-		if (is_redir(token))
+		if (is_redir(tmp))
 		{
 			tmp = tmp->next;
+			if (tmp)
+				tmp = tmp->next;
 			continue;
 		}
+		if (tmp->type == TOKEN_WORD)
+			counter++;\
 		tmp = tmp->next;
 	}
 	return (counter);

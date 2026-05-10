@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/08 21:29:13 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/09 16:28:34 by loena            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(void)
 	{
 		mini.input = readline("Minishell$ ");
 		tokens = lexer(mini.input);
-		if (!validate_syntax(tokens))
-			return (ERR_NONE);
+		//if (!validate_syntax(tokens))
+		//	return (ERR_NONE);
 		if (*mini.input != '\0')
 			add_history(mini.input);
 		free(tokens);
