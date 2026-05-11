@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 04:56:59 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 10:56:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		fill_args(t_token *seg_start, t_cmd *cmd)
 {
-	int 	i;
-	t_token *tmp;
+	int		i;
+	t_token	*tmp;
 
 	cmd->cmd_args = malloc(sizeof(char *) * (count_words(seg_start) + 1));
 	if (!cmd->cmd_args)
@@ -66,7 +66,7 @@ int		fill_redirs(t_token *seg_start, t_cmd *cmd)
 
 int		add_redir(t_token_type type, char *file, t_cmd *cmd)
 {
-	t_redir *redirect;
+	t_redir	*redirect;
 	t_redir	*last;
 	
 	redirect = malloc(sizeof(t_redir));
@@ -108,7 +108,7 @@ t_cmd	*new_cmd(void)
 
 void	free_redir(t_redir *redirect)
 {
-	t_redir *tmp;
+	t_redir	*tmp;
 
 	while (tmp)
 	{
@@ -148,5 +148,3 @@ void	free_all_cmds(t_cmd *cmds)
 		cmds = tmp;
 	}
 }
-
-

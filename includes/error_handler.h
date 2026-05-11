@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:11:17 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/07 20:06:48 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 11:06:54 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,4 @@ typedef enum e_error_type
 	ERR_OLDPWD_NOT_SET
 }	t_error_type;
 
-# endif
+#endif

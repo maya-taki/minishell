@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/09 16:12:06 by loena            ###   ########.fr       */
+/*   Updated: 2026/05/11 11:03:55 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 # include "structs.h"
 # include "error_handler.h"
 
-#define Y		"\033[0;33m"
-#define G		"\033[0;32m"
-#define C		"\033[0;36m"
-#define RED		"\033[0;31m"
-#define RST		"\033[0m"
+# define Y		"\033[0;33m"
+# define G		"\033[0;32m"
+# define C		"\033[0;36m"
+# define RED	"\033[0;31m"
+# define RST	"\033[0m"
 
 /*#LEXER#*/
 t_token			*lexer(char *input);
@@ -41,6 +41,7 @@ int				is_invalid_operator(char *c);
 int				is_space(char c);
 int				is_operator(char c);
 char			*handle_word(char *input, int *i);
+t_token			*handle_operator(t_token_type type, char *input, int *i);
 void			update_quote_state(char c, t_quote_state *state);
 int				were_quotes_closed(char *input);
 t_token			*new_token(t_token_type type, char *value);
@@ -57,7 +58,6 @@ int				is_redir(t_token *token);
 
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
-
 
 /*###UTILS###*/
 const char		*error_msg(t_error_type error);

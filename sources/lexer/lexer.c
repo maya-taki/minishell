@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/09 16:36:27 by loena            ###   ########.fr       */
+/*   Updated: 2026/05/11 10:59:23 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,15 @@ static t_token	*tokenize_input(char *input)
 			return (NULL);
 		}
 		add_token(&head, token);
-		//ft_printf(G"type: %d\nvalue: %s\n"RST, token->type, token->value);
 	}
 	return (head);
 }
 
 t_token	*lexer(char *input)
 {
-	char	*trimmed;
-	t_token	*tokens;
-	 int		wordcounter;
+	char		*trimmed;
+	t_token		*tokens;
+	int			wordcounter;
 
 	if (!input)
 		return (NULL);

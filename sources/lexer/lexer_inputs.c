@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/02 15:40:04 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 11:02:35 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*handle_word(char *input, int *i)
 	while (input[*i])
 	{
 		update_quote_state(input[*i], &state);
-		if (state == QUOTE_NONE && (is_space(input[*i]) || is_operator(input[*i])))
+		if (state == QUOTE_NONE && (is_space(input[*i])
+				|| is_operator(input[*i])))
 			break ;
 		(*i)++;
 	}
@@ -31,4 +32,24 @@ char	*handle_word(char *input, int *i)
 	if (!word)
 		return (NULL);
 	return (word);
+}
+
+t_token	*handle_operator(t_token_type type, char *input, int *i)
+{
+	int		len;
+	char	*value;
+	t_token	*token;
+
+	len = 1;
+	if (type == TOKEN_HEREDOC || type == TOKEN_REDIR_APPEND)
+		len = 2;
+	value = ft_substr(input, *i, len);
+	if (!value)
+		return (NULL);
+	token = new_token(type, value);
+	free(value);
+	if (len == 2)
+		(*i)++;
+	(*i)++;
+	return (token);
 }

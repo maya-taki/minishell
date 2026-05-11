@@ -6,27 +6,24 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/04 18:35:36 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 10:58:06 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-int		is_invalid_operator(char *c);
+int	is_invalid_operator(char *c);
 
-int		is_operator(char c)
+int	is_operator(char c)
 {
 	return (c == '|' || c == '>' || c == '<');
 }
 
-// if invalid_operator == 1 && state == quote_none
-// return syntax error
-
-int		is_invalid_operator(char *c)
+int	is_invalid_operator(char *c)
 {
 	t_quote_state	state;
 	int				i;
-	
+
 	state = QUOTE_NONE;
 	i = 0;
 	while (c[i])
@@ -44,7 +41,7 @@ int		is_invalid_operator(char *c)
 	return (0);
 }
 
-int		is_space(char c)
+int	is_space(char c)
 {
 	return (c == ' ' || c == '\n' || c == '\t');
 }
@@ -61,7 +58,7 @@ void	update_quote_state(char c, t_quote_state *state)
 		*state = QUOTE_NONE;
 }
 
-int		were_quotes_closed(char *input)
+int	were_quotes_closed(char *input)
 {
 	t_quote_state	state;
 	int				i;
