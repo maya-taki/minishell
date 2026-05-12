@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loena <loena@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/09 16:14:36 by loena            ###   ########.fr       */
+/*   Updated: 2026/05/12 19:43:49 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ const char	*error_msg(t_error_type error)
 	const char	*message[] = {
 		NULL,
 		"syntax error near unexpected token: ",
+		"parse error near ",
 		"command not found",
 		"No such file or directory",
 		"Permission denied",
