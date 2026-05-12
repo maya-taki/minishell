@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 14:54:03 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/12 19:31:42 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int count_words(t_token *token)
 			tmp = tmp->next;
 			if (tmp)
 				tmp = tmp->next;
-			continue;
+			continue ;
 		}
 		if (tmp->type == TOKEN_WORD)
 			counter++;
