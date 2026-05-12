@@ -6,20 +6,53 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 10:56:26 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 20:15:27 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int		fill_args(t_token *seg_start, t_cmd *cmd)
-{
-	int		i;
-	t_token	*tmp;
+int			fill_args(t_token *seg_start, t_cmd *cmd);
+static int	add_args(t_token *seg_start, t_cmd *cmd);
+int			fill_redirs(t_token *seg_start, t_cmd *cmd);
+static int	add_redirs(t_token_type type, char *file, t_cmd *cmd);
 
+int	fill_args(t_token *seg_start, t_cmd *cmd)
+{
 	cmd->cmd_args = malloc(sizeof(char *) * (count_words(seg_start) + 1));
 	if (!cmd->cmd_args)
 		return (0);
+	if (!add_args(seg_start, cmd))
+		return (0);
+	return (1);
+}
+
+int	fill_redirs(t_token *seg_start, t_cmd *cmd)
+{
+	t_token	*tmp;
+
+	tmp = seg_start;
+	while (tmp && tmp->type != TOKEN_PIPE)
+	{
+		if (is_redir(tmp))
+		{
+			if (!tmp->next || tmp->type != TOKEN_WORD)
+				return (ERR_SYNTAX);
+			if (!add_redirs(tmp->type, tmp->value, cmd))
+				return (ERR_MALLOC);
+			tmp = tmp->next->next;
+			continue ;
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+static int	add_args(t_token *seg_start, t_cmd *cmd)
+{
+	t_token	*tmp;
+	int		i;
+
 	i = 0;
 	tmp = seg_start;
 	while (tmp && tmp->type != TOKEN_PIPE)
@@ -28,7 +61,7 @@ int		fill_args(t_token *seg_start, t_cmd *cmd)
 		{
 			tmp = tmp->next;
 			if (tmp)
-				tmp = tmp->type;
+				tmp = tmp->next;
 			continue ;
 		}
 		if (tmp->type == TOKEN_WORD)
@@ -43,32 +76,12 @@ int		fill_args(t_token *seg_start, t_cmd *cmd)
 	cmd->cmd_args[i] = NULL;
 	return (1);
 }
-int		fill_redirs(t_token *seg_start, t_cmd *cmd)
-{
-	t_token	*tmp;
 
-	tmp = seg_start;
-	while (tmp && tmp->type != TOKEN_PIPE)
-	{
-		if (is_redir(tmp))
-		{
-			if (!tmp->next || tmp->type != TOKEN_WORD)
-				return (ERR_SYNTAX);
-			if (!add_redir(tmp->type, tmp->value, cmd))
-				return (ERR_MALLOC);
-			tmp = tmp->next->next;
-			continue ;
-		}
-		tmp = tmp->next;
-	}
-	return (1);
-}
-
-int		add_redir(t_token_type type, char *file, t_cmd *cmd)
+static int	add_redirs(t_token_type type, char *file, t_cmd *cmd)
 {
 	t_redir	*redirect;
 	t_redir	*last;
-	
+
 	redirect = malloc(sizeof(t_redir));
 	if (!redirect)
 		return (0);
@@ -91,60 +104,56 @@ int		add_redir(t_token_type type, char *file, t_cmd *cmd)
 	last->next = redirect;
 	return (1);
 }
-
-t_cmd	*new_cmd(void)
+t_cmd	*parse_cmd(t_token *seg_start)
 {
 	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
+	int		success;
+	
+	success = 0;
+	cmd = new_cmd();
+	success = fill_args(seg_start, cmd);
+	if (!success)
 		return (NULL);
-	cmd->cmd_args = NULL;
-	cmd->cmd_path = NULL;
-	cmd->redirs = NULL;
-	cmd->next = NULL;
+	success = fill_redirs(seg_start, cmd);
+	if (!success)
+		return (NULL);
 	return (cmd);
 }
 
-void	free_redir(t_redir *redirect)
+t_cmd	*parser(t_mini *mini)
 {
-	t_redir	*tmp;
+	t_cmd	*head;
+	t_cmd	*cmd;
+	t_cmd	*last;
+	t_token	*tmp;
 
+	if (!mini || !mini->tokens)
+		return (0);
+	if (!validate_syntax(mini->tokens))
+	{
+		ft_printf(RED"Unknown token\n"RST);
+		return (0);
+	}
+	tmp = mini->tokens;
+	head = NULL;
+	last = NULL;
 	while (tmp)
 	{
-		tmp = redirect->next;
-		free(redirect->file);
-		free(redirect);
-		redirect = tmp;
+		cmd = parse_cmd(tmp);
+		if (!cmd)
+		{
+			free_all_cmds(cmd);
+			return (0);
+		}
+		if (!head)
+			head = cmd;
+		else
+			last->next = cmd;
+		last = cmd;
+		while (tmp && tmp->type != TOKEN_PIPE)
+			tmp = tmp->next;
+		if (tmp && tmp->type == TOKEN_PIPE)
+			tmp = tmp->next;
 	}
-}
-
-void	free_single_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	if (cmd->cmd_args)
-	{
-		i = 0;
-		while (cmd->cmd_args[i])
-			free(cmd->cmd_args[i++]);
-		free(cmd->cmd_args);
-	}
-	free(cmd->cmd_path);
-	free_redir(cmd->redirs);
-	free(cmd);
-}
-
-void	free_all_cmds(t_cmd *cmds)
-{
-	t_cmd	*tmp;
-	
-	while(cmds)
-	{
-		tmp = cmds->next;
-		free_single_cmd(cmds);
-		cmds = tmp;
-	}
+	return (head);
 }

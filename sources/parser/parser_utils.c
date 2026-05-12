@@ -6,11 +6,30 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 04:50:38 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 14:54:03 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
+
+t_cmd	*new_cmd(void);
+int		count_words(t_token *token);
+int		count_cmds(t_token *token_list);
+int		open_file(int *fd_ptr, char *path, int flags);
+
+t_cmd	*new_cmd(void)
+{
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->cmd_args = NULL;
+	cmd->cmd_path = NULL;
+	cmd->redirs = NULL;
+	cmd->next = NULL;
+	return (cmd);
+}
 
 int	open_file(int *fd_ptr, char *path, int flags)
 {
@@ -20,9 +39,9 @@ int	open_file(int *fd_ptr, char *path, int flags)
 	if (*fd_ptr == -1)
 	{
 		perror(path);
-		return (1);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 int count_cmds(t_token *token_list)

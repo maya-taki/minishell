@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 10:55:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/11 22:44:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 int	main(void)
 {
 	t_mini	mini;
-	t_token	*tokens;	
+	t_token	*tokens;
 
 	using_history();
 	while (1)
 	{
 		mini.input = readline("Minishell$ ");
 		tokens = lexer(mini.input);
-		//if (!validate_syntax(tokens))
-		//	return (ERR_NONE);
+		mini.cmd = parser(&mini);
+		if (!mini.cmd)
+		{
+			free_all_cmds(mini.cmd);
+			return (0);
+		}
 		if (*mini.input != '\0')
 			add_history(mini.input);
 		free(tokens);

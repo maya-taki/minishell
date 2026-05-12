@@ -21,11 +21,12 @@ SRC				= \
 					sources/lexer/lexer_inputs.c \
 					sources/lexer/lexer_utils.c \
 					sources/lexer/tokens.c \
+					sources/utils/error_utils.c \
 					sources/parser/parser_utils.c \
 					sources/parser/parser.c \
+					sources/parser/parser_frees.c \
 					sources/parser/syntax.c \
 					sources/parser/redirects.c \
-					sources/utils/error_utils.c \
 					sources/main.c 
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
