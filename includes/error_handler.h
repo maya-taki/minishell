@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 17:11:17 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 11:06:54 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/12 19:52:02 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef enum e_error_type
 {
 	ERR_NONE,
+	ERR_PARSE,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NO_FILE,
