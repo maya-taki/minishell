@@ -6,11 +6,12 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/12 20:16:39 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/12 22:41:16 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+
 
 int	main(void)
 {
@@ -22,11 +23,6 @@ int	main(void)
 		mini.input = readline("Minishell$ ");
 		mini.tokens = lexer(mini.input);
 		add_history(mini.input);
-		if (!mini.tokens)
-		{
-			ft_printf("Invalid command\n");
-			continue ;
-		}
 		mini.cmd = parser(&mini);
 		if (!mini.cmd)
 		{

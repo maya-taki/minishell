@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/12 20:17:11 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/12 22:26:47 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_token	*lexer(char *input)
 		return (NULL);
 	if (!validate_input(trimmed))
 	{
+		ft_printf(RED"Invalid command\n"RST);
 		free(trimmed);
 		return (NULL);
 	}
