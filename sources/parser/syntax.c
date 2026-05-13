@@ -6,11 +6,25 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 22:29:37 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/12 22:43:53 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/13 20:40:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
+
+static int	is_pipe_last(t_token *tokens)
+{
+	t_token	*tmp;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		if (!tmp->next && tmp->type == TOKEN_PIPE)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	validate_syntax(t_token *tokens)
 {
@@ -20,17 +34,17 @@ int	validate_syntax(t_token *tokens)
 	if (!tmp)
 		return (0);
 	if (tmp->type == TOKEN_PIPE)
-		return (0);
+		return (ERR_SYNTAX);
+	if (is_pipe_last(tmp))
+		return (ERR_SYNTAX);
 	while (tmp)
 	{
 		if (is_redir(tmp) && (!tmp->next || tmp->next->type != TOKEN_WORD))
-			return (0);
+			return (ERR_SYNTAX);
 		if (tmp->type == TOKEN_PIPE && tmp->next
 			&& tmp->next->type == TOKEN_PIPE)
 			return (ERR_SYNTAX);
 		tmp = tmp->next;
-		// if (!tmp->next && tmp->type == TOKEN_PIPE)
-		// 	return (0);
 	}
 	return (1);
 }

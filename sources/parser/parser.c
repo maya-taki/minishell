@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/12 22:43:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/13 20:37:50 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	fill_redirs(t_token *seg_start, t_cmd *cmd)
 	{
 		if (is_redir(tmp))
 		{
-			if (!tmp->next || tmp->type != TOKEN_WORD)
+			if (!tmp->next || tmp->next->type != TOKEN_WORD)
 				return (ERR_SYNTAX);
-			if (!add_redirs(tmp->type, tmp->value, cmd))
+			if (!add_redirs(tmp->type, tmp->next->value, cmd))
 				return (ERR_MALLOC);
 			tmp = tmp->next->next;
 			continue ;
@@ -111,13 +111,33 @@ t_cmd	*parse_cmd(t_token *seg_start)
 	
 	success = 0;
 	cmd = new_cmd();
+	if (!cmd)
+		return (NULL);
 	success = fill_args(seg_start, cmd);
 	if (!success)
+	{
+		free_single_cmd(cmd);
 		return (NULL);
+	}
 	success = fill_redirs(seg_start, cmd);
 	if (!success)
+	{
+		free_single_cmd(cmd);	
 		return (NULL);
+	}
 	return (cmd);
+}
+
+static int	validate_parser(t_mini *mini)
+{
+	if (!mini || !mini->tokens)
+		return (0);
+	if (!validate_syntax(mini->tokens))
+	{
+		ft_printf(RED"Unknown token\n"RST);
+		return (0);
+	}
+	return (1);
 }
 
 t_cmd	*parser(t_mini *mini)
@@ -127,13 +147,8 @@ t_cmd	*parser(t_mini *mini)
 	t_cmd	*last;
 	t_token	*tmp;
 
-	if (!mini || !mini->tokens)
+	if (validate_parser(mini))
 		return (0);
-	if (!validate_syntax(mini->tokens))
-	{
-		ft_printf(RED"Unknown token\n"RST);
-		return (0);
-	}
 	tmp = mini->tokens;
 	head = NULL;
 	last = NULL;
@@ -142,8 +157,8 @@ t_cmd	*parser(t_mini *mini)
 		cmd = parse_cmd(tmp);
 		if (!cmd)
 		{
-			free_all_cmds(cmd);
-			return (0);
+			free_all_cmds(head);
+			return (NULL);
 		}
 		if (!head)
 			head = cmd;
