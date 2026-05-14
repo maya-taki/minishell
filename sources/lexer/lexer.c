@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/14 17:04:49 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 19:22:33 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_token	*tokenize_input(char *input)
 			return (NULL);
 		}
 		add_token(&head, token);
-		ft_printf(G"value: %s \ntype: %d\n"RST, token->value, token->type);
+		// ft_printf(G"value: %s \ntype: %d\n"RST, token->value, token->type);
 	}
 	return (head);
 }
@@ -55,7 +55,7 @@ t_token	*lexer(char *input)
 		return (NULL);
 	if (is_input_valid(trimmed) != 0)
 	{
-		ft_printf(RED"Invalid command\n"RST);
+		ft_printf(RED"minishell: command not allowed\n"RST);
 		free(trimmed);
 		return (NULL);
 	}
