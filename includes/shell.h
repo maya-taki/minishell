@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/14 02:31:17 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/14 02:48:51 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,10 @@ int			builtin_pwd(void);
 int			builtin_cd(t_cmd *cmd, t_env **env);
 t_builtin	get_builtin(char *arg);
 
-
-
 // Exec
 t_cmd	*create_test_cmd(void); // remove
 void	exec_builtin(t_shell *shell);
 void	execute(t_shell *shell);
-
-
 
 
 #endif
