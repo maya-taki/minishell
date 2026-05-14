@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/04/29 20:58:06 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/14 02:31:17 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include "error_handler.h"
 
 /*###LEXER###*/
-t_token *new_token(t_token_type type, char *value);
+t_token	*new_token(t_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 void	handle_inputs(t_token *token, char *input, int *i);
 t_token	*lexer(char *input);
@@ -42,14 +42,28 @@ void	read_input_redir_in(t_token **head, char *input, int *i);
 void	read_input_redir_out(t_token **head, char *input, int *i);
 void	read_input_word(t_token **head, char *input);
 
-// Builtins
-int		builtin_echo(t_cmd *cmd);
-int		builtin_pwd(void);
-int		builtin_cd(t_cmd *cmd, t_env **env);
+// Init_utils
+void	env_add_back(t_env **head, t_env *current);
+void	parser_env_line(char *str, t_env *node);
 
-void	exec_bultin(t_cmd *cmd);
+// Init
+t_cmd	*init_cmd(char *input);
+t_shell	*init_shell(t_shell *shell, char **envp); // principal
+
+
+// Builtins
+int			builtin_echo(t_cmd *cmd);
+int			builtin_pwd(void);
+int			builtin_cd(t_cmd *cmd, t_env **env);
+t_builtin	get_builtin(char *arg);
+
+
+
+// Exec
+t_cmd	*create_test_cmd(void); // remove
+void	exec_builtin(t_shell *shell);
 void	execute(t_shell *shell);
-t_cmd	*create_test_cmd(void);
+
 
 
 

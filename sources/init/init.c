@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/08 19:25:10 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/14 02:54:55 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static t_env	*init_env(char **envp)
 {
 	t_env	*current;
 	t_env	*head;
-	t_env	*last;
-	char	*equal;
 	int		i;
 
 	i = 0;
@@ -52,11 +50,9 @@ static t_env	*init_env(char **envp)
 		current = malloc(sizeof(t_env));
 		if (!current)
 			return (NULL);
+		current->next = NULL;
 		parser_env_line(envp[i], current);
-		if (!head)
-			head = current;
-		head = current;
-		last = current;
+		env_add_back(&head, current);
 		i++;
 	}
 	return (head);
@@ -64,10 +60,9 @@ static t_env	*init_env(char **envp)
 
 t_shell	*init_shell(t_shell *shell, char **envp)
 {
+	shell->cmd = NULL;
 	shell->env = init_env(envp);
-	shell->cmd = 
-	// iniciar as variaveis da estrutura t_shell
-	
+	shell->exit_status = 0;
 }
 
 
