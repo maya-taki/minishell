@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 22:29:37 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/13 20:40:26 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 19:10:06 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	validate_syntax(t_token *tokens)
 	
 	tmp = tokens;
 	if (!tmp)
-		return (0);
+		return (1);
 	if (tmp->type == TOKEN_PIPE)
 		return (ERR_SYNTAX);
-	if (is_pipe_last(tmp))
+	if (is_pipe_last(tmp) != 0)
 		return (ERR_SYNTAX);
 	while (tmp)
 	{
@@ -46,5 +46,5 @@ int	validate_syntax(t_token *tokens)
 			return (ERR_SYNTAX);
 		tmp = tmp->next;
 	}
-	return (1);
+	return (0);
 }

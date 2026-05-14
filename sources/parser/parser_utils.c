@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/12 19:31:42 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:44:24 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	open_file(int *fd_ptr, char *path, int flags)
 	if (*fd_ptr == -1)
 	{
 		perror(path);
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int count_cmds(t_token *token_list)
@@ -82,4 +82,12 @@ int count_words(t_token *token)
 		tmp = tmp->next;
 	}
 	return (counter);
+}
+
+int	is_redir(t_token *token)
+{
+	return (token->type == TOKEN_HEREDOC
+			|| token->type == TOKEN_REDIR_OUT
+			|| token->type == TOKEN_REDIR_APPEND
+			|| token->type == TOKEN_REDIR_IN);
 }
