@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/06 14:32:53 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 13:18:27 by mtakiyos         ###   ########.fr       */
+/*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
+/*   Updated: 2026/05/14 16:32:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,3 @@
 // 	if (token->type == TOKEN_REDIR_IN)
 // 		return (handle_input());
 // }
-
-int	is_redir(t_token *token)
-{
-	return (token->type == TOKEN_HEREDOC
-			|| token->type == TOKEN_REDIR_OUT
-			|| token->type == TOKEN_REDIR_APPEND
-			|| token->type == TOKEN_REDIR_IN);
-}
