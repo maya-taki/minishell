@@ -6,20 +6,20 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 16:35:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 10:58:06 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:07:37 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-int	is_invalid_operator(char *c);
+int	is_operator_valid(char *c);
 
 int	is_operator(char c)
 {
 	return (c == '|' || c == '>' || c == '<');
 }
 
-int	is_invalid_operator(char *c)
+int	is_operator_valid(char *c)
 {
 	t_quote_state	state;
 	int				i;
@@ -71,6 +71,6 @@ int	were_quotes_closed(char *input)
 		i++;
 	}
 	if (state == QUOTE_NONE)
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }

@@ -6,17 +6,17 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/12 22:26:47 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:04:49 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static int	validate_input(char *input)
+static int	is_input_valid(char *input)
 {
-	if (is_invalid_operator(input) || !were_quotes_closed(input))
-		return (0);
-	return (1);
+	if (is_operator_valid(input) != 0 || were_quotes_closed(input) != 0)
+		return (1);
+	return (0);
 }
 
 static t_token	*tokenize_input(char *input)
@@ -53,7 +53,7 @@ t_token	*lexer(char *input)
 	trimmed = ft_strtrim(input, " \r\t");
 	if (!trimmed)
 		return (NULL);
-	if (!validate_input(trimmed))
+	if (is_input_valid(trimmed) != 0)
 	{
 		ft_printf(RED"Invalid command\n"RST);
 		free(trimmed);

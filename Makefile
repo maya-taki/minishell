@@ -26,7 +26,6 @@ SRC				= \
 					sources/parser/parser.c \
 					sources/parser/parser_frees.c \
 					sources/parser/syntax.c \
-					sources/parser/redirects.c \
 					sources/main.c 
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))

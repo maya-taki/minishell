@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 19:38:20 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:02:22 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 
 /*#LEXER#*/
 t_token			*lexer(char *input);
-int				is_invalid_operator(char *c);
+int				is_operator_valid(char *c);
 int				is_space(char c);
 int				is_operator(char c);
 char			*handle_word(char *input, int *i);
