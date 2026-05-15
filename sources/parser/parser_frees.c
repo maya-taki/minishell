@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 14:52:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/13 18:59:05 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:06:21 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	free_single_cmd(t_cmd *cmd)
 
 	if (!cmd)
 		return ;
-	if (cmd->cmd_args)
+	if (cmd->args)
 	{
 		i = 0;
-		while (cmd->cmd_args[i])
-			free(cmd->cmd_args[i++]);
-		free(cmd->cmd_args);
+		while (cmd->args[i])
+			free(cmd->args[i++]);
+		free(cmd->args);
 	}
 	free(cmd->cmd_path);
 	free_redir(cmd->redirs);

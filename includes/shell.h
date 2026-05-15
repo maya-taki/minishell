@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/14 21:51:01 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:17:31 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int				open_file(int *fd_ptr, char *path, int flags);
 void			free_single_cmd(t_cmd *cmd);
 void			free_all_cmds(t_cmd *cmds);
 void			free_redir(t_redir *redirect);
-t_cmd			*parser(t_mini *mini);
+t_cmd			*parser(t_shell *shell);
 
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
@@ -75,8 +75,7 @@ void	parser_env_line(char *str, t_env *node);
 
 // Init
 t_cmd	*init_cmd(char *input);
-t_mini	*init_shell(t_mini *shell, char **envp); // principal
-
+int		init_shell(t_shell *shell, char **envp); // principal
 
 // Builtins
 int			builtin_echo(t_cmd *cmd);
@@ -86,8 +85,8 @@ t_builtin	get_builtin(char *arg);
 
 // Exec
 t_cmd	*create_test_cmd(void); // remove
-void	exec_builtin(t_mini *shell);
-void	execute(t_mini *shell);
+void	exec_builtin(t_shell *shell);
+void	execute(t_shell *shell);
 
 
 #endif

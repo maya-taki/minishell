@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/14 21:57:17 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/15 10:59:47 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char			**cmd_args;
+	char			**args;
 	char			*cmd_path;
 	t_builtin		builtin;
 	t_redir			*redirs;
 	struct s_cmd	*next;
 }	t_cmd;
 
-typedef struct s_mini
+typedef struct s_shell
 {
-	t_env			*env_list;
+	t_env			*env;
 	t_cmd			*cmd;
 	t_token			*tokens;
 	char			*input;
@@ -55,8 +55,7 @@ typedef struct s_mini
 	int				exit_code;
 	int				std_out;
 	int				std_in;
-	struct s_mini	*next;
-}	t_mini;
+}	t_shell;
 
 // cada comando vai ser um t_cmd
 // parser da maya vai entregar os dados pro meu executor no formato t_cmd

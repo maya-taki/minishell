@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/14 22:21:50 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:05:33 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,28 @@ t_cmd *create_test_cmd(void)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->cmd_args = arr;
+	cmd->args = arr;
 	cmd->builtin = ECHO;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
 
-void	exec_builtin(t_mini *mini)
+void	exec_builtin(t_shell *shell)
 {
 	// decide qual func_builtin chamar
-	if (mini->cmd->builtin == ECHO)
-		builtin_echo(mini->cmd);
-	if (mini->cmd->builtin == PWD)
+	if (shell->cmd->builtin == ECHO)
+		builtin_echo(shell->cmd);
+	if (shell->cmd->builtin == PWD)
 		builtin_pwd();
-	if (mini->cmd->builtin == CD)
-		builtin_cd(mini->cmd, mini->env_list);
+	if (shell->cmd->builtin == CD)
+		builtin_cd(shell->cmd, shell->env);
 }
 
-void	execute(t_mini *mini)
+void	execute(t_shell *shell)
 {
-	if (mini->cmd->builtin != NONE)
-		exec_builtin(mini);
+	if (shell->cmd->builtin != NONE)
+		exec_builtin(shell);
 	// else
 	// 	exec_external(cmd);
 }

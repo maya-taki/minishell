@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/14 19:42:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:04:15 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	add_redirs(t_token_type type, char *file, t_cmd *cmd);
 
 int	fill_args(t_token *seg_start, t_cmd *cmd)
 {
-	cmd->cmd_args = malloc(sizeof(char *) * (count_words(seg_start) + 1));
-	if (!cmd->cmd_args)
+	cmd->args = malloc(sizeof(char *) * (count_words(seg_start) + 1));
+	if (!cmd->args)
 		return (1);
 	return (add_args(seg_start, cmd));
 }
@@ -64,14 +64,14 @@ static int	add_args(t_token *seg_start, t_cmd *cmd)
 		}
 		if (tmp->type == TOKEN_WORD)
 		{
-			cmd->cmd_args[i] = ft_strdup(tmp->value);
-			if (!cmd->cmd_args[i])
+			cmd->args[i] = ft_strdup(tmp->value);
+			if (!cmd->args[i])
 				return (1);
 			i++;
 		}
 		tmp = tmp->next;
 	}
-	cmd->cmd_args[i] = NULL;
+	cmd->args[i] = NULL;
 	return (0);
 }
 
@@ -122,11 +122,11 @@ t_cmd	*parse_cmd(t_token *seg_start)
 	return (cmd);
 }
 
-static int	validate_parser(t_mini *mini)
+static int	validate_parser(t_shell *shell)
 {
-	if (!mini || !mini->tokens)
+	if (!shell || !shell->tokens)
 		return (1);
-	if (validate_syntax(mini->tokens) != 0)
+	if (validate_syntax(shell->tokens) != 0)
 	{
 		handle_error(ERR_SYNTAX, NULL, "`newline'");
 		return (1);
@@ -134,16 +134,16 @@ static int	validate_parser(t_mini *mini)
 	return (0);
 }
 
-t_cmd	*parser(t_mini *mini)
+t_cmd	*parser(t_shell *shell)
 {
 	t_cmd	*head;
 	t_cmd	*cmd;
 	t_cmd	*last;
 	t_token	*tmp;
 
-	if (validate_parser(mini) != 0)
+	if (validate_parser(shell) != 0)
 		return (NULL);
-	tmp = mini->tokens;
+	tmp = shell->tokens;
 	head = NULL;
 	last = NULL;
 	while (tmp)
