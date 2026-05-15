@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/29 20:56:57 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:21:50 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/shell.h"
+#include "../../includes/shell.h"
 
 // typedef enum e_builtin
 // {
@@ -32,28 +32,28 @@ t_cmd *create_test_cmd(void)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->args = arr;
+	cmd->cmd_args = arr;
 	cmd->builtin = ECHO;
-	cmd->redir = NULL;
+	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
 
-void	exec_builtin(t_shell *shell)
+void	exec_builtin(t_mini *mini)
 {
 	// decide qual func_builtin chamar
-	if (shell->cmd->builtin == ECHO)
-		builtin_echo(shell->cmd);
-	if (shell->cmd->builtin == PWD)
+	if (mini->cmd->builtin == ECHO)
+		builtin_echo(mini->cmd);
+	if (mini->cmd->builtin == PWD)
 		builtin_pwd();
-	if (shell->cmd->builtin == CD)
-		builtin_cd(shell->cmd, shell->env);
+	if (mini->cmd->builtin == CD)
+		builtin_cd(mini->cmd, mini->env_list);
 }
 
-void	execute(t_shell *shell)
+void	execute(t_mini *mini)
 {
-	if (shell->cmd->builtin != NONE)
-		exec_builtin(shell);
+	if (mini->cmd->builtin != NONE)
+		exec_builtin(mini);
 	// else
 	// 	exec_external(cmd);
 }

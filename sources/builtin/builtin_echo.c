@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 12:01:34 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/04/29 20:19:25 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:19:49 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	builtin_echo(t_cmd *cmd)
 
 	i = 1;
 	no_newline = 0;
-	while (cmd->args[i] && verify_flag_n(cmd->args[i]))
+	while (cmd->cmd_args[i] && verify_flag_n(cmd->cmd_args[i]))
 	{
 		no_newline = 1;
 		i++;
 	}
-	while (cmd->args[i])
+	while (cmd->cmd_args[i])
 	{
-		ft_printf("%s", cmd->args[i]);
-		if (cmd->args[i + 1] != NULL)
+		ft_printf("%s", cmd->cmd_args[i]);
+		if (cmd->cmd_args[i + 1] != NULL)
 			ft_printf(" ");
 		i++;
 	}
