@@ -44,36 +44,25 @@ ifeq ($(DEBUG), 1)
 	CFLAGS += -g2 -O0 -fsanitize=leak
 endif
 
-# ================= BUILD =================
-
-all: $(NAME)
-
-$(NAME): $(OBJ) $(LIBFT) $(PRINTF)
-	$(CC) $(CFLAGS) $(OBJ) $(PRINTF) $(LIBFT) -lreadline -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB_FLAGS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# ================= LIBS BUILD =================
-
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) --silent
+	@$(MAKE) -C $(LIBFT_DIR) --silent	
 
-$(PRINTF):
-	@$(MAKE) -C $(PRINTF_DIR) --silent
-
-# ================= CLEAN =================
+all: $(NAME) $(OBJ) $(LIBFT)
 
 clean:
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
-	@$(MAKE) clean -C $(PRINTF_DIR) --silent
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
-	@$(MAKE) fclean -C $(PRINTF_DIR) --silent
 
 re: fclean all
 
