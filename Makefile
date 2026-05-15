@@ -10,11 +10,15 @@ OBJ_DIR			= build
 INCLUDE_DIRS	= includes $(LIBFT_DIR) $(LIBFT_DIR)/libft
 INCLUDES		= $(foreach dir,$(INCLUDE_DIRS), -I$(dir))
 
+# ================= COLORS =================
+
 GREEN			:= \033[0;32m
 YELLOW			:= \033[0;33m
 RED				:= \033[0;31m
 BLUE			:= \033[0;34m
 RESET			:= \033[0m
+
+# ================= SOURCES =================
 
 SRC				= \
 					sources/lexer/lexer.c \
@@ -26,34 +30,50 @@ SRC				= \
 					sources/parser/parser.c \
 					sources/parser/parser_frees.c \
 					sources/parser/syntax.c \
-					sources/main.c 
+					sources/builtin/builtin_echo.c \
+					sources/builtin/builtin_pwd.c \
+					sources/exec/exec.c \
+					sources/main.c
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
+
+# ================= DEBUG =================
 
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g2 -O0 -fsanitize=leak
 endif
 
-$(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_FLAGS) -o $(NAME)
+# ================= BUILD =================
+
+all: $(NAME)
+
+$(NAME): $(OBJ) $(LIBFT) $(PRINTF)
+	$(CC) $(CFLAGS) $(OBJ) $(PRINTF) $(LIBFT) -lreadline -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) --silent	
+# ================= LIBS BUILD =================
 
-all: $(NAME) $(OBJ) $(LIBFT)
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR) --silent
+
+$(PRINTF):
+	@$(MAKE) -C $(PRINTF_DIR) --silent
+
+# ================= CLEAN =================
 
 clean:
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) clean -C $(LIBFT_DIR) --silent
+	@$(MAKE) clean -C $(PRINTF_DIR) --silent
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
+	@$(MAKE) fclean -C $(PRINTF_DIR) --silent
 
 re: fclean all
 

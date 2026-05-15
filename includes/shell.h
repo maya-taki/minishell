@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/14 17:02:22 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 21:51:01 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "../libftprintf/project/libft/libft.h"
 # include "../libftprintf/project/src/ft_printf.h"
 # include "structs.h"
-# include "error_handler.h"
+# include "enum.h"
 
 # define Y		"\033[0;33m"
 # define G		"\033[0;32m"
@@ -45,9 +45,9 @@ t_token			*handle_operator(t_token_type type, char *input, int *i);
 void			update_quote_state(char c, t_quote_state *state);
 int				were_quotes_closed(char *input);
 t_token			*new_token(t_token_type type, char *value);
+void			add_token(t_token **head, t_token *new_token);
 t_token_type	id_token_type(char *c, int *i);
 t_token			*read_token(char *input, int *i);
-void			add_token(t_token **head, t_token *new);
 void			free_tokens(t_token *tokens);
 
 /*#PARSER#*/
@@ -68,5 +68,26 @@ int				open_file(int *fd_ptr, char *path, int flags);
 /*###UTILS###*/
 const char		*error_msg(t_error_type error);
 int				handle_error(t_error_type error, char *cmd, char *context);
+
+// Init_utils
+void	env_add_back(t_env **head, t_env *current);
+void	parser_env_line(char *str, t_env *node);
+
+// Init
+t_cmd	*init_cmd(char *input);
+t_mini	*init_shell(t_mini *shell, char **envp); // principal
+
+
+// Builtins
+int			builtin_echo(t_cmd *cmd);
+int			builtin_pwd(void);
+int			builtin_cd(t_cmd *cmd, t_env **env);
+t_builtin	get_builtin(char *arg);
+
+// Exec
+t_cmd	*create_test_cmd(void); // remove
+void	exec_builtin(t_mini *shell);
+void	execute(t_mini *shell);
+
 
 #endif

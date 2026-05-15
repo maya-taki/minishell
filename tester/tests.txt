@@ -1,0 +1,11 @@
+
+echo test1
+echo -n test2
+echo -n -nee -n test3
+echo - n test4
+echo test5 -n
+echo -nnn test6
+ls
+ls -l
+pwd
+comando_invalido

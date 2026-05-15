@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/11 11:07:02 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/14 21:57:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,6 @@
 # define STRUCTS_H
 
 # include "shell.h"
-
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_HEREDOC,
-}	t_token_type;
-
-typedef enum e_quote_state
-{
-	QUOTE_NONE,
-	QUOTE_DOUBLE,
-	QUOTE_SINGLE,
-}	t_quote_state;
 
 typedef struct s_token
 {
@@ -57,6 +40,7 @@ typedef struct s_cmd
 {
 	char			**cmd_args;
 	char			*cmd_path;
+	t_builtin		builtin;
 	t_redir			*redirs;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -73,5 +57,8 @@ typedef struct s_mini
 	int				std_in;
 	struct s_mini	*next;
 }	t_mini;
+
+// cada comando vai ser um t_cmd
+// parser da maya vai entregar os dados pro meu executor no formato t_cmd
 
 #endif
