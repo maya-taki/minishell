@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 20:32:26 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/15 11:04:47 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/17 19:31:07 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,43 @@ void	env_add_back(t_env **head, t_env *current)
 	}
 }
 
-void	parser_env_line(char *str, t_env *node)
+int	parser_env_line(char *str, t_env *node)
 {
 	char	*equal;
 
 	equal = ft_strchr(str, '=');
 	if (!equal)
 	{
-		node->key = ft_strdup(str);
+		if (!(node->key = ft_strdup(str)))
+			return (0);
 		node->value = NULL;
-		return ;
+		return (1);
 	}
-	node->key = ft_substr(str, 0, equal - str);
-	node->value = ft_strdup(equal + 1);
-	return ;
+	if (!(node->key = ft_substr(str, 0, equal - str)))
+		return (0);
+	if (!(node->value = ft_strdup(equal + 1)))
+	{
+		free_ptr((void **)&node->key);
+		return (0);
+	}
+	return (1);
+}
+
+void	init_shell_values(t_shell *shell)
+{
+	shell->env = NULL;
+	shell->cmd = NULL;
+	shell->tokens = NULL;
+	shell->input = NULL;
+	shell->prompt_str = NULL;
+	shell->exit_code = 0;
+	shell->std_in = -1;
+	shell->std_out = -1;
+}
+
+void	init_env_values(t_env *env)
+{
+	env->key = NULL;
+	env->next = NULL;
+	env->value = NULL;
 }

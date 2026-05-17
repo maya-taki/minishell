@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:41:46 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/17 19:30:03 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	t_shell	shell;
 
-	init_shell(&shell, envp); // arrumando as iniciações com as novas variaveis
-
+	init_shell(&shell, envp); // frees tratados
 	// daqui pra baixo tem que revisar todo o código;
 	using_history();
 	while (1)
@@ -32,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(shell.input);
 
 		shell.tokens = lexer(shell.input);
-		shell.cmd = parser(&shell);
+		shell.cmd = parser(&shell); // tratar os frees do init_cmd
 
 		if (shell.cmd)
 			execute(&shell);

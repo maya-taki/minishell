@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:17:31 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/17 19:21:18 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,27 @@ int				open_file(int *fd_ptr, char *path, int flags);
 const char		*error_msg(t_error_type error);
 int				handle_error(t_error_type error, char *cmd, char *context);
 
+
 // Init_utils
 void	env_add_back(t_env **head, t_env *current);
-void	parser_env_line(char *str, t_env *node);
+void	init_env_values(t_env *env);
+int		parser_env_line(char *str, t_env *node);
+void	init_shell_values(t_shell *shell);
 
 // Init
 t_cmd	*init_cmd(char *input);
-int		init_shell(t_shell *shell, char **envp); // principal
+int		init_shell(t_shell *shell, char **envp);
+
+
+// CLEAN paste
+//free init utils
+void	free_ptr(void **ptr);
+// free init
+void	free_env_node(t_env *node);
+void	free_env_list(t_env *env);
+void	close_fd(int *fd);
+void	free_shell(t_shell *shell);
+
 
 // Builtins
 int			builtin_echo(t_cmd *cmd);
