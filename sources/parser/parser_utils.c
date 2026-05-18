@@ -3,33 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:06:43 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/18 00:17:43 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-t_cmd	*new_cmd(void);
 int		count_words(t_token *token);
 int		count_cmds(t_token *token_list);
 int		open_file(int *fd_ptr, char *path, int flags);
-
-t_cmd	*new_cmd(void)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = NULL;
-	cmd->cmd_path = NULL;
-	cmd->redirs = NULL;
-	cmd->next = NULL;
-	return (cmd);
-}
 
 int	open_file(int *fd_ptr, char *path, int flags)
 {

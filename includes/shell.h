@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/17 19:21:18 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/18 00:16:43 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int				validate_syntax(t_token *tokens);
 int				count_cmds(t_token *token_list);
 int				count_words(t_token *token);
 int				is_redir(t_token *token);
-t_cmd			*new_cmd(void);
 int				open_file(int *fd_ptr, char *path, int flags);
 void			free_single_cmd(t_cmd *cmd);
 void			free_all_cmds(t_cmd *cmds);
@@ -77,7 +76,7 @@ int		parser_env_line(char *str, t_env *node);
 void	init_shell_values(t_shell *shell);
 
 // Init
-t_cmd	*init_cmd(char *input);
+t_cmd	*init_cmd(void);
 int		init_shell(t_shell *shell, char **envp);
 
 

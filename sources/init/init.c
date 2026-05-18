@@ -3,29 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/17 19:24:29 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/18 00:15:50 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-t_cmd	*init_cmd(char *input)
+t_cmd	*init_cmd(void)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	cmd->args = ft_split(input, ' ');
-	if (!cmd->args || !cmd->args[0])
-	{
-		free_cmd(cmd);
-		return (NULL);
-	}
-	cmd->builtin = get_builtin(cmd->args[0]);
+	cmd->args = NULL;
+	cmd->cmd_path = NULL;
+	cmd->redirs = NULL;
+	cmd->next = NULL;
 	return (cmd);
 }
 

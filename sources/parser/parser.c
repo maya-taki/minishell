@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:04:15 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/18 00:16:09 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_cmd	*parse_cmd(t_token *seg_start)
 {
 	t_cmd	*cmd;
 
-	cmd = new_cmd();
+	cmd = init_cmd();
 	if (!cmd)
 		return (NULL);
 	if (fill_args(seg_start, cmd) != 0)
@@ -137,23 +137,20 @@ static int	validate_parser(t_shell *shell)
 t_cmd	*parser(t_shell *shell)
 {
 	t_cmd	*head;
-	t_cmd	*cmd;
 	t_cmd	*last;
+	t_cmd	*cmd;
 	t_token	*tmp;
 
 	if (validate_parser(shell) != 0)
 		return (NULL);
-	tmp = shell->tokens;
 	head = NULL;
 	last = NULL;
+	tmp = shell->tokens;
 	while (tmp)
 	{
 		cmd = parse_cmd(tmp);
 		if (!cmd)
-		{
-			free_all_cmds(head);
-			return (NULL);
-		}
+			return (free_all_cmds(head), NULL);
 		if (!head)
 			head = cmd;
 		else
