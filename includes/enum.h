@@ -6,14 +6,15 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 10:57:53 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/14 20:38:37 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:18:29 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUM_H
 # define ENUM_H
 
-#include "shell.h"
+# include "shell.h"
+# include "structs.h"
 
 typedef enum e_token_type
 {
