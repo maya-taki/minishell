@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:41:46 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:25:12 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
+	(void)envp;
 	t_shell	shell;
 
-	init_shell(&shell, envp); // arrumando as iniciações com as novas variaveis
+	//init_shell(&shell, envp); // arrumando as iniciações com as novas variaveis
 
 	// daqui pra baixo tem que revisar todo o código;
 	using_history();
@@ -34,10 +35,10 @@ int	main(int argc, char **argv, char **envp)
 		shell.tokens = lexer(shell.input);
 		shell.cmd = parser(&shell);
 
-		if (shell.cmd)
-			execute(&shell);
+		// if (shell.cmd)
+		// 	execute(&shell);
 
-		free_all(&shell); // fazer função que limpa tudo
+		//free_all(&shell); // fazer função que limpa tudo
 	}
 	clear_history();
 	return (0);

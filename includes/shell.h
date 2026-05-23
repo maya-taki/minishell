@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:17:31 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:09:19 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,23 @@ int				open_file(int *fd_ptr, char *path, int flags);
 const char		*error_msg(t_error_type error);
 int				handle_error(t_error_type error, char *cmd, char *context);
 
-// Init_utils
-void	env_add_back(t_env **head, t_env *current);
-void	parser_env_line(char *str, t_env *node);
+	// // Init_utils
+	// void	env_add_back(t_env **head, t_env *current);
+	// void	parser_env_line(char *str, t_env *node);
 
-// Init
-t_cmd	*init_cmd(char *input);
-int		init_shell(t_shell *shell, char **envp); // principal
+	// // Init
+	// t_cmd	*init_cmd(char *input);
+	// int		init_shell(t_shell *shell, char **envp); // principal
 
-// Builtins
-int			builtin_echo(t_cmd *cmd);
-int			builtin_pwd(void);
-int			builtin_cd(t_cmd *cmd, t_env **env);
-t_builtin	get_builtin(char *arg);
+	// // Builtins
+	// int			builtin_echo(t_cmd *cmd);
+	// int			builtin_pwd(void);
+	// int			builtin_cd(t_cmd *cmd, t_env **env);
+	// t_builtin	get_builtin(char *arg);
 
-// Exec
-t_cmd	*create_test_cmd(void); // remove
-void	exec_builtin(t_shell *shell);
-void	execute(t_shell *shell);
-
+	// // Exec
+	// t_cmd	*create_test_cmd(void); // remove
+	// void	exec_builtin(t_shell *shell);
+	// void	execute(t_shell *shell);
 
 #endif
