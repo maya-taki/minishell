@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 18:27:47 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/23 18:31:18 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:41:54 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,4 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-int	main()
-{
-	const char	*t1 = "teste um dois tres";
-	const char	*t2 = "teste um dois ";
-	int	r;
-	
-	r = ft_strcmp(t1, t2);
-	printf("%d", r);
-	return (0);
 }
