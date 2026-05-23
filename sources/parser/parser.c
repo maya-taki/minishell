@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:04:15 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:24:30 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,18 +134,8 @@ static int	validate_parser(t_shell *shell)
 	return (0);
 }
 
-t_cmd	*parser(t_shell *shell)
+static t_cmd *run_parse(t_cmd *head, t_cmd *cmd, t_cmd *last, t_token *tmp)
 {
-	t_cmd	*head;
-	t_cmd	*cmd;
-	t_cmd	*last;
-	t_token	*tmp;
-
-	if (validate_parser(shell) != 0)
-		return (NULL);
-	tmp = shell->tokens;
-	head = NULL;
-	last = NULL;
 	while (tmp)
 	{
 		cmd = parse_cmd(tmp);
@@ -166,3 +156,45 @@ t_cmd	*parser(t_shell *shell)
 	}
 	return (head);
 }
+
+t_cmd	*parser(t_shell *shell)
+{
+	t_cmd	*head;
+	t_cmd	*cmd;
+	t_cmd	*last;
+	t_token	*tmp;
+
+	if (validate_parser(shell) != 0)
+		return (NULL);
+	tmp = shell->tokens;
+	head = NULL;
+	last = NULL;
+	cmd = NULL;
+	run_parse(head, cmd, last, tmp);
+	return (head);
+}
+
+
+// }
+// 	head = NULL;
+// 	last = NULL;
+// 	while (tmp)
+// 	{
+// 		cmd = parse_cmd(tmp);
+// 		if (!cmd)
+// 		{
+// 			free_all_cmds(head);
+// 			return (NULL);
+// 		}
+// 		if (!head)
+// 			head = cmd;
+// 		else
+// 			last->next = cmd;
+// 		last = cmd;
+// 		while (tmp && tmp->type != TOKEN_PIPE)
+// 			tmp = tmp->next;
+// 		if (tmp)
+// 			tmp = tmp->next;
+// 	}
+// 	return (head);
+// }
