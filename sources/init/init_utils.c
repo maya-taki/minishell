@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 20:32:26 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/17 19:31:07 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/24 21:54:45 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,26 @@ void	env_add_back(t_env **head, t_env *current)
 	}
 }
 
-int	parser_env_line(char *str, t_env *node)
+int	parser_env_line(char *str, char **key, char **value)
 {
 	char	*equal;
 
 	equal = ft_strchr(str, '=');
 	if (!equal)
 	{
-		if (!(node->key = ft_strdup(str)))
+		*key = ft_strdup(str);
+		*value = NULL;
+		if (!*key)
 			return (0);
-		node->value = NULL;
 		return (1);
 	}
-	if (!(node->key = ft_substr(str, 0, equal - str)))
+	*key = ft_substr(str, 0, equal - str);
+	if (!*key)
 		return (0);
-	if (!(node->value = ft_strdup(equal + 1)))
+	*value = ft_strdup(equal + 1);
+	if (!*value)
 	{
-		free_ptr((void **)&node->key);
+		free(*key);
 		return (0);
 	}
 	return (1);

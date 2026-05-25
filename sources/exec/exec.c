@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/18 00:23:08 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/24 17:26:12 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_builtin(t_shell *shell)
 	else if (shell->cmd->builtin == PWD)
 		builtin_pwd();
 	else if (shell->cmd->builtin == CD)
-		builtin_cd(shell->cmd, shell->env);
+		builtin_cd(shell);
 }
 
 void	execute(t_shell *shell)

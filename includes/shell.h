@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/18 00:16:43 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/24 21:45:43 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,12 @@ int				handle_error(t_error_type error, char *cmd, char *context);
 // Init_utils
 void	env_add_back(t_env **head, t_env *current);
 void	init_env_values(t_env *env);
-int		parser_env_line(char *str, t_env *node);
+int	parser_env_line(char *str, char **key, char **value);
 void	init_shell_values(t_shell *shell);
 
 // Init
 t_cmd	*init_cmd(void);
 int		init_shell(t_shell *shell, char **envp);
-
 
 // CLEAN paste
 //free init utils
@@ -89,12 +88,17 @@ void	free_env_list(t_env *env);
 void	close_fd(int *fd);
 void	free_shell(t_shell *shell);
 
+//helpers
+char	*get_env_var(t_env *env, char *key);
 
 // Builtins
 int			builtin_echo(t_cmd *cmd);
 int			builtin_pwd(void);
-int			builtin_cd(t_cmd *cmd, t_env **env);
+int			builtin_cd(t_shell *shell);
 t_builtin	get_builtin(char *arg);
+
+
+
 
 // Exec
 t_cmd	*create_test_cmd(void); // remove
