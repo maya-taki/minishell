@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   free_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 16:39:06 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/17 19:21:38 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/25 00:38:40 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+
+void	free_ptr(void **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
 
 void	free_env_node(t_env *node)
 {

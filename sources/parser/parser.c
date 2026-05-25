@@ -6,13 +6,11 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 22:44:32 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/25 00:48:03 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-
 
 t_cmd	*parse_cmd(t_token *seg_start)
 {

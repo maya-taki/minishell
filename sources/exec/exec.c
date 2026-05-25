@@ -6,23 +6,11 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/24 17:26:12 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/25 01:07:45 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-// typedef enum e_builtin
-// {
-// 	NONE,
-// 	ECHO,
-// 	CD,
-// 	PWD,
-// 	EXPORT,
-// 	UNSET,
-// 	ENV,
-// 	EXIT
-// }	t_builtin;
 
 void	exec_builtin(t_shell *shell)
 {

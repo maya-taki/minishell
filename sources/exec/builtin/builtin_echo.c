@@ -6,11 +6,11 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 12:01:34 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/24 21:24:13 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/24 23:34:40 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/shell.h"
+#include "../../includes/shell.h"
 
 static int	verify_flag_n(char *str);
 

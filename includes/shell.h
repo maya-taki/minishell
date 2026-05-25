@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 22:47:40 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/25 01:05:26 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,46 +69,38 @@ int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 
+/*###CLEAN###*/
+void			free_ptr(void **ptr);
+void			free_env_node(t_env *node);
+void			free_env_list(t_env *env);
+void			close_fd(int *fd);
+void			free_shell(t_shell *shell);
+
 /*###UTILS###*/
 const char		*error_msg(t_error_type error);
 int				handle_error(t_error_type error, char *cmd, char *context);
+void			env_add_back(t_env **head, t_env *current);
+t_env			*env_new(char *key, char *value);
+int				parser_env_line(char *str, char **key, char **value);
+t_env			*create_env_node(char *env_line);
+char			*get_env_var(t_env *env, char *key);
+t_env			*find_env_node(t_env *env, char *key);
+void			set_env_var(t_env **env, char *key, char *value);
+void			update_pwd_env(t_shell *shell, char *old_pwd);
+
+/*###INIT###*/
+t_cmd			*init_cmd(void);
+int				init_shell(t_shell *shell, char **envp);
+
+/*###BUILTIN###*/
+int				builtin_echo(t_cmd *cmd);
+int				builtin_cd(t_shell *shell);
+int				builtin_pwd(void);
 
 
-// Init_utils
-void	env_add_back(t_env **head, t_env *current);
-void	init_env_values(t_env *env);
-int	parser_env_line(char *str, char **key, char **value);
-void	init_shell_values(t_shell *shell);
-
-// Init
-t_cmd	*init_cmd(void);
-int		init_shell(t_shell *shell, char **envp);
-
-// CLEAN paste
-//free init utils
-void	free_ptr(void **ptr);
-// free init
-void	free_env_node(t_env *node);
-void	free_env_list(t_env *env);
-void	close_fd(int *fd);
-void	free_shell(t_shell *shell);
-
-//helpers
-char	*get_env_var(t_env *env, char *key);
-
-// Builtins
-int			builtin_echo(t_cmd *cmd);
-int			builtin_pwd(void);
-int			builtin_cd(t_shell *shell);
-t_builtin	get_builtin(char *arg);
-
-
-
-
-// Exec
-t_cmd	*create_test_cmd(void); // remove
-void	exec_builtin(t_shell *shell);
-void	execute(t_shell *shell);
+/*###EXEC###*/
+void			exec_builtin(t_shell *shell);
+void			execute(t_shell *shell);
 
 	// // Exec
 	// t_cmd	*create_test_cmd(void); // remove

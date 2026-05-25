@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/29 20:32:26 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/24 21:54:45 by otton-sousa      ###   ########.fr       */
+/*   Created: 2026/05/24 23:35:36 by otton-sousa       #+#    #+#             */
+/*   Updated: 2026/05/25 00:35:10 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,35 @@ void	env_add_back(t_env **head, t_env *current)
 			last = last->next;
 		last->next = current;
 	}
+}
+
+t_env	*env_new(char *key, char *value)
+{
+	t_env	*node;
+
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	node->key = ft_strdup(key);
+	if (!node->key)
+	{
+		free(node);
+		return (NULL);
+	}
+	if (value)
+	{
+		node->value = ft_strdup(value);
+		if (!node->value)
+		{
+			free(node->key);
+			free(node);
+			return (NULL);
+		}
+	}
+	else
+		node->value = NULL;
+	node->next = NULL;
+	return (node);
 }
 
 int	parser_env_line(char *str, char **key, char **value)
@@ -52,21 +81,18 @@ int	parser_env_line(char *str, char **key, char **value)
 	return (1);
 }
 
-void	init_shell_values(t_shell *shell)
+t_env	*create_env_node(char *env_line)
 {
-	shell->env = NULL;
-	shell->cmd = NULL;
-	shell->tokens = NULL;
-	shell->input = NULL;
-	shell->prompt_str = NULL;
-	shell->exit_code = 0;
-	shell->std_in = -1;
-	shell->std_out = -1;
-}
+	t_env	*node;
+	char	*key;
+	char	*value;
 
-void	init_env_values(t_env *env)
-{
-	env->key = NULL;
-	env->next = NULL;
-	env->value = NULL;
+	if (!parser_env_line(env_line, &key, &value))
+		return (NULL);
+	node = env_new(key, value);
+	free(key);
+	free(value);
+	if (!node)
+		return (NULL);
+	return (node);
 }

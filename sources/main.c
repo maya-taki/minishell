@@ -6,13 +6,12 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 22:44:34 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/25 01:09:31 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-// ESSE TERIA DE SER NOSSO FLUXO DA MAIN
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -20,9 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	t_shell	shell;
 
-	//init_shell(&shell, envp); // arrumando as iniciações com as novas variaveis
-
-	// daqui pra baixo tem que revisar todo o código;
+	init_shell(&shell, envp);
 	using_history();
 	while (1)
 	{
@@ -32,10 +29,8 @@ int	main(int argc, char **argv, char **envp)
 		add_history(shell.input);
 		shell.tokens = lexer(shell.input);
 		shell.cmd = parser(&shell);
-
-		// if (shell.cmd)
-		// 	execute(&shell);
-
+		if (shell.cmd)
+			execute(&shell); // pwd nao ta pronto
 		//free_all(&shell); // fazer função que limpa tudo
 	}
 	clear_history();

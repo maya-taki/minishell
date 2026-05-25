@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_init_utils.c                                  :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/17 18:43:28 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/17 18:43:38 by osousa-d         ###   ########.fr       */
+/*   Created: 2026/05/25 01:04:01 by otton-sousa       #+#    #+#             */
+/*   Updated: 2026/05/25 01:04:14 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/shell.h"
+#include "../../includes/shell.h"
 
-void	free_ptr(void **ptr)
+int	builtin_pwd(void)
 {
-	if (*ptr)
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
 	{
-		free(*ptr);
-		*ptr = NULL;
+		perror("pwd");
+		return (1);
 	}
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
 }

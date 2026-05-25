@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 22:30:25 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/25 00:23:32 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,5 @@ typedef struct s_shell
 	int				std_out;
 	int				std_in;
 }	t_shell;
-
-// cada comando vai ser um t_cmd
-// parser da maya vai entregar os dados pro meu executor no formato t_cmd
 
 #endif

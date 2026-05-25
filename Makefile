@@ -21,21 +21,34 @@ RESET			:= \033[0m
 # ================= SOURCES =================
 
 SRC				= \
+					sources/main.c \
+					\
+					sources/init/init.c \
+					\
 					sources/lexer/lexer.c \
 					sources/lexer/lexer_inputs.c \
 					sources/lexer/lexer_utils.c \
 					sources/lexer/tokens.c \
-					sources/utils/error_utils.c \
-					sources/parser/parser_utils.c \
+					\
 					sources/parser/parser.c \
+					sources/parser/parser_utils.c \
 					sources/parser/parser_frees.c \
 					sources/parser/syntax.c \
 					sources/parser/fill.c \
-					sources/main.c
-
- 					#sources/builtin/builtin_echo.c \
- 					sources/builtin/builtin_pwd.c \
- 					sources/exec/exec.c \#
+					\
+					sources/exec/exec.c \
+					sources/exec/builtin/builtin_cd.c \
+					sources/exec/builtin/builtin_echo.c \
+					sources/exec/builtin/builtin_pwd.c \
+					\
+					sources/expander/redirects.c \
+					\
+					sources/utils/error_utils.c \
+					sources/utils/env_utils.c \
+					sources/utils/cd_utils.c \
+					\
+					sources/clean/clear.c \
+					sources/clean/free_init.c
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
