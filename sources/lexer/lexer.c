@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:06:05 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:17:38 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,17 @@ static t_token	*tokenize_input(char *input)
 
 t_token	*lexer(char *input)
 {
-	char		*trimmed;
 	t_token		*tokens;
 
 	if (!input)
 		return (NULL);
-	trimmed = ft_strtrim(input, " \r\t");
-	if (!trimmed)
-		return (NULL);
-	if (is_input_valid(trimmed) != 0)
+	if (is_input_valid(input) != 0)
 	{
 		ft_printf(RED"minishell: command not allowed\n"RST);
-		free(trimmed);
+		free(input);
 		return (NULL);
 	}
-	tokens = tokenize_input(trimmed);
-	free(trimmed);
+	tokens = tokenize_input(input);
+	free(input);
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 21:45:43 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/24 22:47:40 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void			free_all_cmds(t_cmd *cmds);
 void			free_redir(t_redir *redirect);
 t_cmd			*parser(t_shell *shell);
 
+int				fill_args(t_token *seg_start, t_cmd *cmd);
+int				fill_redirs(t_token *seg_start, t_cmd *cmd);
+int				add_args(t_token *seg_start, t_cmd *cmd);
+int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
+
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 
@@ -105,5 +110,9 @@ t_cmd	*create_test_cmd(void); // remove
 void	exec_builtin(t_shell *shell);
 void	execute(t_shell *shell);
 
+	// // Exec
+	// t_cmd	*create_test_cmd(void); // remove
+	// void	exec_builtin(t_shell *shell);
+	// void	execute(t_shell *shell);
 
 #endif

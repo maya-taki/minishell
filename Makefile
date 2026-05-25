@@ -30,10 +30,12 @@ SRC				= \
 					sources/parser/parser.c \
 					sources/parser/parser_frees.c \
 					sources/parser/syntax.c \
-					sources/builtin/builtin_echo.c \
-					sources/builtin/builtin_pwd.c \
-					sources/exec/exec.c \
+					sources/parser/fill.c \
 					sources/main.c
+
+ 					#sources/builtin/builtin_echo.c \
+ 					sources/builtin/builtin_pwd.c \
+ 					sources/exec/exec.c \#
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 

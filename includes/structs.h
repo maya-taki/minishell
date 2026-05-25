@@ -6,7 +6,7 @@
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 17:41:42 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/24 22:30:25 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTS_H
 
 # include "shell.h"
+# include "enum.h"
 
 typedef struct s_token
 {

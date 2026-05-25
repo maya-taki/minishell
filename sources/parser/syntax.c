@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 22:29:37 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:07:05 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:34:32 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_pipe_last(t_token *tokens)
 int	validate_syntax(t_token *tokens)
 {
 	t_token	*tmp;
-	
+
 	tmp = tokens;
 	if (!tmp)
 		return (1);
