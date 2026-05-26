@@ -6,29 +6,26 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/23 19:37:02 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/26 19:42:54 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-
-
 t_cmd	*parse_cmd(t_token *seg_start)
 {
 	t_cmd	*cmd;
 
-	cmd = new_cmd();
 	if (!cmd)
 		return (NULL);
 	if (fill_args(seg_start, cmd) != 0)
 	{
-		free_single_cmd(cmd);
+		free_cmd_args(cmd);
 		return (NULL);
 	}
 	if (fill_redirs(seg_start, cmd) != 0)
 	{
-		free_single_cmd(cmd);
+		free_cmd_args(cmd);
 		return (NULL);
 	}
 	return (cmd);
@@ -86,26 +83,19 @@ t_cmd	*parser(t_shell *shell)
 	return (head);
 }
 
-// }
-// 	head = NULL;
-// 	last = NULL;
-// 	while (tmp)
-// 	{
-// 		cmd = parse_cmd(tmp);
-// 		if (!cmd)
-// 		{
-// 			free_all_cmds(head);
-// 			return (NULL);
-// 		}
-// 		if (!head)
-// 			head = cmd;
-// 		else
-// 			last->next = cmd;
-// 		last = cmd;
-// 		while (tmp && tmp->type != TOKEN_PIPE)
-// 			tmp = tmp->next;
-// 		if (tmp)
-// 			tmp = tmp->next;
-// 	}
-// 	return (head);
-// }
+t_cmd	*parse_tokens(t_token *token_list, t_shell *shell)
+{
+	t_cmd	*cmd_list;
+	t_cmd	*new_cmd;
+	t_token	*tmp;
+
+	tmp = token_list;
+	while (tmp)
+	{
+		new_cmd = ft_calloc(1, sizeof(t_cmd));
+		if (!new_cmd)
+			return (free_cmds(cmd_list));
+		init_cmd(new_cmd);
+		
+	}
+}
