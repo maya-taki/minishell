@@ -6,19 +6,18 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 19:37:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/26 20:02:51 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:37:58 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int	fill_args(t_token *seg_start, t_cmd *cmd, t_shell *shell)
+int	fill_args(t_token *seg_start, t_cmd *cmd)
 {
-	
 	cmd->args = malloc(sizeof(char *) * (count_words(seg_start) + 1));
 	if (!cmd->args)
 		return (1);
-	return (add_args(seg_start, cmd, shell));
+	return (add_args(seg_start, cmd));
 }
 
 int	fill_redirs(t_token *seg_start, t_cmd *cmd)
@@ -42,7 +41,7 @@ int	fill_redirs(t_token *seg_start, t_cmd *cmd)
 	return (0);
 }
 
-int	add_args(t_cmd *cmd, t_token *seg_start, t_shell *shell)
+int	add_args(t_token *seg_start, t_cmd *cmd)
 {
 	t_token	*tmp;
 	int		i;
@@ -53,11 +52,9 @@ int	add_args(t_cmd *cmd, t_token *seg_start, t_shell *shell)
 	{
 		if (is_redir(tmp))
 		{
-			if (!tmp->next)
-				return (1);
-			if (handle_redir(tmp, &cmd, shell) != 0)
-				return(1);
 			tmp = tmp->next;
+			if (tmp)
+				tmp = tmp->next;
 			continue ;
 		}
 		if (tmp->type == TOKEN_WORD)
