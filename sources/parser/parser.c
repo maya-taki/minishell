@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/27 20:55:34 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:58:01 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static t_cmd	*run_parse(t_cmd *cmd, t_token *tmp)
 
 	head = NULL;
 	last = NULL;
-
 	while (tmp)
 	{
 		cmd = parser_handler(tmp);

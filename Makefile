@@ -21,16 +21,20 @@ RESET			:= \033[0m
 # ================= SOURCES =================
 
 SRC				= \
+					sources/utils/error_utils.c \
 					sources/lexer/lexer.c \
 					sources/lexer/lexer_inputs.c \
 					sources/lexer/lexer_utils.c \
+					sources/lexer/lexer_free.c \
 					sources/lexer/tokens.c \
-					sources/utils/error_utils.c \
-					sources/parser/parser_utils.c \
 					sources/parser/parser.c \
-					sources/parser/parser_frees.c \
-					sources/parser/syntax.c \
 					sources/parser/parser_handler.c \
+					sources/parser/syntax.c \
+					sources/parser/parser_utils.c \
+					sources/parser/parser_frees.c \
+					sources/expander/expander_utils.c \
+					sources/expander/expander.c \
+					sources/expander/redirects.c \
 					sources/main.c
 
  					#sources/builtin/builtin_echo.c \

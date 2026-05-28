@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:25:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:02:42 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:55:34 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,5 @@ t_token	*read_token(char *input, int *i)
 		token = new_token(type, value);
 		free(value);
 		return (token);
-	}
-}
-
-void	free_tokens(t_token *tokens)
-{
-	t_token	*tmp;
-
-	while (tokens)
-	{
-		tmp = tokens->next;
-		free(tokens->value);
-		free(tokens);
-		tokens = tmp;
 	}
 }
