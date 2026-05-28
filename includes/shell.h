@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/23 19:38:52 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/27 20:49:31 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,18 @@ int				count_cmds(t_token *token_list);
 int				count_words(t_token *token);
 int				is_redir(t_token *token);
 t_cmd			*new_cmd(void);
-int				open_file(int *fd_ptr, char *path, int flags);
-void			free_single_cmd(t_cmd *cmd);
-void			free_all_cmds(t_cmd *cmds);
+void			*free_single_cmd(t_cmd *cmd);
+void			*free_all_cmds(t_cmd *cmds);
 void			free_redir(t_redir *redirect);
+t_cmd			*parser_handler(t_token *seg_start);
 t_cmd			*parser(t_shell *shell);
 
-int				fill_args(t_token *seg_start, t_cmd *cmd);
-int				fill_redirs(t_token *seg_start, t_cmd *cmd);
 int				add_args(t_token *seg_start, t_cmd *cmd);
+int				fill_args(t_token *seg_start, t_cmd *cmd);
 int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
+int				fill_redirs(t_token *seg_start, t_cmd *cmd);
+void			debug_print_cmds(t_cmd *cmds);
+
 
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);

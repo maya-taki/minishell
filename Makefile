@@ -30,7 +30,7 @@ SRC				= \
 					sources/parser/parser.c \
 					sources/parser/parser_frees.c \
 					sources/parser/syntax.c \
-					sources/parser/fill.c \
+					sources/parser/parser_handler.c \
 					sources/main.c
 
  					#sources/builtin/builtin_echo.c \
