@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/27 20:49:31 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/28 16:08:34 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,38 @@ void			debug_print_cmds(t_cmd *cmds);
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 
+/*###CLEAN###*/
+void			free_ptr(void **ptr);
+void			free_env_node(t_env *node);
+void			free_env_list(t_env *env);
+void			close_fd(int *fd);
+void			free_shell(t_shell *shell);
+
 /*###UTILS###*/
 const char		*error_msg(t_error_type error);
 int				handle_error(t_error_type error, char *cmd, char *context);
+void			env_add_back(t_env **head, t_env *current);
+t_env			*env_new(char *key, char *value);
+int				parser_env_line(char *str, char **key, char **value);
+t_env			*create_env_node(char *env_line);
+char			*get_env_var(t_env *env, char *key);
+t_env			*find_env_node(t_env *env, char *key);
+void			set_env_var(t_env **env, char *key, char *value);
+void			update_pwd_env(t_shell *shell, char *old_pwd);
 
-	// // Init_utils
-	// void	env_add_back(t_env **head, t_env *current);
-	// void	parser_env_line(char *str, t_env *node);
+/*###INIT###*/
+t_cmd			*init_cmd(void);
+int				init_shell(t_shell *shell, char **envp);
 
-	// // Init
-	// t_cmd	*init_cmd(char *input);
-	// int		init_shell(t_shell *shell, char **envp); // principal
+/*###BUILTIN###*/
+int				builtin_echo(t_cmd *cmd);
+int				builtin_cd(t_shell *shell);
+int				builtin_pwd(void);
 
-	// // Builtins
-	// int			builtin_echo(t_cmd *cmd);
-	// int			builtin_pwd(void);
-	// int			builtin_cd(t_cmd *cmd, t_env **env);
-	// t_builtin	get_builtin(char *arg);
+
+/*###EXEC###*/
+void			exec_builtin(t_shell *shell);
+void			execute(t_shell *shell);
 
 	// // Exec
 	// t_cmd	*create_test_cmd(void); // remove

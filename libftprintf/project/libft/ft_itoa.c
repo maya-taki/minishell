@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:18:50 by osousa-d          #+#    #+#             */
-/*   Updated: 2025/07/30 16:18:51 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/25 00:46:47 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	len_n(long long n)
 	}
 	i++;
 	return (i);
-}	
+}
 
 char	*ft_itoa(int n)
 {

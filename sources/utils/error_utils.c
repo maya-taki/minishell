@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
 /*   Updated: 2026/05/27 22:02:29 by mtakiyos         ###   ########.fr       */
+=======
+/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
+/*   Updated: 2026/05/24 23:36:13 by otton-sousa      ###   ########.fr       */
+>>>>>>> origin/development
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shell.h"
+#include "../includes/shell.h"
 
 const char	*error_msg(t_error_type error)
 {

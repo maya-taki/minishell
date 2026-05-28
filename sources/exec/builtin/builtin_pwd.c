@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/23 18:27:47 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 23:30:42 by otton-sousa      ###   ########.fr       */
+/*   Created: 2026/05/25 01:04:01 by otton-sousa       #+#    #+#             */
+/*   Updated: 2026/05/25 01:04:14 by otton-sousa      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../../includes/shell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	builtin_pwd(void)
 {
-	size_t	i;
+	char	*cwd;
 
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0')
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		perror("pwd");
+		return (1);
 	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
 }

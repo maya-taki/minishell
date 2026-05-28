@@ -6,13 +6,12 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/27 22:00:56 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/28 16:07:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-t_cmd	*new_cmd(void);
 int		count_words(t_token *token);
 int		count_cmds(t_token *token_list);
 int		open_file(int *fd_ptr, char *path, int flags);
