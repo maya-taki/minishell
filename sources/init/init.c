@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/25 01:03:03 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/28 20:26:58 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_cmd	*init_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
-	cmd->cmd_path = NULL;
+	cmd->path = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);

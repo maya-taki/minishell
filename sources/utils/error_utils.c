@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/27 22:02:29 by mtakiyos         ###   ########.fr       */
-=======
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 23:36:13 by otton-sousa      ###   ########.fr       */
->>>>>>> origin/development
+/*   Updated: 2026/05/28 20:26:10 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

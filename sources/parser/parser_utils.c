@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 16:07:26 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/28 20:30:07 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,23 @@ void	debug_print_cmds(t_cmd *cmds)
 	cmd_index = 1;
 	while (cmds)
 	{
-		printf(C"=== CMD %d ===\n", cmd_index++);
+		ft_printf(C"=== CMD %d ===\n", cmd_index++);
 		i = 0;
 		if (cmds->args)
 		{
 			while (cmds->args[i])
 			{
-				printf("  arg[%d]: %s\n", i, cmds->args[i]);
+				ft_printf("  arg[%d]: %s\n", i, cmds->args[i]);
 					i++;
 			}
 		}
 		r = cmds->redirs;
 		while (r)
 		{
-			printf("  redir type %d -> %s\n"RST, r->type, r->file);
+			ft_printf("  redir type %d -> %s\n", r->type, r->file);
 			r = r->next;
 		}
 		cmds = cmds->next;
+		ft_printf(RST);
 	}
 }
