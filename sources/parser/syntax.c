@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 22:29:37 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/23 19:34:32 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/27 20:40:55 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	validate_syntax(t_token *tokens)
 
 	tmp = tokens;
 	if (!tmp)
-		return (1);
+		return (0);
 	if (tmp->type == TOKEN_PIPE)
 		return (ERR_SYNTAX);
 	if (is_pipe_last(tmp) != 0)

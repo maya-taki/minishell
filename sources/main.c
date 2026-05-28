@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/23 19:25:12 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/27 20:55:05 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv, char **envp)
 
 		shell.tokens = lexer(shell.input);
 		shell.cmd = parser(&shell);
-
 		// if (shell.cmd)
 		// 	execute(&shell);
 
