@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 20:27:45 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:12:39 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@
 // 
 
 
-// int	handle_redir(t_token *token, t_cmd **new_cmd, t_shell *shell)
+// int	handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell)
 // {
 // 	if (token->type == TOKEN_REDIR_OUT)
-// 		return (handle_output(token, new_cmd));
+// 		return (handle_output(token, init_cmd));
 // 	else if (token->type == TOKEN_REDIR_APPEND)
-// 		return (handle_append(token, new_cmd));
+// 		return (handle_append(token, init_cmd));
 // 	else if (token->type == TOKEN_REDIR_IN)
-// 		return (handle_input(token, new_cmd));
+// 		return (handle_input(token, init_cmd));
 // 	else if (token->type == TOKEN_HEREDOC)
-// 		return (handle_heredoc(token->next->next, *new_cmd, shell));
+// 		return (handle_heredoc(token->next->next, *init_cmd, shell));
 // 	return (1);
 // }

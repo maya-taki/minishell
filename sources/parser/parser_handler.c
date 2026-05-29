@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 19:37:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 16:07:30 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:12:39 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_cmd	*parser_handler(t_token *seg_start)
 {
 	t_cmd	*cmd;
 
-	cmd = new_cmd();
+	cmd = init_cmd();
 	if (!cmd)
 		return (NULL);
 	if (fill_args(seg_start, cmd) != 0)

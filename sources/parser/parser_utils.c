@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 20:30:07 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:11:31 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 int		count_words(t_token *token);
 int		count_cmds(t_token *token_list);
 int		open_file(int *fd_ptr, char *path, int flags);
-
-t_cmd	*new_cmd(void)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = NULL;
-	cmd->path = NULL;
-	cmd->redirs = NULL;
-	cmd->next = NULL;
-	// cmd->builtin = BUILTIN_NONE; //TODO
-	return (cmd);
-}
 
 int	count_cmds(t_token *token_list)
 {

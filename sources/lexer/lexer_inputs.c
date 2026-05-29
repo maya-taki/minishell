@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_inputs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:46:09 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/17 16:39:52 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:13:29 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	*handle_operator(t_token_type type, char *input, int *i)
 	value = ft_substr(input, *i, len);
 	if (!value)
 		return (NULL);
-	token = new_token(type, value);
+	token = init_token(type, value);
 	free(value);
 	if (len == 2)
 		(*i)++;

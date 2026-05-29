@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/28 20:26:58 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:17:35 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,20 @@ static void	init_shell_values(t_shell *shell)
 	shell->exit_code = 0;
 	shell->std_in = -1;
 	shell->std_out = -1;
+}
+
+t_token	*init_token(t_token_type type, char *value)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->type = type;
+	if (value)
+		token->value = ft_strdup(value);
+	else
+		token->value = NULL;
+	token->next = NULL;
+	return (token);
 }
