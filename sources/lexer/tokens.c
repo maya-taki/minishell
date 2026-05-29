@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 18:25:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:02:42 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:16:54 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-t_token	*new_token(t_token_type type, char *value)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	if (value)
-		token->value = ft_strdup(value);
-	else
-		token->value = NULL;
-	token->next = NULL;
-	return (token);
-}
 
 void	add_token(t_token **head, t_token *new_token)
 {
@@ -81,21 +65,8 @@ t_token	*read_token(char *input, int *i)
 		value = handle_word(input, i);
 		if (!value)
 			return (NULL);
-		token = new_token(type, value);
+		token = init_token(type, value);
 		free(value);
 		return (token);
-	}
-}
-
-void	free_tokens(t_token *tokens)
-{
-	t_token	*tmp;
-
-	while (tokens)
-	{
-		tmp = tokens->next;
-		free(tokens->value);
-		free(tokens);
-		tokens = tmp;
 	}
 }

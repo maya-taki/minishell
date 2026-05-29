@@ -1,16 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill.c                                             :+:      :+:    :+:   */
+/*   parser_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 19:37:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/25 00:47:41 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/29 14:12:39 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
+
+int	fill_args(t_token *seg_start, t_cmd *cmd);
+int	fill_redirs(t_token *seg_start, t_cmd *cmd);
+int	add_args(t_token *seg_start, t_cmd *cmd);
+int	add_redirs(t_token_type type, char *file, t_cmd *cmd);
+
+t_cmd	*parser_handler(t_token *seg_start)
+{
+	t_cmd	*cmd;
+
+	cmd = init_cmd();
+	if (!cmd)
+		return (NULL);
+	if (fill_args(seg_start, cmd) != 0)
+		return (free_single_cmd(cmd));
+	if (fill_redirs(seg_start, cmd) != 0)
+		return (free_single_cmd(cmd));
+	return (cmd);
+}
 
 int	fill_args(t_token *seg_start, t_cmd *cmd)
 {

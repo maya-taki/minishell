@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/24 22:47:44 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/29 14:11:31 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 int		count_words(t_token *token);
 int		count_cmds(t_token *token_list);
 int		open_file(int *fd_ptr, char *path, int flags);
-
-int	open_file(int *fd_ptr, char *path, int flags)
-{
-	if (*fd_ptr > 2)
-		close(*fd_ptr);
-	*fd_ptr = open(path, flags, 0644);
-	if (*fd_ptr == -1)
-	{
-		perror(path);
-		return (1);
-	}
-	return (0);
-}
 
 int	count_cmds(t_token *token_list)
 {
@@ -74,4 +61,34 @@ int	is_redir(t_token *token)
 		|| token->type == TOKEN_REDIR_OUT
 		|| token->type == TOKEN_REDIR_APPEND
 		|| token->type == TOKEN_REDIR_IN);
+}
+
+void	debug_print_cmds(t_cmd *cmds)
+{
+	int		i;
+	t_redir	*r;
+	int		cmd_index;
+
+	cmd_index = 1;
+	while (cmds)
+	{
+		ft_printf(C"=== CMD %d ===\n", cmd_index++);
+		i = 0;
+		if (cmds->args)
+		{
+			while (cmds->args[i])
+			{
+				ft_printf("  arg[%d]: %s\n", i, cmds->args[i]);
+					i++;
+			}
+		}
+		r = cmds->redirs;
+		while (r)
+		{
+			ft_printf("  redir type %d -> %s\n", r->type, r->file);
+			r = r->next;
+		}
+		cmds = cmds->next;
+		ft_printf(RST);
+	}
 }
