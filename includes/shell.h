@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/29 14:13:29 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:43:12 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void			debug_print_cmds(t_cmd *cmds);
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 int				handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
+void			remove_quotes(char *delimiter);
+
+
 
 /*###CLEAN###*/
 void			free_ptr(void **ptr);
