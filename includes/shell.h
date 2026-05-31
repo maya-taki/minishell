@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/25 01:05:26 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/31 17:34:29 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,5 @@ int				builtin_pwd(void);
 void			exec_builtin(t_shell *shell);
 void			execute(t_shell *shell);
 
-	// // Exec
-	// t_cmd	*create_test_cmd(void); // remove
-	// void	exec_builtin(t_shell *shell);
-	// void	execute(t_shell *shell);
 
 #endif
