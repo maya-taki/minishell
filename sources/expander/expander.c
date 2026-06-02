@@ -6,13 +6,13 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/01 14:29:15 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/01 23:44:06 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int	expand_all(t_cmd *cmds, , t_shell *shell)
+int	expand_all(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*cur;
 
@@ -85,9 +85,128 @@ int	expand_redirs(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
+
+/*
+expand word 
+
+checar aspas simples(literal) & aspas duplas(com expansao)
+expand $ && ? 
+
+
+*/
+
+char	*expand_word(const char *dest, t_shell *shell)
+{
+	t_quote_state	state;
+	size_t			i;
+	char			*expanded;
+	char			*start;
+	char			*
+	
+	state = QUOTE_NONE;
+	if (dest[i])
+	{
+		if (dest[i] == '\'' && state == QUOTE_NONE)
+			state = QUOTE_SINGLE;
+		else if (dest[i] == '\'' && state == QUOTE_SINGLE)
+			state = QUOTE_NONE;
+		else if (dest[i] == '"' && state == QUOTE_NONE)
+			state = QUOTE_DOUBLE;
+		else if (dest[i] == '"' && state == QUOTE_DOUBLE)
+			state = QUOTE_NONE;
+		else if (dest[i] == '$' && state == QUOTE_DOUBLE)
+		{
+			i++;
+			
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 char	*expand_word(const char *src, t_shell *shell)
 {
-	
+	size_t			i;
+	t_quote_state	state;
+	char			*result;
+
+	if (!src || shell)
+		return (NULL);
+	i = 0;
+	state = QUOTE_NONE;
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
+	while (src[i])
+	{
+		if (src[i] == '\'' && state == QUOTE_NONE)
+			state = QUOTE_SINGLE;
+		else if (src[i] == '\'' && state == QUOTE_SINGLE)
+			state = QUOTE_NONE;
+		else if (src[i] == '\"' && state == QUOTE_NONE)
+			state = QUOTE_DOUBLE;
+		else if (src[i] == '\"' && state == QUOTE_DOUBLE)
+			state = QUOTE_NONE;
+		else if (src[i] == '$' && state == QUOTE_SINGLE)
+		{
+			char	*code;
+			i++;
+			if  (src[i] == '?')
+			{
+				code = ft_itoa(shell->exit_code);
+				if (!code || !(result = append_str(result, code)))
+				{
+					free(code);
+					free(result);
+					return (NULL);
+				}
+				free(code);
+				i++;
+				continue ;
+			}
+			size_t	start;
+			start = i;
+			while (src[i] && (ft_isalnum(src[i])  || src[i] == '_'))
+				i++;
+			char	*name = ft_substr(src, start, i - start);
+			char	*value = get_env_value(shell->env, name);
+			free(name);
+			if  (!(result = append_str(result, value)))
+				return (NULL);
+			continue ;
+		}
+		else
+		{
+			result = append_char(result, src[i]);
+			if  (!result)
+				return (NULL);
+		}
+		i++;
+	}
+	return (result);
 }
 
 char	*get_env_value(t_env *env, const char *name)
@@ -104,29 +223,55 @@ char	*get_env_value(t_env *env, const char *name)
 	return (NULL);
 }
 
-char *append_char(char *dest, char c)
+char	*append_char(char *dest, char c)
 {
-	int	len;
-	char *new_str;
+	char	*new_dest;
+	int		dest_l;
 
 	if (!dest)
 	{
-		new_str = malloc(2);
-		dest[0] = c;
-		dest[1] = '\0';
-		return (new_str);
+		new_dest = malloc(2);
+		if (!new_dest)
+			return (1);
+		new_dest[0] = c;
+		new_dest[1] = '\0';
+		return (new_dest);
 	}
-	len = ft_strlen(dest);
-	new_str = malloc(len + 2);
-	if (!new_str)
-		return (NULL);
-	ft_memcpy(new_str, dest, len);
-	new_str[len] = c;
-	new_str[len + 1] = '\0';
+	dest_l = ft_strlen(dest);
+	new_dest = malloc(dest_l + 2);
+	if (!new_dest)
+		return (1);
+	memcpy(new_dest, dest, dest_l);
+	new_dest[dest_l] = c;
+	new_dest[dest_l + 1] = '\0';
 	free(dest);
-	return (new_str);
+	return (new_dest);
+	}
+	
+char	*append_str(char *dest, char *src)
+{
+	size_t		dest_l;
+	size_t		src_l;
+	char		*new_dest;
+	
+	if (!src)
+		return (dest);
+	if (!dest)
+	{
+		new_dest = ft_strdup(src);
+		return (new_dest);
+	}
+	dest_l = ft_strlen(dest); 
+	src_l = ft_strlen(src);
+	new_dest = malloc(dest_l + src_l + 1);
+	if (!new_dest)
+		return (NULL);
+	ft_memcpy(new_dest, dest, dest_l);
+	ft_memcpy(new_dest + dest_l, src, src_l);
+	new_dest[dest_l + src_l] =  '\0';
+	free(dest);
+	return (new_dest);
 }
-char	*append_str();
 
 int	is_single_quoted(char *arg)
 {
