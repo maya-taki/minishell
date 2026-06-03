@@ -6,11 +6,18 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 01:25:53 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/03 15:05:39 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
+
+char	*expand_word(const char *src, t_shell *shell);
+static char	*append_char(char *dest, char c);
+static char	*append_str(char *dest, const char *src);
+static char	*get_env_value(t_env *env, const char *name);
+static int	expand_args(t_cmd *cmd, t_shell *shell);
+static int	expand_redirs(t_cmd *cmd, t_shell *shell);
 
 int	expand_all(t_cmd *cmds, t_shell *shell)
 {
@@ -49,7 +56,7 @@ int	expand_args(t_cmd *cmd, t_shell *shell)
 	int	i;
 	int	ret;
 
-	if (!cmd || !!cmd->args)
+	if (!cmd || !cmd->args)
 		return (0);
 	i = 0;
 	while (cmd->args[i])
@@ -64,9 +71,9 @@ int	expand_args(t_cmd *cmd, t_shell *shell)
 
 int	expand_redirs(t_cmd *cmd, t_shell *shell)
 {
-	t_redir *redir;
+	t_redir	*redir;
 	char	*new_file;
-	
+
 	if (!cmd)
 		return (0);
 	redir = cmd->redirs;
@@ -85,41 +92,13 @@ int	expand_redirs(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-// update_quote_state(char c, t_quote_state state)
-
-int	can_expand(char c, t_quote_state state)
-{
-	update_quote_state(c, state);
-	if (c == '$' && state == QUOTE_SINGLE)
-		return (0);
-	return (1);
-}
-
-void	extract_exit_code(t_shell *shell, const char *src, const char *result, int i)
-{
-	char	*code;
-	i++;
-	if  (src[i] == '?')
-	{
-		code = ft_itoa(shell->exit_code);
-		if (!code || !(result = append_str(result, code)))
-		{
-			free(code);
-			free(result);
-			return (NULL);
-		}
-		free(code);
-		// i++;
-	}
-}
-
 char	*expand_word(const char *src, t_shell *shell)
 {
 	size_t			i;
 	t_quote_state	state;
 	char			*result;
 
-	if (!src || shell)
+	if (!src || !shell)
 		return (NULL);
 	i = 0;
 	state = QUOTE_NONE;
@@ -128,51 +107,92 @@ char	*expand_word(const char *src, t_shell *shell)
 		return (NULL);
 	while (src[i])
 	{
-		// if (src[i] == '\'' && state == QUOTE_NONE)
-		// 	state = QUOTE_SINGLE;
-		// else if (src[i] == '\'' && state == QUOTE_SINGLE)
-		// 	state = QUOTE_NONE;
-		// else if (src[i] == '\"' && state == QUOTE_NONE)
-		// 	state = QUOTE_DOUBLE;
-		// else if (src[i] == '\"' && state == QUOTE_DOUBLE)
-		// 	state = QUOTE_NONE;
-		// else if (src[i] == '$' && state == QUOTE_SINGLE)
-		if (can_expand(&src[i], state) == 0)
+		if (src[i] == '\'' && state == QUOTE_NONE)
 		{
-			extract_exit_code(shell, src[i], result, i);
+			state = QUOTE_SINGLE;
 			i++;
-			// char	*code;
-			// i++;
-			// if  (src[i] == '?')
-			// {
-			// 	code = ft_itoa(shell->exit_code);
-			// 	if (!code || !(result = append_str(result, code)))
-			// 	{
-			// 		free(code);
-			// 		free(result);
-			// 		return (NULL);
-			// 	}
-			// 	free(code);
-			// 	i++;
-			// 	continue ;
-			// }
-			size_t	start;
-			start = i;
-			while (src[i] && (ft_isalnum(src[i])  || src[i] == '_'))
-				i++;
-			char	*name = ft_substr(src, start, i - start);
-			char	*value = get_env_value(shell->env, name);
-			free(name);
-			if  (!(result = append_str(result, value)))
-				return (NULL);
 			continue ;
 		}
-		else
+		if (src[i] == '\'' && state == QUOTE_SINGLE)
 		{
-			result = append_char(result, src[i]);
-			if  (!result)
-				return (NULL);
+			state = QUOTE_NONE;
+			i++;
+			continue ;
 		}
+		if (src[i] == '"' && state == QUOTE_NONE)
+		{
+			state = QUOTE_DOUBLE;
+			i++;
+			continue ;
+		}
+		if (src[i] == '"' && state == QUOTE_DOUBLE)
+		{
+			state = QUOTE_NONE;
+			i++;
+			continue ;
+		}
+		if (src[i] == '$' && state != QUOTE_SINGLE)
+		{
+			i++;
+			if (src[i] == '?')
+			{
+				char	*code;
+
+				code = ft_itoa(shell->exit_code);
+				if (!code)
+				{
+					free(result);
+					return (NULL);
+				}
+				result = append_str(result, code);
+				free(code);
+				if (!result)
+					return (NULL);
+				i++;
+				continue ;
+			}
+			if (!src[i])
+			{
+				result = append_char(result, '$');
+				if (!result)
+					return (NULL);
+				continue ;
+			}
+			size_t	start;
+			start = i;
+			while (src[i] && (ft_isalnum(src[i]) || src[i] == '_'))
+				i++;
+			if (start == i)
+			{
+				result = append_char(result, '$');
+				if (!result)
+					return (NULL);
+				continue ;
+			}
+			char	*name;
+			char	*value;
+			char	*tmp;
+
+			name = ft_substr(src, start, i - start);
+			if (!name)
+			{
+				free(result);
+				return (NULL);
+			}
+			value = get_env_value(shell->env, name);
+			tmp = append_str(result, value);
+			free(name);
+			if (!tmp)
+			{
+				free(result);
+				return (NULL);
+			}
+			result = tmp;
+			continue ;
+		}
+		result = append_char(result, src[i]);
+		if (!result)
+			return (NULL);
 		i++;
 	}
 	return (result);
@@ -201,7 +221,7 @@ char	*append_char(char *dest, char c)
 	{
 		new_dest = malloc(2);
 		if (!new_dest)
-			return (1);
+			return (NULL);
 		new_dest[0] = c;
 		new_dest[1] = '\0';
 		return (new_dest);
@@ -209,20 +229,20 @@ char	*append_char(char *dest, char c)
 	dest_l = ft_strlen(dest);
 	new_dest = malloc(dest_l + 2);
 	if (!new_dest)
-		return (1);
+		return (NULL);
 	memcpy(new_dest, dest, dest_l);
 	new_dest[dest_l] = c;
 	new_dest[dest_l + 1] = '\0';
 	free(dest);
 	return (new_dest);
-	}
-	
-char	*append_str(char *dest, char *src)
+}
+
+char	*append_str(char *dest, const char *src)
 {
 	size_t		dest_l;
 	size_t		src_l;
 	char		*new_dest;
-	
+
 	if (!src)
 		return (dest);
 	if (!dest)
@@ -230,14 +250,14 @@ char	*append_str(char *dest, char *src)
 		new_dest = ft_strdup(src);
 		return (new_dest);
 	}
-	dest_l = ft_strlen(dest); 
+	dest_l = ft_strlen(dest);
 	src_l = ft_strlen(src);
 	new_dest = malloc(dest_l + src_l + 1);
 	if (!new_dest)
 		return (NULL);
 	ft_memcpy(new_dest, dest, dest_l);
 	ft_memcpy(new_dest + dest_l, src, src_l);
-	new_dest[dest_l + src_l] =  '\0';
+	new_dest[dest_l + src_l] = '\0';
 	free(dest);
 	return (new_dest);
 }
@@ -245,24 +265,21 @@ char	*append_str(char *dest, char *src)
 int	is_single_quoted(char *arg)
 {
 	t_quote_state	state;
-	int				i;
+	int			i;
 
-	i = 0;
 	if (!arg)
 		return (1);
 	state = QUOTE_NONE;
-	if  (arg[0] == "\'")
+	i = 0;
+	if (arg[0] == '\'')
 	{
 		while (arg[i])
 		{
-			update_quote_state(arg[i], state);
+			update_quote_state(arg[i], &state);
 			i++;
 		}
-		if (state == QUOTE_NONE && (arg[i - 1] == "\'"))
+		if (state == QUOTE_NONE && arg[i - 1] == '\'')
 			return (0);
 	}
-	else
-		return (1);
-	return (0);
+	return (1);
 }
-

@@ -77,4 +77,15 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: norminette make fclean clean re
+TEST_EXPANDER = tests/test_expander.c
+TEST_EXPANDER_NAME = test_expander
+TEST_REDIRECTS = tests/test_redirects.c
+TEST_REDIRECTS_NAME = test_redirects
+
+test-expander: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXPANDER) sources/expander/expander.c sources/lexer/lexer_utils.c sources/utils/env_utils.c sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXPANDER_NAME)
+
+test-redirects: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_REDIRECTS) sources/exec/redirections/redirects.c $(LIB_FLAGS) -o $(TEST_REDIRECTS_NAME)
+
+.PHONY: norminette make fclean clean re test-expander test-redirects
