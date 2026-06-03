@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/01 23:44:06 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/03 01:25:53 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,67 +85,33 @@ int	expand_redirs(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
+// update_quote_state(char c, t_quote_state state)
 
-/*
-expand word 
-
-checar aspas simples(literal) & aspas duplas(com expansao)
-expand $ && ? 
-
-
-*/
-
-char	*expand_word(const char *dest, t_shell *shell)
+int	can_expand(char c, t_quote_state state)
 {
-	t_quote_state	state;
-	size_t			i;
-	char			*expanded;
-	char			*start;
-	char			*
-	
-	state = QUOTE_NONE;
-	if (dest[i])
-	{
-		if (dest[i] == '\'' && state == QUOTE_NONE)
-			state = QUOTE_SINGLE;
-		else if (dest[i] == '\'' && state == QUOTE_SINGLE)
-			state = QUOTE_NONE;
-		else if (dest[i] == '"' && state == QUOTE_NONE)
-			state = QUOTE_DOUBLE;
-		else if (dest[i] == '"' && state == QUOTE_DOUBLE)
-			state = QUOTE_NONE;
-		else if (dest[i] == '$' && state == QUOTE_DOUBLE)
-		{
-			i++;
-			
-		}
-	}
+	update_quote_state(c, state);
+	if (c == '$' && state == QUOTE_SINGLE)
+		return (0);
+	return (1);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void	extract_exit_code(t_shell *shell, const char *src, const char *result, int i)
+{
+	char	*code;
+	i++;
+	if  (src[i] == '?')
+	{
+		code = ft_itoa(shell->exit_code);
+		if (!code || !(result = append_str(result, code)))
+		{
+			free(code);
+			free(result);
+			return (NULL);
+		}
+		free(code);
+		// i++;
+	}
+}
 
 char	*expand_word(const char *src, t_shell *shell)
 {
@@ -162,31 +128,34 @@ char	*expand_word(const char *src, t_shell *shell)
 		return (NULL);
 	while (src[i])
 	{
-		if (src[i] == '\'' && state == QUOTE_NONE)
-			state = QUOTE_SINGLE;
-		else if (src[i] == '\'' && state == QUOTE_SINGLE)
-			state = QUOTE_NONE;
-		else if (src[i] == '\"' && state == QUOTE_NONE)
-			state = QUOTE_DOUBLE;
-		else if (src[i] == '\"' && state == QUOTE_DOUBLE)
-			state = QUOTE_NONE;
-		else if (src[i] == '$' && state == QUOTE_SINGLE)
+		// if (src[i] == '\'' && state == QUOTE_NONE)
+		// 	state = QUOTE_SINGLE;
+		// else if (src[i] == '\'' && state == QUOTE_SINGLE)
+		// 	state = QUOTE_NONE;
+		// else if (src[i] == '\"' && state == QUOTE_NONE)
+		// 	state = QUOTE_DOUBLE;
+		// else if (src[i] == '\"' && state == QUOTE_DOUBLE)
+		// 	state = QUOTE_NONE;
+		// else if (src[i] == '$' && state == QUOTE_SINGLE)
+		if (can_expand(&src[i], state) == 0)
 		{
-			char	*code;
+			extract_exit_code(shell, src[i], result, i);
 			i++;
-			if  (src[i] == '?')
-			{
-				code = ft_itoa(shell->exit_code);
-				if (!code || !(result = append_str(result, code)))
-				{
-					free(code);
-					free(result);
-					return (NULL);
-				}
-				free(code);
-				i++;
-				continue ;
-			}
+			// char	*code;
+			// i++;
+			// if  (src[i] == '?')
+			// {
+			// 	code = ft_itoa(shell->exit_code);
+			// 	if (!code || !(result = append_str(result, code)))
+			// 	{
+			// 		free(code);
+			// 		free(result);
+			// 		return (NULL);
+			// 	}
+			// 	free(code);
+			// 	i++;
+			// 	continue ;
+			// }
 			size_t	start;
 			start = i;
 			while (src[i] && (ft_isalnum(src[i])  || src[i] == '_'))
