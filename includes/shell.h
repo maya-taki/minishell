@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/29 18:43:12 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/03 17:46:03 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ void			debug_print_cmds(t_cmd *cmds);
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 int				handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
-void			remove_quotes(char *delimiter);
-
+int				is_single_quoted(char *arg);
+void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
+char			*get_env_value(t_env *env, const char *name);
 
 
 /*###CLEAN###*/

@@ -35,7 +35,9 @@ SRC				= \
 					sources/parser/parser_frees.c \
 					sources/expander/expander_utils.c \
 					sources/expander/expander.c \
-					sources/expander/redirects.c \
+					sources/exec/redirections/redirects.c \
+					sources/exec/redirections/heredoc.c \
+					sources/exec/redirections/redir_utils.c \
 					sources/exec/exec.c \
 					sources/exec/builtin/builtin_cd.c \
 					sources/exec/builtin/builtin_echo.c \
@@ -83,7 +85,7 @@ TEST_REDIRECTS = tests/test_redirects.c
 TEST_REDIRECTS_NAME = test_redirects
 
 test-expander: $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXPANDER) sources/expander/expander.c sources/lexer/lexer_utils.c sources/utils/env_utils.c sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXPANDER_NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXPANDER) sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c sources/utils/env_utils.c sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXPANDER_NAME)
 
 test-redirects: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_REDIRECTS) sources/exec/redirections/redirects.c $(LIB_FLAGS) -o $(TEST_REDIRECTS_NAME)

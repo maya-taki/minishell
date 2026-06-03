@@ -6,18 +6,18 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 15:05:39 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:48:00 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
 char	*expand_word(const char *src, t_shell *shell);
-static char	*append_char(char *dest, char c);
-static char	*append_str(char *dest, const char *src);
-static char	*get_env_value(t_env *env, const char *name);
-static int	expand_args(t_cmd *cmd, t_shell *shell);
-static int	expand_redirs(t_cmd *cmd, t_shell *shell);
+static char	*expand_dollar(const char *src, size_t *i, t_shell *shell, char *result);
+char	*append_char(char *dest, char c);
+char	*append_str(char *dest, const char *src);
+int	expand_args(t_cmd *cmd, t_shell *shell);
+int	expand_redirs(t_cmd *cmd, t_shell *shell);
 
 int	expand_all(t_cmd *cmds, t_shell *shell)
 {
@@ -92,124 +92,51 @@ int	expand_redirs(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-char	*expand_word(const char *src, t_shell *shell)
+static char	*expand_dollar(const char *src, size_t *i, t_shell *shell, char *result)
 {
-	size_t			i;
-	t_quote_state	state;
-	char			*result;
-
-	if (!src || !shell)
-		return (NULL);
-	i = 0;
-	state = QUOTE_NONE;
-	result = ft_strdup("");
-	if (!result)
-		return (NULL);
-	while (src[i])
+	size_t start = *i;
+	char *code, *tmp;
+	if (src[*i] == '?')
 	{
-		if (src[i] == '\'' && state == QUOTE_NONE)
-		{
-			state = QUOTE_SINGLE;
-			i++;
-			continue ;
-		}
-		if (src[i] == '\'' && state == QUOTE_SINGLE)
-		{
-			state = QUOTE_NONE;
-			i++;
-			continue ;
-		}
-		if (src[i] == '"' && state == QUOTE_NONE)
-		{
-			state = QUOTE_DOUBLE;
-			i++;
-			continue ;
-		}
-		if (src[i] == '"' && state == QUOTE_DOUBLE)
-		{
-			state = QUOTE_NONE;
-			i++;
-			continue ;
-		}
-		if (src[i] == '$' && state != QUOTE_SINGLE)
-		{
-			i++;
-			if (src[i] == '?')
-			{
-				char	*code;
-
-				code = ft_itoa(shell->exit_code);
-				if (!code)
-				{
-					free(result);
-					return (NULL);
-				}
-				result = append_str(result, code);
-				free(code);
-				if (!result)
-					return (NULL);
-				i++;
-				continue ;
-			}
-			if (!src[i])
-			{
-				result = append_char(result, '$');
-				if (!result)
-					return (NULL);
-				continue ;
-			}
-			size_t	start;
-			start = i;
-			while (src[i] && (ft_isalnum(src[i]) || src[i] == '_'))
-				i++;
-			if (start == i)
-			{
-				result = append_char(result, '$');
-				if (!result)
-					return (NULL);
-				continue ;
-			}
-			char	*name;
-			char	*value;
-			char	*tmp;
-
-			name = ft_substr(src, start, i - start);
-			if (!name)
-			{
-				free(result);
-				return (NULL);
-			}
-			value = get_env_value(shell->env, name);
-			tmp = append_str(result, value);
-			free(name);
-			if (!tmp)
-			{
-				free(result);
-				return (NULL);
-			}
-			result = tmp;
-			continue ;
-		}
-		result = append_char(result, src[i]);
-		if (!result)
-			return (NULL);
-		i++;
+		code = ft_itoa(shell->exit_code);
+		if (!code)
+			return (free(result), NULL);
+		result = append_str(result, code);
+		free(code);
+		return ((*i)++, result);
 	}
+	while (src[*i] && (ft_isalnum(src[*i]) || src[*i] == '_'))
+		(*i)++;
+	if (*i == start)
+		return (append_char(result, '$'));
+	if (!(tmp = ft_substr(src, start, *i - start)))
+		return (free(result), NULL);
+	result = append_str(result, get_env_value(shell->env, tmp));
+	free(tmp);
 	return (result);
 }
 
-char	*get_env_value(t_env *env, const char *name)
+char	*expand_word(const char *src, t_shell *shell)
 {
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
+	size_t i = 0;
+	t_quote_state state = QUOTE_NONE;
+	char *result;
+	if (!src || !shell || !(result = ft_strdup("")))
+		return (NULL);
+	while (src[i])
 	{
-		if (ft_strcmp(tmp->key, name) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
+		update_quote_state_iterate(src, &state, &i);
+		if (src[i] == '$' && state != QUOTE_SINGLE)
+		{
+			i++;
+			result = expand_dollar(src, &i, shell, result);
+		}
+		else
+			result = append_char(result, src[i++]);
+		if (!result)
+			return (NULL);
 	}
-	return (NULL);
+	return (result);
 }
 
 char	*append_char(char *dest, char c)
@@ -260,26 +187,4 @@ char	*append_str(char *dest, const char *src)
 	new_dest[dest_l + src_l] = '\0';
 	free(dest);
 	return (new_dest);
-}
-
-int	is_single_quoted(char *arg)
-{
-	t_quote_state	state;
-	int			i;
-
-	if (!arg)
-		return (1);
-	state = QUOTE_NONE;
-	i = 0;
-	if (arg[0] == '\'')
-	{
-		while (arg[i])
-		{
-			update_quote_state(arg[i], &state);
-			i++;
-		}
-		if (state == QUOTE_NONE && arg[i - 1] == '\'')
-			return (0);
-	}
-	return (1);
 }
