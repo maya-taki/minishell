@@ -83,6 +83,8 @@ TEST_EXPANDER = tests/test_expander.c
 TEST_EXPANDER_NAME = test_expander
 TEST_REDIRECTS = tests/test_redirects.c
 TEST_REDIRECTS_NAME = test_redirects
+TEST_HEREDOC = tests/test_heredoc_utils.c
+TEST_HEREDOC_NAME = test_heredoc
 
 test-expander: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXPANDER) sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c sources/utils/env_utils.c sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXPANDER_NAME)
@@ -90,4 +92,7 @@ test-expander: $(LIBFT)
 test-redirects: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_REDIRECTS) sources/exec/redirections/redirects.c $(LIB_FLAGS) -o $(TEST_REDIRECTS_NAME)
 
-.PHONY: norminette make fclean clean re test-expander test-redirects
+test-heredoc-utils: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_HEREDOC) sources/exec/redirections/heredoc.c $(LIB_FLAGS) -o $(TEST_HEREDOC_NAME)
+
+.PHONY: norminette make fclean clean re test-expander test-redirects test-heredoc-utils
