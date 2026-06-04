@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/25 01:03:03 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/29 14:17:35 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_cmd	*init_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
-	cmd->cmd_path = NULL;
+	cmd->path = NULL;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);
@@ -83,4 +83,20 @@ static void	init_shell_values(t_shell *shell)
 	shell->exit_code = 0;
 	shell->std_in = -1;
 	shell->std_out = -1;
+}
+
+t_token	*init_token(t_token_type type, char *value)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->type = type;
+	if (value)
+		token->value = ft_strdup(value);
+	else
+		token->value = NULL;
+	token->next = NULL;
+	return (token);
 }

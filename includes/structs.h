@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/25 00:23:32 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/05/29 14:05:44 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**args;
-	char			*cmd_path;
+	char			*path;
 	t_builtin		builtin;
 	t_redir			*redirs;
 	struct s_cmd	*next;

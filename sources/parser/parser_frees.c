@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parser_frees.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 14:52:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/15 11:06:21 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:57:20 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-void	free_single_cmd(t_cmd *cmd);
-void	free_all_cmds(t_cmd *cmds);
 void	free_redir(t_redir *redirect);
+void	*free_single_cmd(t_cmd *cmd);
+void	*free_all_cmds(t_cmd *cmds);
 
 void	free_redir(t_redir *redirect)
 {
 	t_redir	*tmp;
 
-	tmp = redirect;
-	while (tmp)
+	while (redirect)
 	{
 		tmp = redirect->next;
 		free(redirect->file);
@@ -30,12 +29,12 @@ void	free_redir(t_redir *redirect)
 	}
 }
 
-void	free_single_cmd(t_cmd *cmd)
+void	*free_single_cmd(t_cmd *cmd)
 {
 	int	i;
 
 	if (!cmd)
-		return ;
+		return (NULL);
 	if (cmd->args)
 	{
 		i = 0;
@@ -43,12 +42,13 @@ void	free_single_cmd(t_cmd *cmd)
 			free(cmd->args[i++]);
 		free(cmd->args);
 	}
-	free(cmd->cmd_path);
+	free(cmd->path);
 	free_redir(cmd->redirs);
 	free(cmd);
+	return (NULL);
 }
 
-void	free_all_cmds(t_cmd *cmds)
+void	*free_all_cmds(t_cmd *cmds)
 {
 	t_cmd	*tmp;
 
@@ -58,4 +58,5 @@ void	free_all_cmds(t_cmd *cmds)
 		free_single_cmd(cmds);
 		cmds = tmp;
 	}
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/19 20:17:38 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:55:52 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static t_token	*tokenize_input(char *input)
 			return (NULL);
 		}
 		add_token(&head, token);
-		// ft_printf(G"value: %s \ntype: %d\n"RST, token->value, token->type);
 	}
 	return (head);
 }
