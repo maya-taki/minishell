@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 13:18:18 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:56:53 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,8 @@ int				get_exit_status(int status);
 
 int				get_sign_and_advance(const char **str);
 long			get_max_digit(int sign);
-int				check_overflow_and_add(long *result, long digit, long max_digit);
+int				check_overflow_and_add(long *result,
+					long digit, long max_digit);
 void			print_exit_error(const char *arg);
 int				handle_no_arg_exit(t_shell *shell);
 int				handle_invalid_arg_exit(t_shell *shell);

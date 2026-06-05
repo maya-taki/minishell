@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:33:26 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:17:10 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ void	write_line(char *line, int fd)
 	write(fd, "\n", 1);
 }
 
-
 void	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 {
 	char	*line;
 	char	*expanded;
-	
+
 	while (1)
 	{
 		line = readline("> ");
@@ -61,7 +60,7 @@ void	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 
 int	handle_heredoc(char *delimiter, t_shell *shell)
 {
-	int 	fd[2];
+	int		fd[2];
 	int		expand;
 	char	*clean_delimiter;
 

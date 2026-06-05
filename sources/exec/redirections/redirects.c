@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 13:38:23 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:17:59 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,24 @@ int	open_file(int *fd_ptr, char *path, int flags)
 	return (0);
 }
 
-static int handle_redir(t_shell *shell, t_redir *redir)
+static int	handle_redir(t_shell *shell, t_redir *redir)
 {
 	if (redir->type == TOKEN_REDIR_OUT)
 	{
-		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_TRUNC))
+		if (open_file(&shell->std_out, redir->file,
+				O_WRONLY | O_CREAT | O_TRUNC))
 			return (0);
 	}
 	else if (redir->type == TOKEN_REDIR_APPEND)
 	{
-		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_APPEND))
+		if (open_file(&shell->std_out, redir->file,
+				O_WRONLY | O_CREAT | O_APPEND))
 			return (0);
 	}
 	else if (redir->type == TOKEN_REDIR_IN)
 	{
-		if (open_file(&shell->std_in, redir->file, O_RDONLY))
+		if (open_file(&shell->std_in, redir->file,
+				O_RDONLY))
 			return (0);
 	}
 	else if (redir->type == TOKEN_HEREDOC)
@@ -58,7 +61,6 @@ int	apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell)
 	(void)token;
 	if (!init_cmd || !*init_cmd)
 		return (0);
-	
 	cmd = *init_cmd;
 	if (!cmd->redirs)
 		return (0);
