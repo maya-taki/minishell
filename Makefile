@@ -39,6 +39,8 @@ SRC				= \
 					sources/exec/redirections/redirects.c \
 					sources/exec/redirections/heredoc.c \
 					sources/exec/exec.c \
+					sources/exec/exec_fork.c \
+					sources/exec/exec_child.c \
 					sources/exec/builtin/builtin_cd.c \
 					sources/exec/builtin/builtin_echo.c \
 					sources/exec/builtin/builtin_pwd.c \
@@ -47,11 +49,14 @@ SRC				= \
 					sources/exec/builtin/builtin_env.c \
 					sources/exec/builtin/builtin_exit.c \
 					sources/utils/error_utils.c \
-						sources/utils/export_utils.c \
+					sources/utils/export_utils.c \
+					sources/utils/exit_utils.c \
 					sources/utils/env_utils.c \
 					sources/utils/cd_utils.c \
+					sources/utils/fork_utils.c \
 					sources/clean/clear.c \
-					sources/clean/free_init.c
+					sources/clean/free_init.c \
+					sources/clean/free_exec.c
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
@@ -117,6 +122,7 @@ TEST_EXEC_NAME = test_exec_builtins
 test-exec-builtins: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXEC) \
 		sources/exec/exec.c \
+		sources/exec/exec_fork.c \
 		sources/exec/builtin/builtin_cd.c \
 		sources/exec/builtin/builtin_echo.c \
 		sources/exec/builtin/builtin_pwd.c \

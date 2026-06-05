@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 23:22:33 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 03:45:31 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ int	handle_error(t_error_type error, char *cmd, char *context)
 	ft_putstr_fd("\n"RST, STDERR_FILENO);
 	return (1);
 }
-

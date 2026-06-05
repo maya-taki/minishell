@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 06:06:23 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:14:37 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ void			swap_env_nodes(t_env **a, t_env **b);
 void			sort_env_array(t_env **array, int count);
 void			print_escaped_value(char *value);
 void			print_export_entry(t_env *node);
+int				get_sign_and_advance(const char **str);
+long			get_max_digit(int sign);
+int				check_overflow_and_add(long *result, long digit, long max_digit);
+void			print_exit_error(const char *arg);
+int				handle_no_arg_exit(t_shell *shell);
+int				handle_invalid_arg_exit(t_shell *shell);
 
 /*###INIT###*/
 t_cmd			*init_cmd(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: copilot <copilot@example.com>               +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/04 23:00:00 by copilot          #+#    #+#             */
-/*   Updated: 2026/06/04 23:00:00 by copilot         ###   ########.fr       */
+/*   Created: 2026/06/05 03:44:23 by osousa-d          #+#    #+#             */
+/*   Updated: 2026/06/05 03:44:28 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	count_env_vars(t_env *env)
 
 void	swap_env_nodes(t_env **a, t_env **b)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -36,9 +36,9 @@ void	swap_env_nodes(t_env **a, t_env **b)
 
 void	sort_env_array(t_env **array, int count)
 {
-	int i;
-	int j;
-	int min;
+	int	i;
+	int	j;
+	int	min;
 
 	i = 0;
 	while (i < count)
