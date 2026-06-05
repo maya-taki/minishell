@@ -6,46 +6,70 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 21:28:17 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:55:29 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-static int	handle_append(t_token *tmp, t_shell *shell) // >>
+int	open_file(int *fd_ptr, char *path, int flags)
 {
-	if (open_file(&shell->std_out, tmp->next->value,
-			O_WRONLY | O_CREAT | O_APPEND))
-		return (0);
-	return (1);
+	if (*fd_ptr > 2)
+		close(*fd_ptr);
+	*fd_ptr = open(path, flags, 0644);
+	if (*fd_ptr == -1)
+	{
+		perror(path);
+		return (1);
+	}
+	return (0);
 }
 
-static int	handle_output(t_token *tmp, t_shell *shell) // >
+static int handle_redirections(t_shell *shell, t_redir *redir)
 {
-	if (open_file(&shell->std_out, tmp->next->value,
-			O_WRONLY | O_CREAT | O_TRUNC))
-		return (0);
-	return (1);
+	if (redir->type == TOKEN_REDIR_OUT)
+	{
+		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_TRUNC))
+			return (1);
+	}
+	else if (redir->type == TOKEN_REDIR_APPEND)
+	{
+		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_APPEND))
+			return (1);
+	}
+	else if (redir->type == TOKEN_REDIR_IN)
+	{
+		if (open_file(&shell->std_in, redir->file, O_RDONLY))
+			return (1);
+	}
+	else if (redir->type == TOKEN_HEREDOC)
+	{
+		if (handle_heredoc(redir->file, shell) != 0)
+			return (1);
+	}
+	return (0);
 }
 
-static int	handle_input(t_token *tmp, t_shell *shell) // <
+int	redirections(t_token *token, t_cmd **init_cmd, t_shell *shell)
 {
-	if (open_file(&shell->std_in, tmp->next->value,
-			O_RDONLY))
-		return (0);
-	return (1);
-}
+	t_redir	*redir;
+	t_cmd	*cmd;
 
-int	handle_redirection(t_token *token, t_cmd **init_cmd, t_shell *shell)
-{
-	(void)init_cmd;
-	if (token->type == TOKEN_REDIR_OUT)
-		return (handle_output(token, shell));
-	else if (token->type == TOKEN_REDIR_APPEND)
-		return (handle_append(token, shell));
-	else if (token->type == TOKEN_REDIR_IN)
-		return (handle_input(token, shell));
-	else if (token->type == TOKEN_HEREDOC)
-		return (handle_heredoc(token->next->value, shell));
-	return (1);
+	(void)token;
+	if (!init_cmd || !*init_cmd)
+		return (0);
+	
+	cmd = *init_cmd;
+	if (!cmd->redirs)
+		return (0);
+	
+	redir = cmd->redirs;
+	while (redir)
+	{
+		handle_redirections(shell, redir);
+		if (!handle_redirections)
+			return (0);
+		redir = redir->next;
+	}
+	return (0);
 }

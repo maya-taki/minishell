@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 23:12:37 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:24:13 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		shell.cmd = parser(&shell);
-		
-		// if (shell.cmd)
-		// 	execute(&shell); // pwd nao ta pronto
+		if (shell.cmd)
+			execute(&shell); // pwd nao ta pronto
 		// free_all(&shell); // fazer função que limpa tudo
 	}
 	clear_history();

@@ -17,8 +17,8 @@ int	expand_all(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*cur;
 
-	if (!shell)
-		return (1);
+	if (!shell || !cmds)
+		return (0);
 	cur = cmds;
 	while (cur)
 	{

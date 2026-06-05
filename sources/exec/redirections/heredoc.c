@@ -49,7 +49,7 @@ void	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 		}
 		if (expand)
 		{
-			expanded = expand_word(delimiter, shell);
+			expanded = expand_word(line, shell);
 			write_line(expanded, fd);
 			free(expanded);
 		}

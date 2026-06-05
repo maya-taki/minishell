@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 23:10:08 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:53:48 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int				fill_redirs(t_token *seg_start, t_cmd *cmd);
 void			debug_print_cmds(t_cmd *cmds);
 
 /*###EXPANDER###*/
-int				handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
+int				redirections(t_token *token, t_cmd **init_cmd, t_shell *shell);
 int				is_single_quoted(char *arg);
 void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
