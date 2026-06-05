@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 21:45:51 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:14:37 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			debug_print_cmds(t_cmd *cmds);
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 int				handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
-int			handle_heredoc(t_token *delimiter_token, t_cmd *cmd, t_shell *shell);
+int				handle_heredoc(t_token *delimiter_token, t_cmd *cmd, t_shell *shell);
 int				is_single_quoted(char *arg);
 void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
@@ -94,13 +94,19 @@ int				parser_env_line(char *str, char **key, char **value);
 t_env			*create_env_node(char *env_line);
 char			*get_env_var(t_env *env, char *key);
 t_env			*find_env_node(t_env *env, char *key);
-int			set_env_var(t_env **env, char *key, char *value);
+int				set_env_var(t_env **env, char *key, char *value);
 void			update_pwd_env(t_shell *shell, char *old_pwd);
-int			count_env_vars(t_env *env);
+int				count_env_vars(t_env *env);
 void			swap_env_nodes(t_env **a, t_env **b);
 void			sort_env_array(t_env **array, int count);
 void			print_escaped_value(char *value);
 void			print_export_entry(t_env *node);
+int				get_sign_and_advance(const char **str);
+long			get_max_digit(int sign);
+int				check_overflow_and_add(long *result, long digit, long max_digit);
+void			print_exit_error(const char *arg);
+int				handle_no_arg_exit(t_shell *shell);
+int				handle_invalid_arg_exit(t_shell *shell);
 
 /*###INIT###*/
 t_cmd			*init_cmd(void);
@@ -116,12 +122,20 @@ int				builtin_env(t_shell *shell);
 int				builtin_exit(t_shell *shell);
 
 /*###EXEC###*/
-int				exec_builtin(t_shell *shell);
+int				exec_external(t_shell *shell, t_cmd *cmd);
+int				get_exit_status(int status);
+char			**build_envp(t_shell *shell);
+void			exec_child(t_shell *shell, t_cmd *cmd, char *exec_path);
 int				execute(t_shell *shell);
+
+/*###FORK-UTILS###*/
+char			*make_try_path(char *path, char *cmd);
+char			*join_env_line(char *key, char *value);
+void			free_paths(char **paths);
+void			free_child(char *exec_path, char **envp, char **empty_envp);
 
 	// // Exec
 	// t_cmd	*create_test_cmd(void); // remove
-	// int	exec_builtin(t_shell *shell);
 	// int	execute(t_shell *shell);
 
 #endif
