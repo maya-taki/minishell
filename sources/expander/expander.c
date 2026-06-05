@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 20:50:55 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 03:36:01 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,16 @@ int	replace_arg(char **arg_ptr, t_shell *shell)
 
 int	expand_args(t_cmd *cmd, t_shell *shell)
 {
-	int	i;
-	int	ret;
+	int		i;
+	int		ret;
 
 	if (!cmd || !cmd->args)
 		return (0);
 	i = 0;
 	while (cmd->args[i])
 	{
-		ret = replace_arg(&cmd->args[i], shell);
+		cmd->expanded_args = cmd->args;
+		ret = replace_arg(&cmd->expanded_args[i], shell);
 		if (ret != 0)
 			return (ret);
 		i++;

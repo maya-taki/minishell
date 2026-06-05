@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/29 14:05:44 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 03:07:57 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**args;
+	char			**expanded_args;
 	char			*path;
 	t_builtin		builtin;
 	t_redir			*redirs;
