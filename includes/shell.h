@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 13:56:53 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 18:34:58 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define C		"\033[0;36m"
 # define RED	"\033[0;31m"
 # define RST	"\033[0m"
+
+extern sig_atomic_t	g_sigint;
 
 /*---------------------------------------------------------------------------*/
 /*  INIT                                                                     */
@@ -203,5 +205,16 @@ void			free_shell(t_shell *shell);
 void			free_paths(char **paths);
 void			free_child(char *exec_path, char **envp, char **empty_envp);
 void			close_fd(int *fd);
+
+/*---------------------------------------------------------------------------*/
+/*  SIGNALS                                                                  */
+/*---------------------------------------------------------------------------*/
+
+void	handle_sigint(int sig);
+void	setup_exec_signals(void);
+void	setup_signals(void);
+void	setup_child_signals(void);
+void	prompt_event_hook();
+
 
 #endif

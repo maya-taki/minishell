@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:31:46 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 17:48:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_cmd
 	char			**args;
 	char			**expanded_args;
 	char			*path;
+	pid_t			process_pid;
 	t_builtin		builtin;
 	t_redir			*redirs;
 	struct s_cmd	*next;
