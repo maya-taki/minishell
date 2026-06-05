@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:31:33 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:56:08 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,16 +118,11 @@ int				builtin_exit(t_shell *shell);
 
 /*###EXEC###*/
 int				open_file(int *fd_ptr, char *path, int flags);
-void			exec_builtin(t_shell *shell);
-void			execute(t_shell *shell);
+int				exec_builtin(t_shell *shell);
+int				execute(t_shell *shell);
 char			*remove_quotes(char *delimiter);
 void			write_line(char *line, int fd);
 void			heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd);
 int				handle_heredoc(char *delimiter, t_shell *shell);
-
-	// // Exec
-	// t_cmd	*create_test_cmd(void); // remove
-	// int	exec_builtin(t_shell *shell);
-	// int	execute(t_shell *shell);
 
 #endif

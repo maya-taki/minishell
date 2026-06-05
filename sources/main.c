@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:33:02 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:48:34 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		shell.cmd = parser(&shell); //TODO
+		expand_all(shell.cmd, &shell);
 		if (shell.cmd)
 			shell.exit_code = execute(&shell);
 		if (shell.exit_shell)
