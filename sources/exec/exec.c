@@ -3,81 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 06:10:00 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:33:39 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static int	exec_builtin(t_shell *shell);
-static int	exec_cmd(t_shell *shell, t_cmd *cmd);
-static int	handle_cmd(t_shell *shell, t_cmd **cmd);
-
-int	execute(t_shell *shell)
+int	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
-	t_cmd *head;
-	t_cmd *cmd;
-	int status;
-
-	if (!shell)
-		return (1);
-	status = shell->exit_code;
-	if (!shell->cmd)
-		return (status);
-	head = shell->cmd;
-	cmd = shell->cmd;
+	if (cmd->builtin == ECHO)
+		return (builtin_echo(cmd));
+	if (cmd->builtin == PWD)
+		return (builtin_pwd(shell));
+	if (cmd->builtin == CD)
+		return (builtin_cd(shell));
+	if (cmd->builtin == EXPORT)
+		return (builtin_export(shell));
+	if (cmd->builtin == UNSET)
+		return (builtin_unset(shell));
+	if (cmd->builtin == ENV)
+		return (builtin_env(shell));
+	if (cmd->builtin == EXIT)
+		return (builtin_exit(shell));
+	return (1);
+}
+ 
+static int	count_cmds_exec(t_cmd *cmd)
+{
+	int	n;
+ 
+	n = 0;
 	while (cmd)
 	{
-		status = handle_cmd(shell, &cmd);
+		n++;
+		cmd = cmd->next;
 	}
-	shell->cmd = head;
-	return (status);
+	return (n);
 }
 
-static int	handle_cmd(t_shell *shell, t_cmd **cmd)
-{
-	int status;
-
-	status = exec_cmd(shell, *cmd);
-	*cmd = (*cmd)->next;
-	return (status);
-}
-
-static int	exec_cmd(t_shell *shell, t_cmd *cmd)
+static int	run_single(t_shell *shell, t_cmd *cmd)
 {
 	int	status;
 
+	apply_redir(NULL, &cmd, shell);
 	if (cmd->builtin != NONE)
-		status = exec_builtin(shell);
+		status = exec_builtin(shell, cmd);
 	else
 		status = exec_external(shell, cmd);
-	shell->exit_code = status;
+	reset_io(shell);
 	return (status);
 }
-
-static int	exec_builtin(t_shell *shell)
+ 
+int	execute(t_shell *shell)
 {
-	int status;
+	int		status;
+	t_cmd	*head;
 
-	status = 1;
 	if (!shell || !shell->cmd)
-		return (status);
-	if (shell->cmd->builtin == ECHO)
-		status = builtin_echo(shell->cmd);
-	else if (shell->cmd->builtin == PWD)
-		status = builtin_pwd(shell);
-	else if (shell->cmd->builtin == CD)
-		status = builtin_cd(shell);
-	else if (shell->cmd->builtin == EXPORT)
-		status = builtin_export(shell);
-	else if (shell->cmd->builtin == UNSET)
-		status = builtin_unset(shell);
-	else if (shell->cmd->builtin == ENV)
-		status = builtin_env(shell);
-	else if (shell->cmd->builtin == EXIT)
-		status = builtin_exit(shell);
+		return (1);
+	head = shell->cmd;
+	if (count_cmds_exec(shell->cmd) == 1)
+		status = run_single(shell, shell->cmd);
+	else
+		status = exec_pipeline(shell, shell->cmd);
+	shell->cmd = head;
+	shell->exit_code = status;
 	return (status);
 }

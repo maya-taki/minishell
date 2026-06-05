@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:16:17 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:38:23 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,21 @@ static int handle_redir(t_shell *shell, t_redir *redir)
 {
 	if (redir->type == TOKEN_REDIR_OUT)
 	{
-		printf("output\n");
 		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_TRUNC))
 			return (0);
 	}
 	else if (redir->type == TOKEN_REDIR_APPEND)
 	{
-		printf("append\n");
 		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_APPEND))
 			return (0);
 	}
 	else if (redir->type == TOKEN_REDIR_IN)
 	{
-		printf("in\n");
 		if (open_file(&shell->std_in, redir->file, O_RDONLY))
 			return (0);
 	}
 	else if (redir->type == TOKEN_HEREDOC)
 	{
-		printf("heredoc\n");
 		if (handle_heredoc(redir->file, shell) != 0)
 			return (1);
 	}
@@ -66,7 +62,6 @@ int	apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell)
 	cmd = *init_cmd;
 	if (!cmd->redirs)
 		return (0);
-	
 	redir = cmd->redirs;
 	while (redir)
 	{
