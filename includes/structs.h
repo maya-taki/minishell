@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 03:07:57 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:31:46 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_shell
 	char			*input;
 	char			*prompt_str;
 	int				exit_code;
+	int				exit_shell;
 	int				std_out;
 	int				std_in;
 }	t_shell;

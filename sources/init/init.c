@@ -69,6 +69,7 @@ t_cmd	*init_cmd(void)
 	cmd->expanded_args = NULL;
 	cmd->args = NULL;
 	cmd->path = NULL;
+	cmd->builtin = NONE;
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);
@@ -82,6 +83,7 @@ static void	init_shell_values(t_shell *shell)
 	shell->input = NULL;
 	shell->prompt_str = NULL;
 	shell->exit_code = 0;
+	shell->exit_shell = 0;
 	shell->std_in = -1;
 	shell->std_out = -1;
 }

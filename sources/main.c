@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:01:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:33:02 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	t_shell	shell;
 
-	init_shell(&shell, envp);
+	if (!init_shell(&shell, envp))
+		return (1);
 	using_history();
 	while (1)
 	{
@@ -33,12 +33,24 @@ int	main(int argc, char **argv, char **envp)
 			free(shell.tokens);
 			continue ;
 		}
-		shell.cmd = parser(&shell);
-		expand_all(shell.cmd, &shell);
+		shell.cmd = parser(&shell); //TODO
 		if (shell.cmd)
-			execute(&shell); // pwd nao ta pronto
-		// free_all(&shell); // fazer função que limpa tudo
+			shell.exit_code = execute(&shell);
+		if (shell.exit_shell)
+			break ;
+		if (shell.tokens)
+		{
+			free_tokens(shell.tokens);
+			shell.tokens = NULL;
+		}
+		if (shell.cmd)
+		{
+			free_all_cmds(shell.cmd);
+			shell.cmd = NULL;
+		}
+		free_ptr((void **)&shell.input);
 	}
 	clear_history();
+	free_shell(&shell);
 	return (0);
 }

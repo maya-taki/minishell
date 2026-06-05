@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 20:26:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:22:33 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,17 @@ int	handle_error(t_error_type error, char *cmd, char *context)
 	}
 	if (context && error != ERR_SYNTAX)
 	{
+		ft_putstr_fd("'", STDERR_FILENO);
 		ft_putstr_fd(context, STDERR_FILENO);
-		ft_putstr_fd(": " , STDERR_FILENO);
+		ft_putstr_fd("': " , STDERR_FILENO);
 	}
 	ft_putstr_fd((char *)msg, STDERR_FILENO);
 	if (context && error == ERR_SYNTAX)
+	{
+		ft_putstr_fd(" '", STDERR_FILENO);
 		ft_putstr_fd(context, STDERR_FILENO);
+		ft_putstr_fd("'", STDERR_FILENO);
+	}
 	ft_putstr_fd("\n"RST, STDERR_FILENO);
 	return (1);
 }

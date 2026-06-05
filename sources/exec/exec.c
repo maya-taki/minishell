@@ -3,30 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/25 01:07:45 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/06/04 20:20:11 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-void	exec_builtin(t_shell *shell)
+int	exec_builtin(t_shell *shell)
 {
-	// decide qual func_builtin chamar
+	int	status;
+
+	status = 1;
+	if (!shell || !shell->cmd)
+		return (status);
 	if (shell->cmd->builtin == ECHO)
-		builtin_echo(shell->cmd);
+		status = builtin_echo(shell->cmd);
 	else if (shell->cmd->builtin == PWD)
-		builtin_pwd();
+		status = builtin_pwd(shell);
 	else if (shell->cmd->builtin == CD)
-		builtin_cd(shell);
+		status = builtin_cd(shell);
+	else if (shell->cmd->builtin == EXPORT)
+		status = builtin_export(shell);
+	else if (shell->cmd->builtin == UNSET)
+		status = builtin_unset(shell);
+	else if (shell->cmd->builtin == ENV)
+		status = builtin_env(shell);
+	else if (shell->cmd->builtin == EXIT)
+		status = builtin_exit(shell);
+	return (status);
 }
 
-void	execute(t_shell *shell)
+int	execute(t_shell *shell)
 {
-	if (shell->cmd->builtin != NONE)
-		exec_builtin(shell);
-	// else
-	// 	exec_external(cmd);
+	t_cmd	*head;
+	t_cmd	*cmd;
+	int		status;
+
+	if (!shell)
+		return (1);
+	status = shell->exit_code;
+	if (!shell->cmd)
+		return (status);
+	head = shell->cmd;
+	cmd = shell->cmd;
+	while (cmd)
+	{
+		shell->cmd = cmd;
+		if (cmd->builtin != NONE)
+		{
+			status = exec_builtin(shell);
+			shell->exit_code = status;
+		}
+		if (shell->exit_shell)
+			break ;
+		cmd = cmd->next;
+	}
+	shell->cmd = head;
+	return (status);
 }
