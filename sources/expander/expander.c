@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 05:46:38 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:06:35 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*expand_word(const char *src, t_shell *shell)
 		return (NULL);
 	while (src[i])
 	{
-		update_quote_state_iterate(src, &state, &i);
+		update_quote_state_i(src, &state, &i);
 		if (src[i] == '$' && state != QUOTE_SINGLE)
 		{
 			i++;

@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 05:49:52 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:06:23 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int				fill_args(t_token *seg_start, t_cmd *cmd);
 int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
 int				fill_redirs(t_token *seg_start, t_cmd *cmd);
 void			debug_print_cmds(t_cmd *cmds);
+void			set_builtin(t_cmd *cmd);
+
 
 /*###EXPANDER###*/
 int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
@@ -79,6 +81,8 @@ char			*append_str(char *dest, const char *src);
 char			*expand_word(const char *src, t_shell *shell);
 int				expand_args(t_cmd *cmd, t_shell *shell);
 int				expand_redirs(t_cmd *cmd, t_shell *shell);
+int				replace_arg(char **arg_ptr, t_shell *shell);
+
 
 /*###CLEAN###*/
 void			free_ptr(void **ptr);

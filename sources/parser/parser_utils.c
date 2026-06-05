@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 05:36:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:08:03 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	is_redir(t_token *token)
 		|| token->type == TOKEN_REDIR_IN);
 }
 
-static void	set_builtin(t_cmd *cmd)
+void	set_builtin(t_cmd *cmd)
 {
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return ;
@@ -95,7 +95,10 @@ void	debug_print_cmds(t_cmd *cmds)
 		if (cmds->args)
 		{
 			while (cmds->args[i])
-				ft_printf("  arg[%d]: %s\n", i, cmds->args[i++]);
+			{
+				ft_printf("  arg[%d]: %s\n", i, cmds->args[i]);
+				i++;
+			}
 		}
 		r = cmds->redirs;
 		while (r)
