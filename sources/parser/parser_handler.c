@@ -6,16 +6,11 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 19:37:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 05:34:57 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:02:59 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-int	fill_args(t_token *seg_start, t_cmd *cmd);
-int	fill_redirs(t_token *seg_start, t_cmd *cmd);
-int	add_args(t_token *seg_start, t_cmd *cmd);
-int	add_redirs(t_token_type type, char *file, t_cmd *cmd);
 
 t_cmd	*parser_handler(t_token *seg_start)
 {
