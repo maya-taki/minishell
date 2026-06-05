@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/27 21:55:52 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 22:40:27 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static t_token	*tokenize_input(char *input)
 	while (input[i])
 	{
 		if (is_space(input[i]))
+		{
 			i++;
+			continue ;
+		}
 		token = read_token(input, &i);
 		if (!token)
 		{
@@ -51,10 +54,10 @@ t_token	*lexer(char *input)
 	if (is_input_valid(input) != 0)
 	{
 		ft_printf(RED"minishell: command not allowed\n"RST);
-		free(input);
+		// free(input);
 		return (NULL);
 	}
 	tokens = tokenize_input(input);
-	free(input);
+	// free(input);,0
 	return (tokens);
 }

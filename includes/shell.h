@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 21:34:50 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:10:08 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int				is_single_quoted(char *arg);
 void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
 char			*append_char(char *dest, char c);
+int				expand_all(t_cmd *cmds, t_shell *shell);
 char			*append_str(char *dest, const char *src);
 char			*expand_word(const char *src, t_shell *shell);
 int				expand_args(t_cmd *cmd, t_shell *shell);
