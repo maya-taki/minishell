@@ -6,13 +6,27 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 17:27:46 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 17:28:53 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 05:47:43 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-void	update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i)
+int	replace_arg(char **arg_ptr, t_shell *shell)
+{
+	char	*old;
+	char	*expanded;
+
+	old = *arg_ptr;
+	expanded = expand_word(old, shell);
+	if (!expanded)
+		return (ERR_MALLOC);
+	free(old);
+	*arg_ptr = expanded;
+	return (0);
+}
+
+void	update_quote_state_i(const char *src, t_quote_state *state, size_t *i)
 {
 	if (src[*i] == '\'' && *state == QUOTE_NONE)
 	{
@@ -53,7 +67,7 @@ char	*get_env_value(t_env *env, const char *name)
 int	is_single_quoted(char *arg)
 {
 	t_quote_state	state;
-	int			i;
+	int				i;
 
 	if (!arg)
 		return (1);

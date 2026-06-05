@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:56:08 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:06:23 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,14 @@ int				fill_args(t_token *seg_start, t_cmd *cmd);
 int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
 int				fill_redirs(t_token *seg_start, t_cmd *cmd);
 void			debug_print_cmds(t_cmd *cmds);
+void			set_builtin(t_cmd *cmd);
+
 
 /*###EXPANDER###*/
 int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
 int				is_single_quoted(char *arg);
-void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
+void			update_quote_state_i(const char *src,
+					t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
 char			*append_char(char *dest, char c);
 void			expand_all(t_cmd *cmds, t_shell *shell);
@@ -78,6 +81,8 @@ char			*append_str(char *dest, const char *src);
 char			*expand_word(const char *src, t_shell *shell);
 int				expand_args(t_cmd *cmd, t_shell *shell);
 int				expand_redirs(t_cmd *cmd, t_shell *shell);
+int				replace_arg(char **arg_ptr, t_shell *shell);
+
 
 /*###CLEAN###*/
 void			free_ptr(void **ptr);
@@ -95,9 +100,9 @@ int				parser_env_line(char *str, char **key, char **value);
 t_env			*create_env_node(char *env_line);
 char			*get_env_var(t_env *env, char *key);
 t_env			*find_env_node(t_env *env, char *key);
-int			set_env_var(t_env **env, char *key, char *value);
+int				set_env_var(t_env **env, char *key, char *value);
 void			update_pwd_env(t_shell *shell, char *old_pwd);
-int			count_env_vars(t_env *env);
+int				count_env_vars(t_env *env);
 void			swap_env_nodes(t_env **a, t_env **b);
 void			sort_env_array(t_env **array, int count);
 void			print_escaped_value(char *value);
@@ -122,7 +127,8 @@ int				exec_builtin(t_shell *shell);
 int				execute(t_shell *shell);
 char			*remove_quotes(char *delimiter);
 void			write_line(char *line, int fd);
-void			heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd);
+void			heredoc_loop(char *delimiter, int expand,
+					t_shell *shell, int fd);
 int				handle_heredoc(char *delimiter, t_shell *shell);
 
 #endif
