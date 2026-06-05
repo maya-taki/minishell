@@ -37,7 +37,6 @@ SRC				= \
 					sources/expander/expander.c \
 					sources/exec/redirections/redirects.c \
 					sources/exec/redirections/heredoc.c \
-					sources/exec/redirections/redir_utils.c \
 					sources/exec/exec.c \
 					sources/exec/builtin/builtin_cd.c \
 					sources/exec/builtin/builtin_echo.c \

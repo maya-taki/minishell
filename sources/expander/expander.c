@@ -6,29 +6,28 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 03:36:01 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:13:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
 
-int	expand_all(t_cmd *cmds, t_shell *shell)
+void	expand_all(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*cur;
 
 	if (!shell || !cmds)
-		return (0);
+		return ;
 	cur = cmds;
 	while (cur)
 	{
 		if (expand_args(cur, shell) != 0)
-			return (ERR_MALLOC);
+			return ;
 		if (expand_redirs(cur, shell) != 0)
-			return (ERR_MALLOC);
+			return ;
 		cur = cur->next;
 	}
-	return (0);
 }
 
 int	replace_arg(char **arg_ptr, t_shell *shell)
@@ -53,9 +52,9 @@ int	expand_args(t_cmd *cmd, t_shell *shell)
 	if (!cmd || !cmd->args)
 		return (0);
 	i = 0;
-	while (cmd->args[i])
+	cmd->expanded_args = cmd->args;
+	while (cmd->expanded_args[i])
 	{
-		cmd->expanded_args = cmd->args;
 		ret = replace_arg(&cmd->expanded_args[i], shell);
 		if (ret != 0)
 			return (ret);

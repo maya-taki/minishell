@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 23:24:13 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:01:21 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int	main(int argc, char **argv, char **envp)
 		if (!shell.tokens)
 		{
 			free(shell.tokens);
-			break ;
+			continue ;
 		}
 		shell.cmd = parser(&shell);
+		expand_all(shell.cmd, &shell);
 		if (shell.cmd)
 			execute(&shell); // pwd nao ta pronto
 		// free_all(&shell); // fazer função que limpa tudo
