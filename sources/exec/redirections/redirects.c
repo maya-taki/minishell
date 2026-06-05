@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 23:55:29 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 23:59:40 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ static int handle_redirections(t_shell *shell, t_redir *redir)
 	if (redir->type == TOKEN_REDIR_OUT)
 	{
 		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_TRUNC))
-			return (1);
+			return (0);
 	}
 	else if (redir->type == TOKEN_REDIR_APPEND)
 	{
 		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_APPEND))
-			return (1);
+			return (0);
 	}
 	else if (redir->type == TOKEN_REDIR_IN)
 	{
 		if (open_file(&shell->std_in, redir->file, O_RDONLY))
-			return (1);
+			return (0);
 	}
 	else if (redir->type == TOKEN_HEREDOC)
 	{
@@ -66,8 +66,7 @@ int	redirections(t_token *token, t_cmd **init_cmd, t_shell *shell)
 	redir = cmd->redirs;
 	while (redir)
 	{
-		handle_redirections(shell, redir);
-		if (!handle_redirections)
+		if (!handle_redirections(shell, redir) != 0)
 			return (0);
 		redir = redir->next;
 	}
