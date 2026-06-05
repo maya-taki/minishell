@@ -6,18 +6,12 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 18:48:00 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 20:50:55 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-char	*expand_word(const char *src, t_shell *shell);
-static char	*expand_dollar(const char *src, size_t *i, t_shell *shell, char *result);
-char	*append_char(char *dest, char c);
-char	*append_str(char *dest, const char *src);
-int	expand_args(t_cmd *cmd, t_shell *shell);
-int	expand_redirs(t_cmd *cmd, t_shell *shell);
 
 int	expand_all(t_cmd *cmds, t_shell *shell)
 {

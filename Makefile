@@ -77,6 +77,9 @@ fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
 
+libft: $(LIBFT)
+	
+
 re: fclean all
 
 TEST_EXPANDER = tests/test_expander.c
@@ -93,6 +96,6 @@ test-redirects: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_REDIRECTS) sources/exec/redirections/redirects.c $(LIB_FLAGS) -o $(TEST_REDIRECTS_NAME)
 
 test-heredoc-utils: $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_HEREDOC) sources/exec/redirections/heredoc.c $(LIB_FLAGS) -o $(TEST_HEREDOC_NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_HEREDOC) sources/exec/redirections/heredoc.c sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c $(LIB_FLAGS) -o $(TEST_HEREDOC_NAME)
 
 .PHONY: norminette make fclean clean re test-expander test-redirects test-heredoc-utils
