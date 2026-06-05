@@ -28,7 +28,13 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		add_history(shell.input);
 		shell.tokens = lexer(shell.input);
-		shell.cmd = parser(&shell);
+		if (!shell.tokens)
+		{
+			free(shell.tokens);
+			continue ;
+		}
+		shell.cmd = parser(&shell); //TODO
+		expand_all(shell.cmd, &shell);
 		if (shell.cmd)
 			shell.exit_code = execute(&shell);
 		if (shell.exit_shell)

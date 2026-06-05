@@ -6,15 +6,11 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 14:38:01 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/29 14:11:31 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:08:03 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-int		count_words(t_token *token);
-int		count_cmds(t_token *token_list);
-int		open_file(int *fd_ptr, char *path, int flags);
 
 int	count_cmds(t_token *token_list)
 {
@@ -63,6 +59,28 @@ int	is_redir(t_token *token)
 		|| token->type == TOKEN_REDIR_IN);
 }
 
+void	set_builtin(t_cmd *cmd)
+{
+	if (!cmd || !cmd->args || !cmd->args[0])
+		return ;
+	if (ft_strcmp(cmd->args[0], "echo") == 0)
+		cmd->builtin = ECHO;
+	else if (ft_strcmp(cmd->args[0], "cd") == 0)
+		cmd->builtin = CD;
+	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
+		cmd->builtin = PWD;
+	else if (ft_strcmp(cmd->args[0], "export") == 0)
+		cmd->builtin = EXPORT;
+	else if (ft_strcmp(cmd->args[0], "unset") == 0)
+		cmd->builtin = UNSET;
+	else if (ft_strcmp(cmd->args[0], "env") == 0)
+		cmd->builtin = ENV;
+	else if (ft_strcmp(cmd->args[0], "exit") == 0)
+		cmd->builtin = EXIT;
+	else
+		cmd->builtin = NONE;
+}
+
 void	debug_print_cmds(t_cmd *cmds)
 {
 	int		i;
@@ -79,7 +97,7 @@ void	debug_print_cmds(t_cmd *cmds)
 			while (cmds->args[i])
 			{
 				ft_printf("  arg[%d]: %s\n", i, cmds->args[i]);
-					i++;
+				i++;
 			}
 		}
 		r = cmds->redirs;

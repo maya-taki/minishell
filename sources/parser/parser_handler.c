@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 19:37:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 17:38:57 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:02:59 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-int	fill_args(t_token *seg_start, t_cmd *cmd);
-int	fill_redirs(t_token *seg_start, t_cmd *cmd);
-int	add_args(t_token *seg_start, t_cmd *cmd);
-int	add_redirs(t_token_type type, char *file, t_cmd *cmd);
-
-static void	set_builtin(t_cmd *cmd)
-{
-	if (!cmd || !cmd->args || !cmd->args[0])
-		return ;
-	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		cmd->builtin = ECHO;
-	else if (ft_strcmp(cmd->args[0], "cd") == 0)
-		cmd->builtin = CD;
-	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		cmd->builtin = PWD;
-	else if (ft_strcmp(cmd->args[0], "export") == 0)
-		cmd->builtin = EXPORT;
-	else if (ft_strcmp(cmd->args[0], "unset") == 0)
-		cmd->builtin = UNSET;
-	else if (ft_strcmp(cmd->args[0], "env") == 0)
-		cmd->builtin = ENV;
-	else if (ft_strcmp(cmd->args[0], "exit") == 0)
-		cmd->builtin = EXIT;
-	else
-		cmd->builtin = NONE;
-}
 
 t_cmd	*parser_handler(t_token *seg_start)
 {

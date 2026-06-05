@@ -6,49 +6,27 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 18:48:00 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 06:06:35 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-char	*expand_word(const char *src, t_shell *shell);
-static char	*expand_dollar(const char *src, size_t *i, t_shell *shell, char *result);
-char	*append_char(char *dest, char c);
-char	*append_str(char *dest, const char *src);
-int	expand_args(t_cmd *cmd, t_shell *shell);
-int	expand_redirs(t_cmd *cmd, t_shell *shell);
-
-int	expand_all(t_cmd *cmds, t_shell *shell)
+void	expand_all(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*cur;
 
-	if (!shell)
-		return (1);
+	if (!shell || !cmds)
+		return ;
 	cur = cmds;
 	while (cur)
 	{
 		if (expand_args(cur, shell) != 0)
-			return (ERR_MALLOC);
+			return ;
 		if (expand_redirs(cur, shell) != 0)
-			return (ERR_MALLOC);
+			return ;
 		cur = cur->next;
 	}
-	return (0);
-}
-
-int	replace_arg(char **arg_ptr, t_shell *shell)
-{
-	char	*old;
-	char	*expanded;
-
-	old = *arg_ptr;
-	expanded = expand_word(old, shell);
-	if (!expanded)
-		return (ERR_MALLOC);
-	free(old);
-	*arg_ptr = expanded;
-	return (0);
 }
 
 int	expand_args(t_cmd *cmd, t_shell *shell)
@@ -59,9 +37,10 @@ int	expand_args(t_cmd *cmd, t_shell *shell)
 	if (!cmd || !cmd->args)
 		return (0);
 	i = 0;
-	while (cmd->args[i])
+	cmd->expanded_args = cmd->args;
+	while (cmd->expanded_args[i])
 	{
-		ret = replace_arg(&cmd->args[i], shell);
+		ret = replace_arg(&cmd->expanded_args[i], shell);
 		if (ret != 0)
 			return (ret);
 		i++;
@@ -92,44 +71,52 @@ int	expand_redirs(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-static char	*expand_dollar(const char *src, size_t *i, t_shell *shell, char *result)
+static char	*expand_dol(const char *src, size_t *i, t_shell *shell, char *res)
 {
-	size_t start = *i;
-	char *code, *tmp;
+	size_t	start;
+	char	*tmp;
+	char	*code;
+
+	start = *i;
 	if (src[*i] == '?')
 	{
 		code = ft_itoa(shell->exit_code);
 		if (!code)
-			return (free(result), NULL);
-		result = append_str(result, code);
+			return (free(res), NULL);
+		res = append_str(res, code);
 		free(code);
-		return ((*i)++, result);
+		return ((*i)++, res);
 	}
 	while (src[*i] && (ft_isalnum(src[*i]) || src[*i] == '_'))
 		(*i)++;
 	if (*i == start)
-		return (append_char(result, '$'));
-	if (!(tmp = ft_substr(src, start, *i - start)))
-		return (free(result), NULL);
-	result = append_str(result, get_env_value(shell->env, tmp));
+		return (append_char(res, '$'));
+	tmp = ft_substr(src, start, *i - start);
+	if (!tmp)
+		return (free(res), NULL);
+	res = append_str(res, get_env_value(shell->env, tmp));
 	free(tmp);
-	return (result);
+	return (res);
 }
 
 char	*expand_word(const char *src, t_shell *shell)
 {
-	size_t i = 0;
-	t_quote_state state = QUOTE_NONE;
-	char *result;
-	if (!src || !shell || !(result = ft_strdup("")))
+	size_t			i;
+	t_quote_state	state;
+	char			*result;
+
+	state = QUOTE_NONE;
+	i = 0;
+	result = ft_strdup("");
+	if (!src || !shell || !result)
 		return (NULL);
 	while (src[i])
 	{
-		update_quote_state_iterate(src, &state, &i);
+		update_quote_state_i(src, &state, &i);
 		if (src[i] == '$' && state != QUOTE_SINGLE)
 		{
 			i++;
-			result = expand_dollar(src, &i, shell, result);
+			result = expand_dol(src, &i, shell, result);
 		}
 		else
 			result = append_char(result, src[i++]);
@@ -137,54 +124,4 @@ char	*expand_word(const char *src, t_shell *shell)
 			return (NULL);
 	}
 	return (result);
-}
-
-char	*append_char(char *dest, char c)
-{
-	char	*new_dest;
-	int		dest_l;
-
-	if (!dest)
-	{
-		new_dest = malloc(2);
-		if (!new_dest)
-			return (NULL);
-		new_dest[0] = c;
-		new_dest[1] = '\0';
-		return (new_dest);
-	}
-	dest_l = ft_strlen(dest);
-	new_dest = malloc(dest_l + 2);
-	if (!new_dest)
-		return (NULL);
-	memcpy(new_dest, dest, dest_l);
-	new_dest[dest_l] = c;
-	new_dest[dest_l + 1] = '\0';
-	free(dest);
-	return (new_dest);
-}
-
-char	*append_str(char *dest, const char *src)
-{
-	size_t		dest_l;
-	size_t		src_l;
-	char		*new_dest;
-
-	if (!src)
-		return (dest);
-	if (!dest)
-	{
-		new_dest = ft_strdup(src);
-		return (new_dest);
-	}
-	dest_l = ft_strlen(dest);
-	src_l = ft_strlen(src);
-	new_dest = malloc(dest_l + src_l + 1);
-	if (!new_dest)
-		return (NULL);
-	ft_memcpy(new_dest, dest, dest_l);
-	ft_memcpy(new_dest + dest_l, src, src_l);
-	new_dest[dest_l + src_l] = '\0';
-	free(dest);
-	return (new_dest);
 }
