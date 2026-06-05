@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 21:01:56 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:33:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,53 @@ char	*remove_quotes(char *delimiter)
 	return (ft_strdup(delimiter));
 }
 
-void	write_lines(char *line, int fd)
+void	write_line(char *line, int fd)
 {
 	write(fd, line, ft_strlen(line));
 	write(fd, "\n", 1);
 }
 
-void	heredoc_loop();
 
-int	handle_heredoc(t_token *delimiter_token, t_cmd *cmd, t_shell *shell)
+void	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 {
-	(void)delimiter_token;
-	(void)cmd;
-	(void)shell;
-	/* stub implementation: heredoc not fully implemented yet */
-	return (1);
+	char	*line;
+	char	*expanded;
+	
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			break ;
+		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+		{
+			free(line);
+			break ;
+		}
+		if (expand)
+		{
+			expanded = expand_word(line, shell);
+			write_line(expanded, fd);
+			free(expanded);
+		}
+		else
+			write_line(line, fd);
+		free(line);
+	}
+}
+
+int	handle_heredoc(char *delimiter, t_shell *shell)
+{
+	int 	fd[2];
+	int		expand;
+	char	*clean_delimiter;
+
+	if (pipe(fd) == -1)
+		return (perror("pipe"), 1);
+	expand = !is_single_quoted(delimiter);
+	clean_delimiter = remove_quotes(delimiter);
+	heredoc_loop(delimiter, expand, shell, fd[1]);
+	close(fd[1]);
+	shell->std_in = fd[0];
+	free(clean_delimiter);
+	return (0);
 }

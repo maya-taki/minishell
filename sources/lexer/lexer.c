@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:11:10 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 22:08:21 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:33:33 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static t_token	*tokenize_input(char *input)
 	while (input[i])
 	{
 		if (is_space(input[i]))
+		{
 			i++;
+			continue ;
+		}
 		token = read_token(input, &i);
 		if (!token)
 		{

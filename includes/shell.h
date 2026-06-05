@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/04 21:45:51 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:56:08 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ void			*free_all_cmds(t_cmd *cmds);
 void			free_redir(t_redir *redirect);
 t_cmd			*parser_handler(t_token *seg_start);
 t_cmd			*parser(t_shell *shell);
-
 int				add_args(t_token *seg_start, t_cmd *cmd);
 int				fill_args(t_token *seg_start, t_cmd *cmd);
 int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
 int				fill_redirs(t_token *seg_start, t_cmd *cmd);
 void			debug_print_cmds(t_cmd *cmds);
 
-
 /*###EXPANDER###*/
-int				open_file(int *fd_ptr, char *path, int flags);
-int				handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
-int			handle_heredoc(t_token *delimiter_token, t_cmd *cmd, t_shell *shell);
+int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
 int				is_single_quoted(char *arg);
 void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
-
+char			*append_char(char *dest, char c);
+void			expand_all(t_cmd *cmds, t_shell *shell);
+char			*append_str(char *dest, const char *src);
+char			*expand_word(const char *src, t_shell *shell);
+int				expand_args(t_cmd *cmd, t_shell *shell);
+int				expand_redirs(t_cmd *cmd, t_shell *shell);
 
 /*###CLEAN###*/
 void			free_ptr(void **ptr);
@@ -116,12 +117,12 @@ int				builtin_env(t_shell *shell);
 int				builtin_exit(t_shell *shell);
 
 /*###EXEC###*/
+int				open_file(int *fd_ptr, char *path, int flags);
 int				exec_builtin(t_shell *shell);
 int				execute(t_shell *shell);
-
-	// // Exec
-	// t_cmd	*create_test_cmd(void); // remove
-	// int	exec_builtin(t_shell *shell);
-	// int	execute(t_shell *shell);
+char			*remove_quotes(char *delimiter);
+void			write_line(char *line, int fd);
+void			heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd);
+int				handle_heredoc(char *delimiter, t_shell *shell);
 
 #endif

@@ -6,53 +6,73 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 19:22:32 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:16:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shell.h"
+#include "../../../includes/shell.h"
 
-static int	handle_append(t_token *tmp, t_shell *shell) // >>
+int	open_file(int *fd_ptr, char *path, int flags)
 {
-	if (open_file(&shell->std_out, tmp->next->value,
-			O_WRONLY | O_CREAT | O_APPEND))
-		return (0);
-	return (1);
+	if (*fd_ptr > 2)
+		close(*fd_ptr);
+	*fd_ptr = open(path, flags, 0644);
+	if (*fd_ptr == -1)
+	{
+		perror(path);
+		return (1);
+	}
+	return (0);
 }
 
-static int	handle_output(t_token *tmp, t_shell *shell) // >
+static int handle_redir(t_shell *shell, t_redir *redir)
 {
-	if (open_file(&shell->std_out, tmp->next->value,
-			O_WRONLY | O_CREAT | O_TRUNC))
-		return (0);
-	return (1);
+	if (redir->type == TOKEN_REDIR_OUT)
+	{
+		printf("output\n");
+		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_TRUNC))
+			return (0);
+	}
+	else if (redir->type == TOKEN_REDIR_APPEND)
+	{
+		printf("append\n");
+		if (open_file(&shell->std_out, redir->file, O_WRONLY | O_CREAT | O_APPEND))
+			return (0);
+	}
+	else if (redir->type == TOKEN_REDIR_IN)
+	{
+		printf("in\n");
+		if (open_file(&shell->std_in, redir->file, O_RDONLY))
+			return (0);
+	}
+	else if (redir->type == TOKEN_HEREDOC)
+	{
+		printf("heredoc\n");
+		if (handle_heredoc(redir->file, shell) != 0)
+			return (1);
+	}
+	return (0);
 }
 
-static int	handle_input(t_token *tmp, t_shell *shell) // <
+int	apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell)
 {
-	if (open_file(&shell->std_in, tmp->next->value,
-			O_RDONLY))
-		return (0);
-	return (1);
-}
+	t_redir	*redir;
+	t_cmd	*cmd;
 
-// static int	handle_heredoc(char *delimiter, t_cmd **cmd, t_shell *shell)
-// {
+	(void)token;
+	if (!init_cmd || !*init_cmd)
+		return (0);
 	
-// 	if (open_file( O_WRONLY, O_CREAT, O_APPEND))
-
-// }
-
-int	handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell)
-{
-	(void)init_cmd;
-	if (token->type == TOKEN_REDIR_OUT)
-		return (handle_output(token, shell));
-	else if (token->type == TOKEN_REDIR_APPEND)
-		return (handle_append(token, shell));
-	else if (token->type == TOKEN_REDIR_IN)
-		return (handle_input(token, shell));
-	else if (token->type == TOKEN_HEREDOC)
-		return (handle_heredoc(token->next->next, *init_cmd, shell));
-	return (1);
+	cmd = *init_cmd;
+	if (!cmd->redirs)
+		return (0);
+	
+	redir = cmd->redirs;
+	while (redir)
+	{
+		if (handle_redir(shell, redir) != 0)
+			return (0);
+		redir = redir->next;
+	}
+	return (0);
 }

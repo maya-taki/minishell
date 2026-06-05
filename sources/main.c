@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 20:26:44 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 04:48:34 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		add_history(shell.input);
 		shell.tokens = lexer(shell.input);
-		shell.cmd = parser(&shell);
+		if (!shell.tokens)
+		{
+			free(shell.tokens);
+			continue ;
+		}
+		shell.cmd = parser(&shell); //TODO
+		expand_all(shell.cmd, &shell);
 		if (shell.cmd)
 			shell.exit_code = execute(&shell);
 		if (shell.exit_shell)
