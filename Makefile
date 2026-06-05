@@ -42,7 +42,12 @@ SRC				= \
 					sources/exec/builtin/builtin_cd.c \
 					sources/exec/builtin/builtin_echo.c \
 					sources/exec/builtin/builtin_pwd.c \
+					sources/exec/builtin/builtin_export.c \
+					sources/exec/builtin/builtin_unset.c \
+					sources/exec/builtin/builtin_env.c \
+					sources/exec/builtin/builtin_exit.c \
 					sources/utils/error_utils.c \
+						sources/utils/export_utils.c \
 					sources/utils/env_utils.c \
 					sources/utils/cd_utils.c \
 					sources/clean/clear.c \
@@ -86,6 +91,9 @@ TEST_REDIRECTS_NAME = test_redirects
 TEST_HEREDOC = tests/test_heredoc_utils.c
 TEST_HEREDOC_NAME = test_heredoc
 
+TEST_EXEC = tests/test_exec_builtins.c
+TEST_EXEC_NAME = test_exec_builtins
+
 test-expander: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXPANDER) sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c sources/utils/env_utils.c sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXPANDER_NAME)
 
@@ -94,5 +102,23 @@ test-redirects: $(LIBFT)
 
 test-heredoc-utils: $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_HEREDOC) sources/exec/redirections/heredoc.c $(LIB_FLAGS) -o $(TEST_HEREDOC_NAME)
+
+test-exec-builtins: $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXEC) \
+		sources/exec/exec.c \
+		sources/exec/builtin/builtin_cd.c \
+		sources/exec/builtin/builtin_echo.c \
+		sources/exec/builtin/builtin_pwd.c \
+		sources/exec/builtin/builtin_export.c \
+		sources/exec/builtin/builtin_unset.c \
+		sources/exec/builtin/builtin_env.c \
+		sources/exec/builtin/builtin_exit.c \
+		sources/lexer/lexer_free.c \
+		sources/utils/env_utils.c \
+		sources/utils/cd_utils.c \
+		sources/utils/error_utils.c \
+		sources/init/init.c \
+		sources/parser/parser_frees.c \
+		sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXEC_NAME)
 
 .PHONY: norminette make fclean clean re test-expander test-redirects test-heredoc-utils

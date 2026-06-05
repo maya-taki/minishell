@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:03:52 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/25 00:51:08 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/06/04 17:32:17 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	builtin_cd(t_shell *shell)
 	if (shell->cmd->args[2])
 	{
 		handle_error(ERR_TOO_MANY_ARGS, "cd", NULL);
-		return (0);
+		return (1);
 	}
 	path = get_cd_path(shell);
 	if (!path)
-		return (0);
+		return (1);
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(path) == -1)
 	{
 		perror("minishell: cd");
 		free(old_pwd);
-		return (0);
+		return (1);
 	}
 	update_pwd_env(shell, old_pwd);
-	return (1);
+	return (0);
 }
 
 static char	*get_cd_path(t_shell *shell)

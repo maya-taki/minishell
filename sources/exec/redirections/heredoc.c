@@ -12,15 +12,6 @@
 
 #include "../../../includes/shell.h"
 
-int		is_single_quoted(char *delimiter)
-{
-	if (!delimiter)
-		return (1);
-	if (delimiter[0] == '\'' || delimiter[0] == '"')
-		return (0);
-	return (1);
-}
-
 char	*remove_quotes(char *delimiter)
 {
 	int	delim_l;
@@ -41,3 +32,12 @@ void	write_lines(char *line, int fd)
 }
 
 void	heredoc_loop();
+
+int	handle_heredoc(t_token *delimiter_token, t_cmd *cmd, t_shell *shell)
+{
+	(void)delimiter_token;
+	(void)cmd;
+	(void)shell;
+	/* stub implementation: heredoc not fully implemented yet */
+	return (1);
+}

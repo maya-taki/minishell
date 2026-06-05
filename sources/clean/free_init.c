@@ -51,11 +51,25 @@ void	close_fd(int *fd)
 
 void	free_shell(t_shell *shell)
 {
+	if (!shell)
+		return ;
 	if (shell->env)
 	{
 		free_env_list(shell->env);
 		shell->env = NULL;
 	}
+	if (shell->tokens)
+	{
+		free_tokens(shell->tokens);
+		shell->tokens = NULL;
+	}
+	if (shell->cmd)
+	{
+		free_all_cmds(shell->cmd);
+		shell->cmd = NULL;
+	}
+	free_ptr((void **)&shell->input);
+	free_ptr((void **)&shell->prompt_str);
 	if (shell->std_in >= 0)
 		close_fd(&shell->std_in);
 	if (shell->std_out >= 0)

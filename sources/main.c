@@ -16,10 +16,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	t_shell	shell;
 
-	// init_shell(&shell, envp);
+	if (!init_shell(&shell, envp))
+		return (1);
 	using_history();
 	while (1)
 	{
@@ -29,11 +29,23 @@ int	main(int argc, char **argv, char **envp)
 		add_history(shell.input);
 		shell.tokens = lexer(shell.input);
 		shell.cmd = parser(&shell);
-		
-		// if (shell.cmd)
-		// 	execute(&shell); // pwd nao ta pronto
-		// free_all(&shell); // fazer função que limpa tudo
+		if (shell.cmd)
+			shell.exit_code = execute(&shell);
+		if (shell.exit_shell)
+			break ;
+		if (shell.tokens)
+		{
+			free_tokens(shell.tokens);
+			shell.tokens = NULL;
+		}
+		if (shell.cmd)
+		{
+			free_all_cmds(shell.cmd);
+			shell.cmd = NULL;
+		}
+		free_ptr((void **)&shell.input);
 	}
 	clear_history();
+	free_shell(&shell);
 	return (0);
 }
