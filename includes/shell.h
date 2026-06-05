@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/03 17:46:03 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:45:51 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void			debug_print_cmds(t_cmd *cmds);
 /*###EXPANDER###*/
 int				open_file(int *fd_ptr, char *path, int flags);
 int				handle_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
+int			handle_heredoc(t_token *delimiter_token, t_cmd *cmd, t_shell *shell);
 int				is_single_quoted(char *arg);
 void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
@@ -93,8 +94,13 @@ int				parser_env_line(char *str, char **key, char **value);
 t_env			*create_env_node(char *env_line);
 char			*get_env_var(t_env *env, char *key);
 t_env			*find_env_node(t_env *env, char *key);
-void			set_env_var(t_env **env, char *key, char *value);
+int			set_env_var(t_env **env, char *key, char *value);
 void			update_pwd_env(t_shell *shell, char *old_pwd);
+int			count_env_vars(t_env *env);
+void			swap_env_nodes(t_env **a, t_env **b);
+void			sort_env_array(t_env **array, int count);
+void			print_escaped_value(char *value);
+void			print_export_entry(t_env *node);
 
 /*###INIT###*/
 t_cmd			*init_cmd(void);
@@ -103,16 +109,19 @@ int				init_shell(t_shell *shell, char **envp);
 /*###BUILTIN###*/
 int				builtin_echo(t_cmd *cmd);
 int				builtin_cd(t_shell *shell);
-int				builtin_pwd(void);
-
+int				builtin_pwd(t_shell *shell);
+int				builtin_export(t_shell *shell);
+int				builtin_unset(t_shell *shell);
+int				builtin_env(t_shell *shell);
+int				builtin_exit(t_shell *shell);
 
 /*###EXEC###*/
-void			exec_builtin(t_shell *shell);
-void			execute(t_shell *shell);
+int				exec_builtin(t_shell *shell);
+int				execute(t_shell *shell);
 
 	// // Exec
 	// t_cmd	*create_test_cmd(void); // remove
-	// void	exec_builtin(t_shell *shell);
-	// void	execute(t_shell *shell);
+	// int	exec_builtin(t_shell *shell);
+	// int	execute(t_shell *shell);
 
 #endif

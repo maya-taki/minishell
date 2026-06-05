@@ -34,24 +34,29 @@ t_env	*find_env_node(t_env *env, char *key)
 	return (NULL);
 }
 
-void	set_env_var(t_env **env, char *key, char *value)
+int	set_env_var(t_env **env, char *key, char *value)
 {
 	t_env	*node;
+	char	*new_value;
 	t_env	*new_node;
 
 	node = find_env_node(*env, key);
 	if (node)
 	{
+		if (!value)
+			return (0);
+		new_value = ft_strdup(value);
+		if (!new_value)
+			return (1);
 		free(node->value);
-		node->value = ft_strdup(value);
+		node->value = new_value;
+		return (0);
 	}
-	else
-	{
-		new_node = env_new(key, value);
-		if (!new_node)
-			return ;
-		env_add_back(env, new_node);
-	}
+	new_node = env_new(key, value);
+	if (!new_node)
+		return (1);
+	env_add_back(env, new_node);
+	return (0);
 }
 
 void	update_pwd_env(t_shell *shell, char *old_pwd)

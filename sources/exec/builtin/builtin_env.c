@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/25 01:04:01 by otton-sousa       #+#    #+#             */
-/*   Updated: 2026/06/04 20:44:44 by osousa-d         ###   ########.fr       */
+/*   Created: 2026/06/04 18:35:00 by osousa-d          #+#    #+#             */
+/*   Updated: 2026/06/04 23:19:25 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int	builtin_pwd(t_shell *shell)
+int	builtin_env(t_shell *shell)
 {
-	char	*cwd;
+	t_env	*node;
 
-	(void)shell;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("pwd");
+	if (!shell || !shell->cmd || !shell->env)
 		return (1);
+	if (shell->cmd->args[1])
+	{
+		handle_error(ERR_NO_FILE, "env", shell->cmd->args[1]);
+		return (127);
 	}
-	ft_printf("%s\n", cwd);
-	free(cwd);
+	node = shell->env;
+	while (node)
+	{
+		if (node->key && node->value)
+			ft_printf("%s=%s\n", node->key, node->value);
+		node = node->next;
+	}
 	return (0);
 }
