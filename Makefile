@@ -35,6 +35,7 @@ SRC				= \
 					sources/parser/parser_frees.c \
 					sources/expander/expander_utils.c \
 					sources/expander/expander.c \
+					sources/expander/append.c \
 					sources/exec/redirections/redirects.c \
 					sources/exec/redirections/heredoc.c \
 					sources/exec/exec.c \

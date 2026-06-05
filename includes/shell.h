@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:56:08 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/05 05:49:52 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void			debug_print_cmds(t_cmd *cmds);
 /*###EXPANDER###*/
 int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
 int				is_single_quoted(char *arg);
-void			update_quote_state_iterate(const char *src, t_quote_state *state, size_t *i);
+void			update_quote_state_i(const char *src,
+					t_quote_state *state, size_t *i);
 char			*get_env_value(t_env *env, const char *name);
 char			*append_char(char *dest, char c);
 void			expand_all(t_cmd *cmds, t_shell *shell);
@@ -95,9 +96,9 @@ int				parser_env_line(char *str, char **key, char **value);
 t_env			*create_env_node(char *env_line);
 char			*get_env_var(t_env *env, char *key);
 t_env			*find_env_node(t_env *env, char *key);
-int			set_env_var(t_env **env, char *key, char *value);
+int				set_env_var(t_env **env, char *key, char *value);
 void			update_pwd_env(t_shell *shell, char *old_pwd);
-int			count_env_vars(t_env *env);
+int				count_env_vars(t_env *env);
 void			swap_env_nodes(t_env **a, t_env **b);
 void			sort_env_array(t_env **array, int count);
 void			print_escaped_value(char *value);
@@ -122,7 +123,8 @@ int				exec_builtin(t_shell *shell);
 int				execute(t_shell *shell);
 char			*remove_quotes(char *delimiter);
 void			write_line(char *line, int fd);
-void			heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd);
+void			heredoc_loop(char *delimiter, int expand,
+					t_shell *shell, int fd);
 int				handle_heredoc(char *delimiter, t_shell *shell);
 
 #endif
