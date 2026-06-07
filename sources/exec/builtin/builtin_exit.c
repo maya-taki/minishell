@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:37:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 03:44:44 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:04:35 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	is_valid_number_format(const char *str);
 static int	safe_atol(const char *str, long *result);
 static int	parse_exit_arg(const char *arg, long *val);
 static int	handle_exit_args(t_shell *shell);	
-
 
 int	builtin_exit(t_shell *shell)
 {
@@ -82,7 +81,10 @@ static int	handle_exit_args(t_shell *shell)
 	if (parse_exit_arg(shell->cmd->args[1], &val))
 		return (handle_invalid_arg_exit(shell));
 	if (shell->cmd->args[2])
-		return (handle_error(ERR_TOO_MANY_ARGS, "exit", NULL));
+	{
+		handle_error(ERR_TOO_MANY_ARGS, "exit", NULL, 0);
+		return (1);
+	}
 	shell->exit_code = (unsigned char)val;
 	shell->exit_shell = 1;
 	return (shell->exit_code);

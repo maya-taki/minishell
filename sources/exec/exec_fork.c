@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 00:00:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 13:36:24 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 22:56:07 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,28 +77,34 @@ char	**build_envp(t_shell *shell)
 	{
 		envp[i] = join_env_line(cur->key, cur->value);
 		if (!envp[i])
-			return (free_envp_partial(envp, i), NULL);
+		{
+			free_envp_partial(envp, i);
+			return (NULL);
+		}
 		i++;
 		cur = cur->next;
 	}
 	envp[i] = NULL;
 	return (envp);
 }
-
+ 
 int	exec_external(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 	int		status;
-	char	*exec_path;
- 
-	exec_path = find_executable(cmd->args[0], shell);
+	int		tmp;
+
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), free(exec_path), 1);
+		return (perror("fork"), 1);
 	if (pid == 0)
-		exec_child(shell, cmd, exec_path);
-	free(exec_path);
-	if (waitpid(pid, &status, 0) == -1)
+	{
+		setup_child_io(shell);
+		exec_child_external(shell, cmd);
+	}
+	reset_io(shell);
+	if (waitpid(pid, &tmp, 0) == -1)
 		return (perror("waitpid"), 1);
-	return (get_exit_status(status));
+	status = get_exit_status(tmp);
+	return (tmp);
 }

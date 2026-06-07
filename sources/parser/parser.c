@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/28 16:07:18 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:14:44 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	validate_parser(t_shell *shell)
 		return (1);
 	if (validate_syntax(shell->tokens) != 0)
 	{
-		handle_error(ERR_SYNTAX, NULL, "`newline'");
+		handle_error(ERR_SYNTAX, NULL, "`newline'", 0);
 		return (1);
 	}
 	return (0);
@@ -60,6 +60,6 @@ t_cmd	*parser(t_shell *shell)
 	cmd = NULL;
 	tmp = shell->tokens;
 	head = run_parse(cmd, tmp);
-	debug_print_cmds(head);
+	//debug_print_cmds(head);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 03:45:44 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 22:16:13 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_shell	shell;
 	(void)argc;
 	(void)argv;
-	t_shell	shell;
 
 	if (!init_shell(&shell, envp))
 		return (1);
@@ -30,15 +30,13 @@ int	main(int argc, char **argv, char **envp)
 		shell.tokens = lexer(shell.input);
 		if (!shell.tokens)
 		{
-			free(shell.tokens);
+			free(shell.input);
 			continue ;
 		}
-		shell.cmd = parser(&shell); //TODO
+		shell.cmd = parser(&shell);
 		expand_all(shell.cmd, &shell);
 		if (shell.cmd)
 			shell.exit_code = execute(&shell);
-		if (shell.exit_shell)
-			break ;
 		if (shell.tokens)
 		{
 			free_tokens(shell.tokens);
@@ -50,8 +48,10 @@ int	main(int argc, char **argv, char **envp)
 			shell.cmd = NULL;
 		}
 		free_ptr((void **)&shell.input);
+		if (shell.exit_shell)
+			break ;
 	}
 	clear_history();
 	free_shell(&shell);
-	return (0);
+	return (shell.exit_code);
 }

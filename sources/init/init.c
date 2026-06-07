@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:35:32 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 03:09:31 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/06 19:24:11 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
+ 
 static t_env	*init_env(char **envp);
 static void		init_shell_values(t_shell *shell);
-
-
+ 
 int	init_shell(t_shell *shell, char **envp)
 {
 	init_shell_values(shell);
@@ -24,25 +23,15 @@ int	init_shell(t_shell *shell, char **envp)
 		free_shell(shell);
 		return (0);
 	}
-	if ((shell->std_in = dup(STDIN_FILENO)) == -1)
-	{
-		free_shell(shell);
-		return (0);
-	}
-	if ((shell->std_out = dup(STDOUT_FILENO)) == -1)
-	{
-		free_shell(shell);
-		return (0);
-	}
 	return (1);
 }
-
+ 
 static t_env	*init_env(char **envp)
 {
 	t_env	*current;
 	t_env	*head;
 	int		i;
-
+ 
 	i = 0;
 	head = NULL;
 	while (envp[i])
@@ -58,11 +47,11 @@ static t_env	*init_env(char **envp)
 	}
 	return (head);
 }
-
+ 
 t_cmd	*init_cmd(void)
 {
 	t_cmd	*cmd;
-
+ 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
@@ -74,7 +63,7 @@ t_cmd	*init_cmd(void)
 	cmd->next = NULL;
 	return (cmd);
 }
-
+ 
 static void	init_shell_values(t_shell *shell)
 {
 	shell->env = NULL;
@@ -84,14 +73,14 @@ static void	init_shell_values(t_shell *shell)
 	shell->prompt_str = NULL;
 	shell->exit_code = 0;
 	shell->exit_shell = 0;
-	shell->std_in = -1;
-	shell->std_out = -1;
+	shell->std_in = STDIN_FILENO;
+	shell->std_out = STDOUT_FILENO;
 }
-
+ 
 t_token	*init_token(t_token_type type, char *value)
 {
 	t_token	*token;
-
+ 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);

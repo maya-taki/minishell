@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 03:45:31 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:04:22 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,28 @@ const char	*error_msg(t_error_type error)
 	return (message[error]);
 }
 
-int	handle_error(t_error_type error, char *cmd, char *context)
+void	handle_error(t_error_type error, char *cmd,
+		char *context,
+		int quotes)
 {
-	const char *msg;
-
+	const char	*msg;
 	msg = error_msg(error);
 	ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 	if (cmd)
 	{
-			ft_putstr_fd( cmd, STDERR_FILENO);
-			ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (context && error != ERR_SYNTAX)
 	{
-		ft_putstr_fd("'", STDERR_FILENO);
+		if (quotes)
+			ft_putstr_fd("'", STDERR_FILENO);
 		ft_putstr_fd(context, STDERR_FILENO);
-		ft_putstr_fd("': " , STDERR_FILENO);
+		if (quotes)
+			ft_putstr_fd("'", STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	ft_putstr_fd((char *)msg, STDERR_FILENO);
-	if (context && error == ERR_SYNTAX)
-	{
-		ft_putstr_fd(" '", STDERR_FILENO);
-		ft_putstr_fd(context, STDERR_FILENO);
-		ft_putstr_fd("'", STDERR_FILENO);
-	}
 	ft_putstr_fd("\n"RST, STDERR_FILENO);
-	return (1);
+	return ;
 }

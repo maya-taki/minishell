@@ -6,12 +6,12 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 13:33:39 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 22:16:36 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
+ 
 int	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
 	if (cmd->builtin == ECHO)
@@ -30,42 +30,45 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 		return (builtin_exit(shell));
 	return (1);
 }
- 
-static int	count_cmds_exec(t_cmd *cmd)
-{
-	int	n;
- 
-	n = 0;
-	while (cmd)
-	{
-		n++;
-		cmd = cmd->next;
-	}
-	return (n);
-}
 
-static int	run_single(t_shell *shell, t_cmd *cmd)
+static int	run_builtin_with_redir(t_shell *shell, t_cmd *cmd)
 {
+	int	saved_in;
+	int	saved_out;
 	int	status;
-
-	apply_redir(NULL, &cmd, shell);
-	if (cmd->builtin != NONE)
-		status = exec_builtin(shell, cmd);
-	else
-		status = exec_external(shell, cmd);
+ 
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
+	if (apply_redir(NULL, &cmd, shell) != 0)
+		return (reset_io(shell), 1);
+	setup_child_io(shell);
+	status = exec_builtin(shell, cmd);
+	dup2(saved_in, STDIN_FILENO);
+	dup2(saved_out, STDOUT_FILENO);
+	close(saved_in);
+	close(saved_out);
 	reset_io(shell);
 	return (status);
+}
+ 
+static int	run_single(t_shell *shell, t_cmd *cmd)
+{
+	if (cmd->builtin != NONE)
+		return (run_builtin_with_redir(shell, cmd));
+	if (apply_redir(NULL, &cmd, shell) != 0)
+		return (reset_io(shell), 1);
+	return (exec_external(shell, cmd));
 }
  
 int	execute(t_shell *shell)
 {
 	int		status;
 	t_cmd	*head;
-
+ 
 	if (!shell || !shell->cmd)
-		return (1);
+		return (shell ? shell->exit_code : 1);
 	head = shell->cmd;
-	if (count_cmds_exec(shell->cmd) == 1)
+	if (!shell->cmd->next)
 		status = run_single(shell, shell->cmd);
 	else
 		status = exec_pipeline(shell, shell->cmd);

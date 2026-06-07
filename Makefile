@@ -40,7 +40,7 @@ SRC				= \
 					sources/exec/redirections/heredoc.c \
 					sources/exec/exec.c \
 					sources/exec/exec_fork.c \
-					sources/exec/exec_child.c \
+					sources/exec/exec_external.c \
 					sources/exec/exec_pipeline.c \
 					sources/exec/builtin/builtin_cd.c \
 					sources/exec/builtin/builtin_echo.c \

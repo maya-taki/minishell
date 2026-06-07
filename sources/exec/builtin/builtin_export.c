@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:30:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/04 23:52:38 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:10:03 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,25 @@ static int	parse_export_arg(char *arg, char **key, char **value)
 	{
 		*key = ft_strdup(arg);
 		if (!*key)
-			return (handle_error(ERR_MALLOC, "export", NULL));
+		{
+			handle_error(ERR_MALLOC, "export", NULL, 0);
+			return (1);
+		}
 		*value = NULL;
 		return (0);
 	}
 	*key = ft_substr(arg, 0, equal - arg);
 	if (!*key)
-		return (handle_error(ERR_MALLOC, "export", NULL));
+	{
+		handle_error(ERR_MALLOC, "export", NULL, 0);
+		return (1);
+	}
 	*value = ft_strdup(equal + 1);
 	if (!*value)
 	{
 		free(*key);
-		return (handle_error(ERR_MALLOC, "export", NULL));
+		handle_error(ERR_MALLOC, "export", NULL, 0);
+		return (1);
 	}
 	return (0);
 }
@@ -71,11 +78,17 @@ static int	apply_export_arg(char *arg, t_shell *shell)
 	key = NULL;
 	value = NULL;
 	if (!is_valid_identifier(arg))
-		return (handle_error(ERR_NOT_VALID_ID, "export", arg));
-	if (parse_export_arg(arg, &key, &value) != 0)
+	{
+		handle_error(ERR_NOT_VALID_ID, "export", arg, 0);
 		return (1);
-	if (set_env_var(&shell->env, key, value) != 0)
-		status = handle_error(ERR_MALLOC, "export", NULL);
+	}
+	else if (parse_export_arg(arg, &key, &value) != 0)
+		return (1);
+	else if (set_env_var(&shell->env, key, value) != 0)
+	{
+		status = 1;
+		handle_error(ERR_MALLOC, "export", NULL, 0);
+	}
 	else
 		status = 0;
 	free(key);
@@ -87,15 +100,18 @@ static int	print_export_env(t_shell *shell)
 {
 	t_env	**env_array;
 	t_env	*node;
-	int	count;
-	int	i;
+	int		count;
+	int		i;
 
 	if (!shell)
 		return (1);
 	count = count_env_vars(shell->env);
 	env_array = malloc(sizeof(t_env *) * count);
 	if (!env_array)
-		return (handle_error(ERR_MALLOC, "export", NULL));
+	{
+		handle_error(ERR_MALLOC, "export", NULL, 0);
+		return (1);
+	}
 	node = shell->env;
 	i = 0;
 	while (node)
@@ -106,7 +122,10 @@ static int	print_export_env(t_shell *shell)
 	sort_env_array(env_array, count);
 	i = 0;
 	while (i < count)
-		print_export_entry(env_array[i++]);
+	{
+		print_export_entry(env_array[i]);
+		i++;
+	}
 	free(env_array);
 	return (0);
 }

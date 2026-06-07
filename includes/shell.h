@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 13:56:53 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:02:41 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int				fill_args(t_token *seg_start, t_cmd *cmd);
 int				add_redirs(t_token_type type, char *file, t_cmd *cmd);
 int				fill_redirs(t_token *seg_start, t_cmd *cmd);
 void			set_builtin(t_cmd *cmd);
-void			debug_print_cmds(t_cmd *cmds);
+// void			debug_print_cmds(t_cmd *cmds);
 void			*free_single_cmd(t_cmd *cmd);
 void			*free_all_cmds(t_cmd *cmds);
 void			free_redir(t_redir *redirect);
@@ -190,18 +190,17 @@ int				handle_invalid_arg_exit(t_shell *shell);
 /*---------------------------------------------------------------------------*/
 
 const char		*error_msg(t_error_type error);
-int				handle_error(t_error_type error, char *cmd, char *context);
+void			handle_error(t_error_type error, char *cmd, 
+					char *context, int quotes);
 
 /*---------------------------------------------------------------------------*/
 /*  CLEAN / FREE                                                             */
 /*---------------------------------------------------------------------------*/
 
 void			free_ptr(void **ptr);
-void			free_env_node(t_env *node);
 void			free_env_list(t_env *env);
 void			free_shell(t_shell *shell);
 void			free_paths(char **paths);
 void			free_child(char *exec_path, char **envp, char **empty_envp);
-void			close_fd(int *fd);
 
 #endif

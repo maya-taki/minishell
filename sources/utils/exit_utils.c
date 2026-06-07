@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 00:00:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 04:06:52 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:12:08 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@ int	check_overflow_and_add(long *result, long digit, long max_digit)
 	return (0);
 }
 
-void	print_exit_error(const char *arg)
-{
-	ft_putstr_fd((char *)"minishell: exit: ", STDERR_FILENO);
-	ft_putstr_fd((char *)arg, STDERR_FILENO);
-	ft_putstr_fd((char *)": ", STDERR_FILENO);
-	ft_putstr_fd((char *)error_msg(ERR_NUM_REQUIRED), STDERR_FILENO);
-	ft_putstr_fd((char *)"\n", STDERR_FILENO);
-}
-
 int	handle_no_arg_exit(t_shell *shell)
 {
 	shell->exit_shell = 1;
@@ -61,6 +52,7 @@ int	handle_invalid_arg_exit(t_shell *shell)
 {
 	shell->exit_code = 255;
 	shell->exit_shell = 1;
-	print_exit_error(shell->cmd->args[1]);
-	return (255);
+
+	handle_error( ERR_NUM_REQUIRED, "exit", shell->cmd->args[1], 0);
+	return (shell->exit_code);
 }

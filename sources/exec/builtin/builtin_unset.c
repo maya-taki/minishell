@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:33:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 03:44:46 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:10:46 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int builtin_unset(t_shell *shell)
 	while (shell->cmd->args[i])
 	{
 		if (!is_valid_identifier(shell->cmd->args[i]))
-			status = handle_error(ERR_NOT_VALID_ID,
-			"unset", shell->cmd->args[i]);
+		{
+			status = 1;
+			handle_error(ERR_NOT_VALID_ID, "unset", shell->cmd->args[i], 0);
+		}
 		else
 			unset_env_var(&shell->env, shell->cmd->args[i]);
 		i++;

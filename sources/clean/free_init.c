@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   free_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otton-sousa <otton-sousa@student.42.fr>    +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 16:39:06 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/05/25 00:38:40 by otton-sousa      ###   ########.fr       */
+/*   Updated: 2026/06/06 22:02:42 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+ 
+static void	free_env_node(t_env *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
+}
+ 
+void	free_env_list(t_env *env)
+{
+	t_env	*next;
+ 
+	while (env)
+	{
+		next = env->next;
+		free_env_node(env);
+		env = next;
+	}
+}
 
 void	free_ptr(void **ptr)
 {
@@ -20,35 +39,7 @@ void	free_ptr(void **ptr)
 		*ptr = NULL;
 	}
 }
-
-void	free_env_node(t_env *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node);
-}
-
-void	free_env_list(t_env *env)
-{
-	t_env	*next;
-
-	while (env)
-	{
-		next = env->next;
-		free_env_node(env);
-		env = next;
-	}
-}
-
-void	close_fd(int *fd)
-{	
-	if (*fd >= 0)
-	{
-		close(*fd);
-		*fd = -1;
-	}
-}
-
+ 
 void	free_shell(t_shell *shell)
 {
 	if (!shell)
@@ -70,8 +61,4 @@ void	free_shell(t_shell *shell)
 	}
 	free_ptr((void **)&shell->input);
 	free_ptr((void **)&shell->prompt_str);
-	if (shell->std_in >= 0)
-		close_fd(&shell->std_in);
-	if (shell->std_out >= 0)
-		close_fd(&shell->std_out);
 }
