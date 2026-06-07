@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 22:16:36 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:54:23 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
  
 int	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
+	int status;
+
+	status = 1;
 	if (cmd->builtin == ECHO)
-		return (builtin_echo(cmd));
-	if (cmd->builtin == PWD)
-		return (builtin_pwd(shell));
-	if (cmd->builtin == CD)
-		return (builtin_cd(shell));
-	if (cmd->builtin == EXPORT)
-		return (builtin_export(shell));
-	if (cmd->builtin == UNSET)
-		return (builtin_unset(shell));
-	if (cmd->builtin == ENV)
-		return (builtin_env(shell));
-	if (cmd->builtin == EXIT)
-		return (builtin_exit(shell));
-	return (1);
+		status = builtin_echo(cmd);
+	else if (cmd->builtin == PWD)
+		status = builtin_pwd(shell);
+	else if (cmd->builtin == CD)
+		status = builtin_cd(shell);
+	else if (cmd->builtin == EXPORT)
+		status = builtin_export(shell);
+	else if (cmd->builtin == UNSET)
+		status = builtin_unset(shell);
+	else if (cmd->builtin == ENV)
+		status = builtin_env(shell);
+	else if (cmd->builtin == EXIT)
+		status = builtin_exit(shell);
+	return (status);
 }
 
 static int	run_builtin_with_redir(t_shell *shell, t_cmd *cmd)
@@ -53,20 +56,32 @@ static int	run_builtin_with_redir(t_shell *shell, t_cmd *cmd)
  
 static int	run_single(t_shell *shell, t_cmd *cmd)
 {
+	int	status;
+
+	status = 0;
 	if (cmd->builtin != NONE)
-		return (run_builtin_with_redir(shell, cmd));
+	{
+		status = run_builtin_with_redir(shell, cmd);
+		return (status);
+	}
 	if (apply_redir(NULL, &cmd, shell) != 0)
-		return (reset_io(shell), 1);
-	return (exec_external(shell, cmd));
+	{
+		reset_io(shell);
+		return (1);
+	}
+	status = exec_external(shell, cmd); 
+	return (status);
 }
  
 int	execute(t_shell *shell)
 {
 	int		status;
 	t_cmd	*head;
- 
-	if (!shell || !shell->cmd)
-		return (shell ? shell->exit_code : 1);
+
+	if (!shell)
+		return (1);
+	if (!shell->cmd)
+		return (shell->exit_code);
 	head = shell->cmd;
 	if (!shell->cmd->next)
 		status = run_single(shell, shell->cmd);

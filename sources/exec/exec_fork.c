@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 00:00:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 22:56:07 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/06 23:47:05 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ int	exec_external(t_shell *shell, t_cmd *cmd)
 	if (waitpid(pid, &tmp, 0) == -1)
 		return (perror("waitpid"), 1);
 	status = get_exit_status(tmp);
-	return (tmp);
+	return (status);
 }
