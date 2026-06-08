@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 00:07:54 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:21:15 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int				builtin_exit(t_shell *shell);
 /*  SIGNALS                                                                  */
 /*---------------------------------------------------------------------------*/
 
-extern sig_atomic_t g_signal;
+extern sig_atomic_t	g_signal;
 
 void	handle_sigint(int sig);
 void	setup_signals(void);
@@ -207,7 +207,7 @@ int				handle_invalid_arg_exit(t_shell *shell);
 /*---------------------------------------------------------------------------*/
 
 const char		*error_msg(t_error_type error);
-void			handle_error(t_error_type error, char *cmd, 
+void			handle_error(t_error_type error, char *cmd,
 					char *context, int quotes);
 
 /*---------------------------------------------------------------------------*/

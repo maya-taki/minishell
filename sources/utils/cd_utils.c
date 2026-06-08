@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 00:19:40 by otton-sousa       #+#    #+#             */
-/*   Updated: 2026/06/05 03:45:24 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:48:48 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_env	*find_env_node(t_env *env, char *key)
 	{
 		if (ft_strcmp(env->key, key) == 0)
 			return (env);
-		env = env->next;		
+		env = env->next;
 	}
 	return (NULL);
 }
@@ -74,4 +74,3 @@ void	update_pwd_env(t_shell *shell, char *old_pwd)
 	}
 	free(old_pwd);
 }
-

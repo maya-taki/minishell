@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:30:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 23:10:03 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:09:51 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,32 @@ static int	apply_export_arg(char *arg, t_shell *shell)
 	return (status);
 }
 
+void	fill_and_print_env(t_env *node, t_env **env_array,
+								int count)
+{
+	int i;
+
+	i = 0;
+	while (node)
+	{
+		env_array[i] = node;
+		node = node->next;
+		i++;
+	}
+	sort_env_array(env_array, count);
+	i = 0;
+	while (i < count)
+	{
+		print_export_entry(env_array[i]);
+		i++;
+	}
+}
+
 static int	print_export_env(t_shell *shell)
 {
 	t_env	**env_array;
 	t_env	*node;
 	int		count;
-	int		i;
 
 	if (!shell)
 		return (1);
@@ -113,19 +133,7 @@ static int	print_export_env(t_shell *shell)
 		return (1);
 	}
 	node = shell->env;
-	i = 0;
-	while (node)
-	{
-		env_array[i++] = node;
-		node = node->next;
-	}
-	sort_env_array(env_array, count);
-	i = 0;
-	while (i < count)
-	{
-		print_export_entry(env_array[i]);
-		i++;
-	}
+	fill_and_print_env(node, env_array, count);
 	free(env_array);
 	return (0);
 }

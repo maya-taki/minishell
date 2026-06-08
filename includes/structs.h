@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 22:13:07 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:43:30 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,5 @@ typedef struct s_shell
 	int				std_in;
 	t_pipe_data		pipe;
 }	t_shell;
-
-
 
 #endif

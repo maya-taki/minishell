@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 20:03:22 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/06 23:04:22 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:53:13 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ const char	*error_msg(t_error_type error)
 		"HOME not set",
 		"OLDPWD not set"
 	};
+
 	if (error <= ERR_NONE || error > ERR_OLDPWD_NOT_SET)
 		return (NULL);
 	return (message[error]);
@@ -38,6 +39,7 @@ void	handle_error(t_error_type error, char *cmd,
 		int quotes)
 {
 	const char	*msg;
+
 	msg = error_msg(error);
 	ft_putstr_fd(RED"minishell: ", STDERR_FILENO);
 	if (cmd)
