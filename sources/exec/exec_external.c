@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 05:52:31 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 20:09:27 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 19:45:39 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	exec_child_external(t_shell *shell, t_cmd *cmd)
 	if (!exec_path)
 	{
 		cmd_not_found(cmd->args[0]);
+		free_all_cmds(shell->cmd);
+		free_tokens(shell->tokens);
+		free_env_list(shell->env);
 		exit(127);
 	}
 	envp = build_envp(shell);

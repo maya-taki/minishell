@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 05:32:29 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/05 05:56:00 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 19:38:21 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	free_child(char *exec_path, char **envp, char **empty_envp)
 {
 	if (exec_path)
 		free(exec_path);
-
 	if (envp && envp != empty_envp)
 		free_envp(envp);
 }

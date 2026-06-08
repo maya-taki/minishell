@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 21:47:33 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 04:31:46 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/07 22:13:07 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct s_pipe_data
+{
+	int	prev_pipe;
+	int	fd[2];
+}	t_pipe_data;
+
 typedef struct s_shell
 {
 	t_env			*env;
@@ -58,6 +64,9 @@ typedef struct s_shell
 	int				exit_shell;
 	int				std_out;
 	int				std_in;
+	t_pipe_data		pipe;
 }	t_shell;
+
+
 
 #endif
