@@ -6,13 +6,13 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 21:55:06 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/07 22:44:04 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static void proper_exit(t_shell *shell)
+void proper_exit(t_shell *shell)
 {
 	ft_printf("exit\n");
 	free_all_cmds(shell->cmd);

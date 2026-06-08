@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 22:04:26 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:10:37 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ void			update_quote_state_i(const char *src, t_quote_state *state,
 int				handle_heredoc(char *delimiter, t_shell *shell);
 int				open_file(int *fd_ptr, char *path, int flags);
 char			*remove_quotes(char *delimiter);
-void			heredoc_loop(char *delimiter, int expand, t_shell *shell,
-					int fd);
 void			write_line(char *line, int fd);
 
 /*---------------------------------------------------------------------------*/
@@ -159,7 +157,7 @@ int		heredoc_event_hook(void);
 int		prompt_event_hook(void);
 void	handle_sigint_heredoc(int sig);
 void	setup_heredoc_signals(void);
-
+void 	proper_exit(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  ENV UTILS                                                                */
