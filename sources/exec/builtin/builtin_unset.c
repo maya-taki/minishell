@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:33:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 23:10:46 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:56:12 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_valid_identifier(char *str);
 static void	unset_env_var(t_env **env, char *key);
 
-int builtin_unset(t_shell *shell)
+int	builtin_unset(t_shell *shell)
 {
 	int	i;
 	int	status;

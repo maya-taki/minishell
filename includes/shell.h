@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 22:04:26 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:47:42 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
-#define _POSIX_C_SOURCE 200809L
-#define _GNU_SOURCE
+# define _POSIX_C_SOURCE 200809L
+# define _GNU_SOURCE
 
 # include <unistd.h>
 # include <stdio.h>
@@ -149,17 +149,16 @@ int				builtin_exit(t_shell *shell);
 /*  SIGNALS                                                                  */
 /*---------------------------------------------------------------------------*/
 
-extern sig_atomic_t g_signal;
+extern sig_atomic_t	g_signal;
 
-void	handle_sigint(int sig);
-void	setup_signals(void);
-void	setup_exec_signal(void);
-void	setup_child_signal(void);
-int		heredoc_event_hook(void);
-int		prompt_event_hook(void);
-void	handle_sigint_heredoc(int sig);
-void	setup_heredoc_signals(void);
-
+void			handle_sigint(int sig);
+void			setup_signals(void);
+void			setup_exec_signal(void);
+void			setup_child_signal(void);
+int				heredoc_event_hook(void);
+int				prompt_event_hook(void);
+void			handle_sigint_heredoc(int sig);
+void			setup_heredoc_signals(void);
 
 /*---------------------------------------------------------------------------*/
 /*  ENV UTILS                                                                */
@@ -209,7 +208,7 @@ int				handle_invalid_arg_exit(t_shell *shell);
 /*---------------------------------------------------------------------------*/
 
 const char		*error_msg(t_error_type error);
-void			handle_error(t_error_type error, char *cmd, 
+void			handle_error(t_error_type error, char *cmd,
 					char *context, int quotes);
 
 /*---------------------------------------------------------------------------*/
