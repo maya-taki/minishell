@@ -95,6 +95,16 @@ libft: $(LIBFT)
 
 re: fclean all
 
+val: readline.supp all
+	@/bin/valgrind --suppressions=readline.supp \
+				--leak-check=full \
+				--show-leak-kinds=all \
+				--track-origins=yes \
+				--track-fds=yes \
+				--trace-children=yes \
+				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
+				./${NAME}
+
 # TEST_EXPANDER = tests/test_expander.c
 # TEST_EXPANDER_NAME = test_expander
 # TEST_REDIRECTS = tests/test_redirects.c

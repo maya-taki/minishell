@@ -51,6 +51,9 @@ void	exec_child_external(t_shell *shell, t_cmd *cmd)
 	if (!exec_path)
 	{
 		cmd_not_found(cmd->args[0]);
+		free_all_cmds(shell->cmd);
+		free_tokens(shell->tokens);
+		free_env_list(shell->env);
 		exit(127);
 	}
 	envp = build_envp(shell);

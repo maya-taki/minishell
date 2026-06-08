@@ -18,42 +18,58 @@ static void	reset_shell_io(t_shell *shell)
 	shell->std_out = STDOUT_FILENO;
 }
 
-static void	setup_pipe_io(t_shell *shell, t_cmd *cmd, int pipe_in, int pipe_out)
+static void	setup_pipe_io(t_shell *shell, t_cmd *cmd)
 {
 	reset_shell_io(shell);
 	apply_redir(NULL, &cmd, shell);
-	if (pipe_in != -1 && shell->std_in == STDIN_FILENO)
-		shell->std_in = pipe_in;
-	if (pipe_out != -1 && shell->std_out == STDOUT_FILENO)
-		shell->std_out = pipe_out;
+	if (shell->pipe.prev_pipe != -1
+		&& shell->std_in == STDIN_FILENO)
+		shell->std_in = shell->pipe.prev_pipe;
+	if (shell->pipe.fd[1] != -1
+		&& shell->std_out == STDOUT_FILENO)
+		shell->std_out = shell->pipe.fd[1];
 	setup_child_io(shell);
 }
 
-static void	run_pipeline_child(t_shell *shell, t_cmd *cmd, int pipe_in, int pipe_out)
+static void	run_pipeline_child(t_shell *shell, t_cmd *cmd)
 {
-	setup_pipe_io(shell, cmd, pipe_in, pipe_out);
-	if (pipe_in != -1)
-		close(pipe_in);
-	if (pipe_out != -1)
-		close(pipe_out);
+	pid_t	pid;
+
+	setup_pipe_io(shell, cmd);
+	if (shell->pipe.prev_pipe != -1)
+		close(shell->pipe.prev_pipe);
+	if (shell->pipe.fd[1] != -1)
+		close(shell->pipe.fd[1]);
 	if (cmd->builtin != NONE)
-		exit(exec_builtin(shell, cmd));
+	{
+		free_env_list(shell->env);
+		free_tokens(shell->tokens);
+		pid = exec_builtin(shell, cmd);
+		free_all_cmds(cmd);
+		exit(pid);
+	}
 	exec_child_external(shell, cmd);
 }
 
-static pid_t	fork_cmd(t_shell *shell, t_cmd *cmd, int pipe_in, int pipe_out)
+static pid_t	fork_cmd(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), (pid_t)-1);
+	{
+		perror("fork");
+		return ((pid_t)-1);
+	}
 	if (pid == 0)
-		run_pipeline_child(shell, cmd, pipe_in, pipe_out);
-	if (pipe_in != -1)
-		close(pipe_in);
-	if (pipe_out != -1)
-		close(pipe_out);
+	{
+	if (shell->pipe.fd[0] != -1
+		&& shell->pipe.fd[0] != shell->pipe.prev_pipe)
+		close(shell->pipe.fd[0]);
+	run_pipeline_child(shell, cmd);
+	}
+	if (shell->pipe.fd[1] != -1)
+	close(shell->pipe.fd[1]);
 	return (pid);
 }
 
@@ -77,47 +93,48 @@ static int	wait_all(pid_t *pids, int n)
 	return (last);
 }
 
-static int	handle_pipeline_cmd(t_shell *shell, t_cmd *cmd, int *pipe_in, pid_t *pid)
+static int	handle_pipeline_cmd(t_shell *shell,
+	t_cmd *cmd, pid_t *pid)
 {
-	int	fd[2];
-	int	pipe_out;
+	shell->pipe.fd[0] = -1;
+	shell->pipe.fd[1] = -1;
 
-	pipe_out = -1;
 	if (cmd->next)
 	{
-		if (pipe(fd) == -1)
-		{
-			perror("pipe");
-			return (1);
-		}
-		pipe_out = fd[1];
+		if (pipe(shell->pipe.fd) == -1)
+			return (perror("pipe"), 1);
 	}
-	*pid = fork_cmd(shell, cmd, *pipe_in, pipe_out);
+	*pid = fork_cmd(shell, cmd);
 	if (*pid == -1)
 		return (1);
+
+	if (shell->pipe.prev_pipe != -1)
+		close(shell->pipe.prev_pipe);
+
 	if (cmd->next)
-		*pipe_in = fd[0];
+		shell->pipe.prev_pipe = shell->pipe.fd[0];
 	else
-		*pipe_in = -1;
+		shell->pipe.prev_pipe = -1;
 	return (0);
 }
 
 int	exec_pipeline(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	pids[MAX_PIPELINE];
-	int		pipe_in;
 	int		n;
 
-	pipe_in = -1;
+	shell->pipe.prev_pipe = -1;
+	shell->pipe.fd[0] = -1;
+	shell->pipe.fd[1] = -1;
 	n = 0;
 	while (cmd && n < MAX_PIPELINE)
 	{
-		if (handle_pipeline_cmd(shell, cmd, &pipe_in, &pids[n]))
+		if (handle_pipeline_cmd(shell, cmd, &pids[n]))
 			return (1);
 		cmd = cmd->next;
 		n++;
 	}
-	if (pipe_in != -1)
-		close(pipe_in);
+	if (shell->pipe.prev_pipe != -1)
+		close(shell->pipe.prev_pipe);
 	return (wait_all(pids, n));
 }
