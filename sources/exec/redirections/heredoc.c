@@ -6,13 +6,13 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 23:39:11 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:06:23 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-char	*remove_quotes(char *delimiter)
+static char	*remove_quotes(char *delimiter)
 {
 	int	delim_l;
 
@@ -31,6 +31,24 @@ void	write_line(char *line, int fd)
 	write(fd, "\n", 1);
 }
 
+static int	heredoc_error_handler(char *delimiter, char *line)
+{
+	if (!line)
+	{
+		ft_putstr_fd("minishell: warning: here-document \
+				delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd(delimiter, 2);
+		ft_putendl_fd("')", 2);
+		return (1);
+	}
+	if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+	{
+		free(line);
+		return (0);
+	}
+	return (0);
+}
+
 static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 {
 	char	*line;
@@ -44,21 +62,10 @@ static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 		line = readline("> ");
 		if (g_signal == 130)
 		{
-			free(line);	
+			free(line);
 			return (130);
 		}
-		if (!line)
-		{
-			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
-			ft_putstr_fd(delimiter, 2);
-			ft_putendl_fd("')", 2);
-			return (1);
-		}
-		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
-		{
-			free(line);
-			return (0);
-		}
+		heredoc_error_handler(delimiter, line);
 		if (expand)
 		{
 			expanded = expand_word(line, shell);

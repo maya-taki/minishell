@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 05:52:31 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 23:50:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:03:47 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exec_child_external(t_shell *shell, t_cmd *cmd)
 		exit(127);
 	}
 	envp = build_envp(shell);
-	if (!envp)m
+	if (!envp)
 		envp = empty_envp;
 	try_exec(exec_path, cmd, envp);
 	perror(cmd->args[0]);
