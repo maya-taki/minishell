@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/06 22:16:13 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 21:55:06 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
+
+static void proper_exit(t_shell *shell)
+{
+	ft_printf("exit\n");
+	free_all_cmds(shell->cmd);
+	free_env_list(shell->env);
+	close(shell->std_in);
+	close(shell->std_out);
+	exit(0);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,9 +33,17 @@ int	main(int argc, char **argv, char **envp)
 	using_history();
 	while (1)
 	{
+		setup_signals();
 		shell.input = readline("minishell> ");
+		if (g_signal == 130)
+		{
+			shell.exit_code = 130;
+			g_signal = 0;
+			free(shell.input);
+			continue ;
+		}
 		if (!shell.input)
-			break ;
+			proper_exit(&shell);
 		add_history(shell.input);
 		shell.tokens = lexer(shell.input);
 		if (!shell.tokens)

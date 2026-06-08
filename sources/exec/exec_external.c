@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_external.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 05:52:31 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 19:45:39 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 22:14:12 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	setup_child_io(t_shell *shell)
 {
+	setup_child_signal();
 	if (shell->std_in != STDIN_FILENO)
 	{
 		dup2(shell->std_in, STDIN_FILENO);

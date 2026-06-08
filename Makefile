@@ -49,6 +49,7 @@ SRC				= \
 					sources/exec/builtin/builtin_unset.c \
 					sources/exec/builtin/builtin_env.c \
 					sources/exec/builtin/builtin_exit.c \
+					sources/signal/signal.c \
 					sources/utils/error_utils.c \
 					sources/utils/export_utils.c \
 					sources/utils/exit_utils.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:12:07 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 22:23:25 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 22:10:20 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static int	wait_all(pid_t *pids, int n)
 
 	i = 0;
 	last = 0;
+	setup_exec_signal();
 	while (i < n)
 	{
 		waitpid(pids[i], &status, 0);
@@ -88,6 +89,7 @@ static int	wait_all(pid_t *pids, int n)
 			last = get_exit_status(status);
 		i++;
 	}
+	setup_signals();
 	return (last);
 }
 
