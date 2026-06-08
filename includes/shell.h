@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 00:21:15 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:24:46 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,15 +149,15 @@ int				builtin_exit(t_shell *shell);
 
 extern sig_atomic_t	g_signal;
 
-void	handle_sigint(int sig);
-void	setup_signals(void);
-void	setup_exec_signal(void);
-void	setup_child_signal(void);
-int		heredoc_event_hook(void);
-int		prompt_event_hook(void);
-void	handle_sigint_heredoc(int sig);
-void	setup_heredoc_signals(void);
-void 	proper_exit(t_shell *shell);
+void			handle_sigint(int sig);
+void			setup_signals(void);
+void			setup_exec_signal(void);
+void			setup_child_signal(void);
+int				heredoc_event_hook(void);
+int				prompt_event_hook(void);
+void			handle_sigint_heredoc(int sig);
+void			setup_heredoc_signals(void);
+void			proper_exit(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  ENV UTILS                                                                */
