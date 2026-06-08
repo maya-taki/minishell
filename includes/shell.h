@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/06 23:02:41 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 22:04:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
+
+#define _POSIX_C_SOURCE 200809L
+#define _GNU_SOURCE
 
 # include <unistd.h>
 # include <stdio.h>
@@ -141,6 +144,22 @@ int				builtin_export(t_shell *shell);
 int				builtin_unset(t_shell *shell);
 int				builtin_env(t_shell *shell);
 int				builtin_exit(t_shell *shell);
+
+/*---------------------------------------------------------------------------*/
+/*  SIGNALS                                                                  */
+/*---------------------------------------------------------------------------*/
+
+extern sig_atomic_t g_signal;
+
+void	handle_sigint(int sig);
+void	setup_signals(void);
+void	setup_exec_signal(void);
+void	setup_child_signal(void);
+int		heredoc_event_hook(void);
+int		prompt_event_hook(void);
+void	handle_sigint_heredoc(int sig);
+void	setup_heredoc_signals(void);
+
 
 /*---------------------------------------------------------------------------*/
 /*  ENV UTILS                                                                */
