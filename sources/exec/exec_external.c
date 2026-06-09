@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 05:52:31 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 21:58:03 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:27:14 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	cmd_not_found(char *name)
 	ft_putstr_fd(name, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 }
- 
+
 void	exec_child_external(t_shell *shell, t_cmd *cmd)
 {
 	char		**envp;
 	char		*exec_path;
 	static char	*empty_envp[] = {NULL};
- 
+
 	exec_path = find_executable(cmd->args[0], shell);
 	if (!exec_path)
 	{

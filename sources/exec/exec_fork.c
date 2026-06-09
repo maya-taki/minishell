@@ -6,16 +6,16 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 00:00:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 21:41:19 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:18:11 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
- 
+
 static char	*try_path(char *dir, char *cmd)
 {
 	char	*full;
- 
+
 	full = make_try_path(dir, cmd);
 	if (!full)
 		return (NULL);
@@ -24,14 +24,14 @@ static char	*try_path(char *dir, char *cmd)
 	free(full);
 	return (NULL);
 }
- 
+
 char	*find_executable(char *cmd, t_shell *shell)
 {
 	char	**paths;
 	char	*path_env;
 	char	*res;
 	int		i;
- 
+
 	if (!cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
@@ -49,7 +49,7 @@ char	*find_executable(char *cmd, t_shell *shell)
 	free_paths(paths);
 	return (res);
 }
- 
+
 static void	free_envp_partial(char **envp, int i)
 {
 	while (i > 0)
@@ -59,14 +59,14 @@ static void	free_envp_partial(char **envp, int i)
 	}
 	free(envp);
 }
- 
+
 char	**build_envp(t_shell *shell)
 {
 	char	**envp;
 	t_env	*cur;
 	int		i;
 	int		count;
- 
+
 	count = count_env_vars(shell->env);
 	envp = malloc(sizeof(char *) * (count + 1));
 	if (!envp)
@@ -87,7 +87,7 @@ char	**build_envp(t_shell *shell)
 	envp[i] = NULL;
 	return (envp);
 }
- 
+
 int	exec_external(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	pid;

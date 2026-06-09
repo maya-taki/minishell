@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 12:01:34 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 23:43:13 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:20:21 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
- 
+
 static int	verify_flag_n(char *str)
 {
 	int	i;
- 
+
 	i = 0;
 	if (str[i] == '-' && str[i + 1])
 		i++;
@@ -27,7 +27,7 @@ static int	verify_flag_n(char *str)
 		return (1);
 	return (0);
 }
- 
+
 int	builtin_echo(t_cmd *cmd)
 {
 	int	i;

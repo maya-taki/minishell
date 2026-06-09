@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 05:32:29 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 19:38:21 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:29:20 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_paths(char **paths)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (paths[i])
@@ -27,7 +27,7 @@ void	free_paths(char **paths)
 
 void	free_envp(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
