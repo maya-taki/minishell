@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 23:21:34 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:35:49 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*remove_quotes(char *delimiter)
 
 	delim_l = strlen(delimiter);
 	if (delim_l < 2)
-		return (delimiter);
+		return (ft_strdup(delimiter));
 	if ((delimiter[0] == '\'' || delimiter[delim_l - 1] == '\'')
 		|| (delimiter[0] == '"' || delimiter[delim_l - 1] == '"'))
 		return (ft_substr(delimiter, 1, delim_l - 2));
