@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:30:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:21:19 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:58:01 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int	builtin_export(t_shell *shell)
 
 	if (!shell || !shell->cmd || !shell->cmd->args)
 		return (1);
-	if (!shell->cmd->args[1])
-		return (print_export_env(shell));
 	status = 0;
+	if (!shell->cmd->args[1])
+	{
+		print_export_env(shell);
+		return (status);
+	}
 	i = 1;
 	while (shell->cmd->args[i])
 	{

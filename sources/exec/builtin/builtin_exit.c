@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:37:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:34:00 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:14:35 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,18 @@ static int	handle_exit_args(t_shell *shell)
 	long	val;
 
 	if (!shell->cmd || !shell->cmd->args || !shell->cmd->args[1])
-		return (handle_no_arg_exit(shell));
-	if (parse_exit_arg(shell->cmd->args[1], &val))
-		return (handle_invalid_arg_exit(shell));
-	if (shell->cmd->args[2])
+	{
+		shell->exit_shell = 1;
+		return (shell->exit_code);
+	}
+	else if (parse_exit_arg(shell->cmd->args[1], &val))
+	{
+		shell->exit_code = 255;
+		shell->exit_shell = 1;
+		handle_error(ERR_NUM_REQUIRED, "exit", shell->cmd->args[1], 0);
+		return (shell->exit_code);
+	}
+	else if (shell->cmd->args[2])
 	{
 		handle_error(ERR_TOO_MANY_ARGS, "exit", NULL, 0);
 		return (1);

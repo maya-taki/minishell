@@ -6,7 +6,7 @@
 /*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 00:00:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 23:54:47 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:13:48 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,4 @@ int	check_overflow_and_add(long *result, long digit, long max_digit)
 		return (1);
 	*result = *result * 10 + digit;
 	return (0);
-}
-
-int	handle_no_arg_exit(t_shell *shell)
-{
-	shell->exit_shell = 1;
-	return (shell->exit_code);
-}
-
-int	handle_invalid_arg_exit(t_shell *shell)
-{
-	shell->exit_code = 255;
-	shell->exit_shell = 1;
-	handle_error(ERR_NUM_REQUIRED, "exit", shell->cmd->args[1], 0);
-	return (shell->exit_code);
 }

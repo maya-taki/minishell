@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:12:07 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:26:54 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:04:51 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,10 @@ static int	handle_pipeline_cmd(t_shell *shell,
 	if (cmd->next)
 	{
 		if (pipe(shell->pipe.fd) == -1)
-			return (perror("pipe"), 1);
+		{
+			perror("pipe");
+			return (1);
+		}
 	}
 	*pid = fork_cmd(shell, cmd);
 	if (*pid == -1)
