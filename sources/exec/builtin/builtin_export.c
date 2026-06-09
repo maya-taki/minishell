@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:30:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 00:09:51 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:12:36 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	parse_export_arg(char *arg, char **key, char **value)
 		return (1);
 	}
 	return (0);
-}
+} //TODO
 
 static int	apply_export_arg(char *arg, t_shell *shell)
 {

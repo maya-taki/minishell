@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 23:24:03 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 22:01:52 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,20 @@ static int	run_single(t_shell *shell, t_cmd *cmd)
 	int	status;
 
 	status = 0;
+	if (apply_redir(NULL, &cmd, shell) != 0)
+	{
+		reset_io(shell);
+		return (shell->exit_code);
+	}
+	if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
+	{
+		reset_io(shell);
+		return (shell->exit_code);
+	}
 	if (cmd->builtin != NONE)
 	{
 		status = run_builtin_with_redir(shell, cmd);
 		return (status);
-	}
-	if (apply_redir(NULL, &cmd, shell) != 0)
-	{
-		reset_io(shell);
-		return (1);
 	}
 	status = exec_external(shell, cmd); 
 	return (status);

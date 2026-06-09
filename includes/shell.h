@@ -6,15 +6,15 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 00:24:46 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:10:41 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
-#define _POSIX_C_SOURCE 200809L
-#define _GNU_SOURCE
+# define _POSIX_C_SOURCE 200809L
+# define _GNU_SOURCE
 
 # include <unistd.h>
 # include <stdio.h>
@@ -153,10 +153,11 @@ void			handle_sigint(int sig);
 void			setup_signals(void);
 void			setup_exec_signal(void);
 void			setup_child_signal(void);
+void			setup_heredoc_signals(void);
 int				heredoc_event_hook(void);
+void			handle_heredoc_sigint(int sig);
 int				prompt_event_hook(void);
 void			handle_sigint_heredoc(int sig);
-void			setup_heredoc_signals(void);
 void			proper_exit(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/

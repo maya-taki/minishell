@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 00:06:23 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:12:07 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	heredoc_error_handler(char *delimiter, char *line)
 	if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
 	{
 		free(line);
-		return (0);
+		return (1);
 	}
 	return (0);
 }
@@ -65,7 +65,8 @@ static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 			free(line);
 			return (130);
 		}
-		heredoc_error_handler(delimiter, line);
+		if (heredoc_error_handler(delimiter, line) != 0)
+			break ;
 		if (expand)
 		{
 			expanded = expand_word(line, shell);
@@ -76,6 +77,7 @@ static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 			write_line(line, fd);
 		free(line);
 	}
+	return (0); //TODO
 }
 
 int	handle_heredoc(char *delimiter, t_shell *shell)
