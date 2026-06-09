@@ -6,15 +6,11 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 14:52:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/05/27 21:57:20 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:08:30 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-void	free_redir(t_redir *redirect);
-void	*free_single_cmd(t_cmd *cmd);
-void	*free_all_cmds(t_cmd *cmds);
 
 void	free_redir(t_redir *redirect)
 {

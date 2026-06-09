@@ -6,13 +6,13 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 14:17:10 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:21:34 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-char	*remove_quotes(char *delimiter)
+static char	*remove_quotes(char *delimiter)
 {
 	int	delim_l;
 
@@ -31,21 +31,42 @@ void	write_line(char *line, int fd)
 	write(fd, "\n", 1);
 }
 
-void	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
+static int	heredoc_error_handler(char *delimiter, char *line)
+{
+	if (!line)
+	{
+		ft_putstr_fd("minishell: warning: here-document \
+				delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd(delimiter, 2);
+		ft_putendl_fd("')", 2);
+		return (1);
+	}
+	if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+	{
+		free(line);
+		return (1);
+	}
+	return (0);
+}
+
+static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 {
 	char	*line;
 	char	*expanded;
 
+	setup_heredoc_signals();
 	while (1)
 	{
+		if (g_signal == 130)
+			return (130);
 		line = readline("> ");
-		if (!line)
-			break ;
-		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+		if (g_signal == 130)
 		{
 			free(line);
-			break ;
+			return (130);
 		}
+		if (heredoc_error_handler(delimiter, line) != 0)
+			break ;
 		if (expand)
 		{
 			expanded = expand_word(line, shell);
@@ -56,21 +77,31 @@ void	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 			write_line(line, fd);
 		free(line);
 	}
+	return (0);
 }
 
 int	handle_heredoc(char *delimiter, t_shell *shell)
 {
 	int		fd[2];
 	int		expand;
+	int		status;
 	char	*clean_delimiter;
 
 	if (pipe(fd) == -1)
 		return (perror("pipe"), 1);
 	expand = !is_single_quoted(delimiter);
 	clean_delimiter = remove_quotes(delimiter);
-	heredoc_loop(delimiter, expand, shell, fd[1]);
-	close(fd[1]);
-	shell->std_in = fd[0];
+	status = heredoc_loop(delimiter, expand, shell, fd[1]);
 	free(clean_delimiter);
+	close(fd[1]);
+	if (status != 0)
+	{
+		close(fd[0]);
+		shell->exit_code = status;
+		if (status == 130)
+			g_signal = 0;
+		return (1);
+	}
+	shell->std_in = fd[0];
 	return (0);
 }

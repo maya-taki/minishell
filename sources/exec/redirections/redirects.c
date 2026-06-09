@@ -6,13 +6,13 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/05 14:17:59 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 00:06:54 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-int	open_file(int *fd_ptr, char *path, int flags)
+static int	open_file(int *fd_ptr, char *path, int flags)
 {
 	if (*fd_ptr > 2)
 		close(*fd_ptr);

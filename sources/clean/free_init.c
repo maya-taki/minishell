@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   free_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 16:39:06 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 22:02:42 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:29:58 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
- 
+
 static void	free_env_node(t_env *node)
 {
 	free(node->key);
 	free(node->value);
 	free(node);
 }
- 
+
 void	free_env_list(t_env *env)
 {
 	t_env	*next;
- 
+
 	while (env)
 	{
 		next = env->next;
@@ -39,7 +39,7 @@ void	free_ptr(void **ptr)
 		*ptr = NULL;
 	}
 }
- 
+
 void	free_shell(t_shell *shell)
 {
 	if (!shell)

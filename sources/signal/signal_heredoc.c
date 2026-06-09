@@ -1,47 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exec.c                                        :+:      :+:    :+:   */
+/*   signal_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/05 05:32:29 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:29:20 by mtakiyos         ###   ########.fr       */
+/*   Created: 2026/06/07 17:31:20 by mtakiyos          #+#    #+#             */
+/*   Updated: 2026/06/08 20:03:45 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-void	free_paths(char **paths)
+void	handle_heredoc_sigint(int sig)
 {
-	int	i;
-
-	i = 0;
-	while (paths[i])
-	{
-		free(paths[i]);
-		i++;
-	}
-	free(paths);
+	(void)sig;
+	g_signal = 130;
+	rl_done = 1;
 }
 
-void	free_envp(char **envp)
+void	setup_heredoc_signals(void)
 {
-	int	i;
+	struct sigaction	sa_int;
 
-	i = 0;
-	while (envp[i])
-	{
-		free(envp[i]);
-		i++;
-	}
-	free(envp);
-}
-
-void	free_child(char *exec_path, char **envp, char **empty_envp)
-{
-	if (exec_path)
-		free(exec_path);
-	if (envp && envp != empty_envp)
-		free_envp(envp);
+	sa_int.sa_handler = handle_heredoc_sigint;
+	sa_int.sa_flags = SA_RESTART;
+	sigemptyset(&sa_int.sa_mask);
+	sigaction(SIGINT, &sa_int, NULL);
+	rl_event_hook = prompt_event_hook;
 }

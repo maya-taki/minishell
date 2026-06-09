@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:03:52 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 23:03:27 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:33:38 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	builtin_cd(t_shell *shell)
 	update_pwd_env(shell, old_pwd);
 	return (0);
 }
+
 static int	count_args(char **args)
 {
 	int	count;
@@ -58,7 +59,7 @@ static int	count_args(char **args)
 
 static char	*get_cd_path(t_shell *shell)
 {
-	char *home;
+	char	*home;
 
 	if (shell->cmd->args[1] && shell->cmd->args[1][0] != '\0')
 		return (shell->cmd->args[1]);

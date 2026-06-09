@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 01:05:14 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:27:58 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
- 
+
 int	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
-	int status;
+	int	status;
 
 	status = 1;
 	if (cmd->builtin == ECHO)
@@ -39,7 +39,7 @@ static int	run_builtin_with_redir(t_shell *shell, t_cmd *cmd)
 	int	saved_in;
 	int	saved_out;
 	int	status;
- 
+
 	saved_in = dup(STDIN_FILENO);
 	saved_out = dup(STDOUT_FILENO);
 	if (apply_redir(NULL, &cmd, shell) != 0)
@@ -53,26 +53,31 @@ static int	run_builtin_with_redir(t_shell *shell, t_cmd *cmd)
 	reset_io(shell);
 	return (status);
 }
- 
+
 static int	run_single(t_shell *shell, t_cmd *cmd)
 {
 	int	status;
 
 	status = 0;
+	if (apply_redir(NULL, &cmd, shell) != 0)
+	{
+		reset_io(shell);
+		return (shell->exit_code);
+	}
+	if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
+	{
+		reset_io(shell);
+		return (shell->exit_code);
+	}
 	if (cmd->builtin != NONE)
 	{
 		status = run_builtin_with_redir(shell, cmd);
 		return (status);
 	}
-	if (apply_redir(NULL, &cmd, shell) != 0)
-	{
-		reset_io(shell);
-		return (1);
-	}
-	status = exec_external(shell, cmd); 
+	status = exec_external(shell, cmd);
 	return (status);
 }
- 
+
 int	execute(t_shell *shell)
 {
 	int		status;

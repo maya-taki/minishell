@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 17:31:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 22:04:21 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 20:03:39 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 sig_atomic_t	g_signal = 0;
 
-int		prompt_event_hook(void)
+int	prompt_event_hook(void)
 {
 	if (g_signal == 130)
 		rl_done = 1;

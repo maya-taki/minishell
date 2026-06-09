@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 19:00:55 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/06 23:14:44 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:52:41 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ t_cmd	*parser(t_shell *shell)
 	cmd = NULL;
 	tmp = shell->tokens;
 	head = run_parse(cmd, tmp);
-	//debug_print_cmds(head);
 	return (head);
 }

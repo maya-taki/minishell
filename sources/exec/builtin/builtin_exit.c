@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:37:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/06 23:04:35 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:34:00 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	handle_exit_args(t_shell *shell);
 
 int	builtin_exit(t_shell *shell)
 {
-	int status;
+	int	status;
 
 	if (!shell || !shell->cmd)
 		return (1);
@@ -72,6 +72,7 @@ static int	parse_exit_arg(const char *arg, long *val)
 		return (1);
 	return (0);
 }
+
 static int	handle_exit_args(t_shell *shell)
 {
 	long	val;
@@ -89,5 +90,3 @@ static int	handle_exit_args(t_shell *shell)
 	shell->exit_shell = 1;
 	return (shell->exit_code);
 }
-
-

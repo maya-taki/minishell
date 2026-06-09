@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 21:44:06 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/06 19:58:34 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/07 23:54:17 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
- 
+
 void	expand_all(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*cur;
- 
+
 	if (!shell || !cmds)
 		return ;
 	cur = cmds;
@@ -28,12 +28,12 @@ void	expand_all(t_cmd *cmds, t_shell *shell)
 		cur = cur->next;
 	}
 }
- 
+
 int	expand_args(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 	int	ret;
- 
+
 	if (!cmd || !cmd->args)
 		return (0);
 	i = 0;
@@ -46,12 +46,12 @@ int	expand_args(t_cmd *cmd, t_shell *shell)
 	}
 	return (0);
 }
- 
+
 int	expand_redirs(t_cmd *cmd, t_shell *shell)
 {
 	t_redir	*redir;
 	char	*new_file;
- 
+
 	if (!cmd)
 		return (0);
 	redir = cmd->redirs;
@@ -69,13 +69,13 @@ int	expand_redirs(t_cmd *cmd, t_shell *shell)
 	}
 	return (0);
 }
- 
+
 static char	*expand_dol(const char *src, size_t *i, t_shell *shell, char *res)
 {
 	size_t	start;
 	char	*tmp;
 	char	*code;
- 
+
 	start = *i;
 	if (src[*i] == '?')
 	{
@@ -97,13 +97,13 @@ static char	*expand_dol(const char *src, size_t *i, t_shell *shell, char *res)
 	free(tmp);
 	return (res);
 }
- 
+
 char	*expand_word(const char *src, t_shell *shell)
 {
 	size_t			i;
 	t_quote_state	state;
 	char			*result;
- 
+
 	state = QUOTE_NONE;
 	i = 0;
 	result = ft_strdup("");
@@ -126,4 +126,3 @@ char	*expand_word(const char *src, t_shell *shell)
 	}
 	return (result);
 }
- 

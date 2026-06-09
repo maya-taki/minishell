@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:30:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 00:09:51 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:21:19 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	apply_export_arg(char *arg, t_shell *shell)
 void	fill_and_print_env(t_env *node, t_env **env_array,
 								int count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (node)

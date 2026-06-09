@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/07 23:47:42 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:10:41 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@
 
 int				init_shell(t_shell *shell, char **envp);
 t_cmd			*init_cmd(void);
+t_env			*init_env(char **envp);
+t_token			*init_token(t_token_type type, char *value);
+void			init_shell_values(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  LEXER                                                                    */
@@ -99,7 +102,6 @@ char			*expand_word(const char *src, t_shell *shell);
 char			*get_env_value(t_env *env, const char *name);
 char			*append_char(char *dest, char c);
 char			*append_str(char *dest, const char *src);
-int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
 int				expand_args(t_cmd *cmd, t_shell *shell);
 int				expand_redirs(t_cmd *cmd, t_shell *shell);
 int				replace_arg(char **arg_ptr, t_shell *shell);
@@ -112,11 +114,7 @@ void			update_quote_state_i(const char *src, t_quote_state *state,
 /*---------------------------------------------------------------------------*/
 
 int				handle_heredoc(char *delimiter, t_shell *shell);
-int				open_file(int *fd_ptr, char *path, int flags);
-char			*remove_quotes(char *delimiter);
-void			heredoc_loop(char *delimiter, int expand, t_shell *shell,
-					int fd);
-void			write_line(char *line, int fd);
+int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  EXEC                                                                     */
@@ -155,10 +153,12 @@ void			handle_sigint(int sig);
 void			setup_signals(void);
 void			setup_exec_signal(void);
 void			setup_child_signal(void);
+void			setup_heredoc_signals(void);
 int				heredoc_event_hook(void);
+void			handle_heredoc_sigint(int sig);
 int				prompt_event_hook(void);
 void			handle_sigint_heredoc(int sig);
-void			setup_heredoc_signals(void);
+void			proper_exit(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  ENV UTILS                                                                */

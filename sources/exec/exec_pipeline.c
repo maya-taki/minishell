@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:12:07 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 22:10:20 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/08 23:26:54 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ static pid_t	fork_cmd(t_shell *shell, t_cmd *cmd)
 	if (pid == -1)
 	{
 		perror("fork");
-		return ((pid_t)-1);
+		return ((pid_t) - 1);
 	}
 	if (pid == 0)
 	{
-	if (shell->pipe.fd[0] != -1
-		&& shell->pipe.fd[0] != shell->pipe.prev_pipe)
-		close(shell->pipe.fd[0]);
-	run_pipeline_child(shell, cmd);
+		if (shell->pipe.fd[0] != -1
+			&& shell->pipe.fd[0] != shell->pipe.prev_pipe)
+			close(shell->pipe.fd[0]);
+		run_pipeline_child(shell, cmd);
 	}
 	if (shell->pipe.fd[1] != -1)
-	close(shell->pipe.fd[1]);
+		close(shell->pipe.fd[1]);
 	return (pid);
 }
 
@@ -98,7 +98,6 @@ static int	handle_pipeline_cmd(t_shell *shell,
 {
 	shell->pipe.fd[0] = -1;
 	shell->pipe.fd[1] = -1;
-
 	if (cmd->next)
 	{
 		if (pipe(shell->pipe.fd) == -1)
@@ -107,10 +106,8 @@ static int	handle_pipeline_cmd(t_shell *shell,
 	*pid = fork_cmd(shell, cmd);
 	if (*pid == -1)
 		return (1);
-
 	if (shell->pipe.prev_pipe != -1)
 		close(shell->pipe.prev_pipe);
-
 	if (cmd->next)
 		shell->pipe.prev_pipe = shell->pipe.fd[0];
 	else
