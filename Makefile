@@ -42,10 +42,12 @@ SRC				= \
 					sources/exec/exec_fork.c \
 					sources/exec/exec_external.c \
 					sources/exec/exec_pipeline.c \
+					sources/exec/exec_pipeline_utils.c \
 					sources/exec/builtin/builtin_cd.c \
 					sources/exec/builtin/builtin_echo.c \
 					sources/exec/builtin/builtin_pwd.c \
 					sources/exec/builtin/builtin_export.c \
+					sources/exec/builtin/builtin_export_utils.c \
 					sources/exec/builtin/builtin_unset.c \
 					sources/exec/builtin/builtin_env.c \
 					sources/exec/builtin/builtin_exit.c \

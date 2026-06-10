@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/09 22:28:34 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 23:22:22 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 			return (130);
 		line = readline("> ");
 		if (g_signal == 130)
-		{
-			free(line);
-			return (130);
-		}
+			return (free(line), 130);
 		if (heredoc_error_handler(delimiter, line) != 0)
 			break ;
 		if (expand)

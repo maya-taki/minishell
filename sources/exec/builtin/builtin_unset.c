@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:33:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/07 23:56:12 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 22:55:13 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static int	is_valid_identifier(char *str);
 static void	unset_env_var(t_env **env, char *key);
 
 int	builtin_unset(t_shell *shell)
@@ -36,24 +35,6 @@ int	builtin_unset(t_shell *shell)
 		i++;
 	}
 	return (status);
-}
-
-static int	is_valid_identifier(char *str)
-{
-	int	i;
-
-	if (!str || !str[0])
-		return (0);
-	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (0);
-	i = 1;
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 static void	unset_env_var(t_env **env, char *key)
