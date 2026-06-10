@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:12:07 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:26:54 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 21:20:11 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 
 static void	reset_shell_io(t_shell *shell)
 {
-	shell->std_in = STDIN_FILENO;
-	shell->std_out = STDOUT_FILENO;
+    if (shell->std_in != STDIN_FILENO && shell->std_in != -1)
+        close(shell->std_in);
+    if (shell->std_out != STDOUT_FILENO && shell->std_out != -1)
+        close(shell->std_out);
+    shell->std_in = STDIN_FILENO;
+    shell->std_out = STDOUT_FILENO;
 }
 
 static void	setup_pipe_io(t_shell *shell, t_cmd *cmd)
 {
-	reset_shell_io(shell);
-	apply_redir(NULL, &cmd, shell);
-	if (shell->pipe.prev_pipe != -1
-		&& shell->std_in == STDIN_FILENO)
-		shell->std_in = shell->pipe.prev_pipe;
-	if (shell->pipe.fd[1] != -1
-		&& shell->std_out == STDOUT_FILENO)
-		shell->std_out = shell->pipe.fd[1];
-	setup_child_io(shell);
+    reset_shell_io(shell);
+    apply_redir(NULL, cmd, shell);
+    if (shell->pipe.prev_pipe != -1
+        && shell->std_in == STDIN_FILENO)
+    {
+        shell->std_in = shell->pipe.prev_pipe;
+        shell->pipe.prev_pipe = -1;
+    }
+    if (shell->pipe.fd[1] != -1
+        && shell->std_out == STDOUT_FILENO)
+        shell->std_out = shell->pipe.fd[1];
+    setup_child_io(shell);
 }
 
 static void	run_pipeline_child(t_shell *shell, t_cmd *cmd)
@@ -70,6 +77,11 @@ static pid_t	fork_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	if (shell->pipe.fd[1] != -1)
 		close(shell->pipe.fd[1]);
+    if (shell->std_in != STDIN_FILENO && shell->std_in != -1)
+    {
+        close(shell->std_in);
+        shell->std_in = STDIN_FILENO;
+    }
 	return (pid);
 }
 

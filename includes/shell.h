@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 23:10:41 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:56:51 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void			update_quote_state_i(const char *src, t_quote_state *state,
 /*---------------------------------------------------------------------------*/
 
 int				handle_heredoc(char *delimiter, t_shell *shell);
-int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
+int				apply_redir(t_token *token, t_cmd *init_cmd, t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  EXEC                                                                     */

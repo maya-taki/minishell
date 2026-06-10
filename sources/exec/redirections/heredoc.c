@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/09 18:35:49 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 21:14:55 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	handle_heredoc(char *delimiter, t_shell *shell)
 		return (perror("pipe"), 1);
 	expand = !is_single_quoted(delimiter);
 	clean_delimiter = remove_quotes(delimiter);
-	status = heredoc_loop(delimiter, expand, shell, fd[1]);
+	status = heredoc_loop(clean_delimiter, expand, shell, fd[1]);
 	free(clean_delimiter);
 	close(fd[1]);
 	if (status != 0)

@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/09 18:55:49 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 21:27:13 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static int	run_builtin_with_redir(t_shell *shell, t_cmd *cmd)
 
 	saved_in = dup(STDIN_FILENO);
 	saved_out = dup(STDOUT_FILENO);
-	//if (apply_redir(NULL, &cmd, shell) != 0)
-	//	return (reset_io(shell), 1);
+	if (apply_redir(NULL, cmd, shell) != 0)
+		return (reset_io(shell), 1);
 	setup_child_io(shell);
 	status = exec_builtin(shell, cmd);
 	dup2(saved_in, STDIN_FILENO);
@@ -59,7 +59,7 @@ static int	run_single(t_shell *shell, t_cmd *cmd)
 	int	status;
 
 	status = 0;
-	if (apply_redir(NULL, &cmd, shell) != 0)
+	if (apply_redir(NULL, cmd, shell) != 0)
 	{
 		reset_io(shell);
 		return (shell->exit_code);
@@ -70,10 +70,7 @@ static int	run_single(t_shell *shell, t_cmd *cmd)
 		return (shell->exit_code);
 	}
 	if (cmd->builtin != NONE)
-	{
-		status = run_builtin_with_redir(shell, cmd);
-		return (status);
-	}
+		return (run_builtin_with_redir(shell, cmd));
 	status = exec_external(shell, cmd);
 	return (status);
 }
