@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:30:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/09 20:58:01 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 23:16:13 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static int	is_valid_identifier(char *str);
 static int	parse_export_arg(char *arg, char **key, char **value);
 static int	apply_export_arg(char *arg, t_shell *shell);
-static int	print_export_env(t_shell *shell);
 
 int	builtin_export(t_shell *shell)
 {
@@ -40,6 +38,14 @@ int	builtin_export(t_shell *shell)
 	return (status);
 }
 
+static int	handle_export_alloc_error(char **key, char **value)
+{
+	*key = NULL;
+	*value = NULL;
+	handle_error(ERR_MALLOC, "export", NULL, 0);
+	return (1);
+}
+
 static int	parse_export_arg(char *arg, char **key, char **value)
 {
 	char	*equal;
@@ -49,19 +55,13 @@ static int	parse_export_arg(char *arg, char **key, char **value)
 	{
 		*key = ft_strdup(arg);
 		if (!*key)
-		{
-			handle_error(ERR_MALLOC, "export", NULL, 0);
-			return (1);
-		}
+			return (handle_export_alloc_error(key, value));
 		*value = NULL;
 		return (0);
 	}
 	*key = ft_substr(arg, 0, equal - arg);
 	if (!*key)
-	{
-		handle_error(ERR_MALLOC, "export", NULL, 0);
-		return (1);
-	}
+		return (handle_export_alloc_error(key, value));
 	*value = ft_strdup(equal + 1);
 	if (!*value)
 	{
@@ -118,43 +118,4 @@ void	fill_and_print_env(t_env *node, t_env **env_array,
 		print_export_entry(env_array[i]);
 		i++;
 	}
-}
-
-static int	print_export_env(t_shell *shell)
-{
-	t_env	**env_array;
-	t_env	*node;
-	int		count;
-
-	if (!shell)
-		return (1);
-	count = count_env_vars(shell->env);
-	env_array = malloc(sizeof(t_env *) * count);
-	if (!env_array)
-	{
-		handle_error(ERR_MALLOC, "export", NULL, 0);
-		return (1);
-	}
-	node = shell->env;
-	fill_and_print_env(node, env_array, count);
-	free(env_array);
-	return (0);
-}
-
-static int	is_valid_identifier(char *str)
-{
-	int	i;
-
-	if (!str || !str[0])
-		return (0);
-	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (0);
-	i = 1;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
 }

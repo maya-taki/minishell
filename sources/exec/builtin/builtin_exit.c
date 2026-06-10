@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:37:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/09 20:14:35 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 22:51:04 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-#include <limits.h>
 
 static int	is_valid_number_format(const char *str);
 static int	safe_atol(const char *str, long *result);

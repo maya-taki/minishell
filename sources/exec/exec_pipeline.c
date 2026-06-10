@@ -3,28 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 13:12:07 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/09 20:04:51 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 23:02:26 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static void	reset_shell_io(t_shell *shell)
-{
-	shell->std_in = STDIN_FILENO;
-	shell->std_out = STDOUT_FILENO;
-}
-
-static void	setup_pipe_io(t_shell *shell, t_cmd *cmd)
+void	setup_pipe_io(t_shell *shell, t_cmd *cmd)
 {
 	reset_shell_io(shell);
-	apply_redir(NULL, &cmd, shell);
+	apply_redir(NULL, cmd, shell);
 	if (shell->pipe.prev_pipe != -1
 		&& shell->std_in == STDIN_FILENO)
+	{
 		shell->std_in = shell->pipe.prev_pipe;
+		shell->pipe.prev_pipe = -1;
+	}
 	if (shell->pipe.fd[1] != -1
 		&& shell->std_out == STDOUT_FILENO)
 		shell->std_out = shell->pipe.fd[1];
@@ -70,27 +67,12 @@ static pid_t	fork_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	if (shell->pipe.fd[1] != -1)
 		close(shell->pipe.fd[1]);
-	return (pid);
-}
-
-static int	wait_all(pid_t *pids, int n)
-{
-	int	i;
-	int	status;
-	int	last;
-
-	i = 0;
-	last = 0;
-	setup_exec_signal();
-	while (i < n)
+	if (shell->std_in != STDIN_FILENO && shell->std_in != -1)
 	{
-		waitpid(pids[i], &status, 0);
-		if (i == n - 1)
-			last = get_exit_status(status);
-		i++;
+		close(shell->std_in);
+		shell->std_in = STDIN_FILENO;
 	}
-	setup_signals();
-	return (last);
+	return (pid);
 }
 
 static int	handle_pipeline_cmd(t_shell *shell,

@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 16:31:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 00:06:54 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:57:16 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,25 @@ static int	handle_redir(t_shell *shell, t_redir *redir)
 		if (handle_heredoc(redir->file, shell) != 0)
 			return (1);
 	}
-	return (0);
+	return (1);
 }
 
-int	apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell)
+int	apply_redir(t_token *token, t_cmd *init_cmd, t_shell *shell)
 {
 	t_redir	*redir;
 	t_cmd	*cmd;
 
 	(void)token;
-	if (!init_cmd || !*init_cmd)
+	if (!init_cmd)
 		return (0);
-	cmd = *init_cmd;
+	cmd = init_cmd;
 	if (!cmd->redirs)
 		return (0);
 	redir = cmd->redirs;
 	while (redir)
 	{
 		if (handle_redir(shell, redir) != 0)
-			return (0);
+			return (1);
 		redir = redir->next;
 	}
 	return (0);

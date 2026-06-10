@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/09 20:54:14 by osousa-d         ###   ########.fr       */
+/*   Updated: 2026/06/09 23:03:00 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void			update_quote_state_i(const char *src, t_quote_state *state,
 /*---------------------------------------------------------------------------*/
 
 int				handle_heredoc(char *delimiter, t_shell *shell);
-int				apply_redir(t_token *token, t_cmd **init_cmd, t_shell *shell);
+int				apply_redir(t_token *token, t_cmd *init_cmd, t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  EXEC                                                                     */
@@ -130,6 +130,9 @@ void			setup_child_io(t_shell *shell);
 void			reset_io(t_shell *shell);
 char			*find_executable(char *cmd, t_shell *shell);
 char			**build_envp(t_shell *shell);
+void			reset_shell_io(t_shell *shell);
+int				wait_all(pid_t *pids, int n);
+void			setup_pipe_io(t_shell *shell, t_cmd *cmd);
 
 /*---------------------------------------------------------------------------*/
 /*  BUILTINS                                                                 */
@@ -142,6 +145,10 @@ int				builtin_export(t_shell *shell);
 int				builtin_unset(t_shell *shell);
 int				builtin_env(t_shell *shell);
 int				builtin_exit(t_shell *shell);
+int				is_valid_identifier(char *str);
+int				print_export_env(t_shell *shell);
+void			fill_and_print_env(t_env *node, t_env **env_array,
+								int count);
 
 /*---------------------------------------------------------------------------*/
 /*  SIGNALS                                                                  */

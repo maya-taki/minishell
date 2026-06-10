@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:04:39 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/08 23:21:34 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 23:22:22 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*remove_quotes(char *delimiter)
 
 	delim_l = strlen(delimiter);
 	if (delim_l < 2)
-		return (delimiter);
+		return (ft_strdup(delimiter));
 	if ((delimiter[0] == '\'' || delimiter[delim_l - 1] == '\'')
 		|| (delimiter[0] == '"' || delimiter[delim_l - 1] == '"'))
 		return (ft_substr(delimiter, 1, delim_l - 2));
@@ -61,10 +61,7 @@ static int	heredoc_loop(char *delimiter, int expand, t_shell *shell, int fd)
 			return (130);
 		line = readline("> ");
 		if (g_signal == 130)
-		{
-			free(line);
-			return (130);
-		}
+			return (free(line), 130);
 		if (heredoc_error_handler(delimiter, line) != 0)
 			break ;
 		if (expand)
@@ -91,7 +88,7 @@ int	handle_heredoc(char *delimiter, t_shell *shell)
 		return (perror("pipe"), 1);
 	expand = !is_single_quoted(delimiter);
 	clean_delimiter = remove_quotes(delimiter);
-	status = heredoc_loop(delimiter, expand, shell, fd[1]);
+	status = heredoc_loop(clean_delimiter, expand, shell, fd[1]);
 	free(clean_delimiter);
 	close(fd[1]);
 	if (status != 0)
