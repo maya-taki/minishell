@@ -58,9 +58,8 @@ SRC				= \
 					sources/utils/cd_utils.c \
 					sources/utils/fork_utils.c \
 					sources/utils/io_utils.c \
-					sources/clean/clear.c \
-					sources/clean/free_init.c \
-					sources/clean/free_exec.c
+					sources/clean/free.c \
+					sources/clean/free_init.c
 
 OBJ				= $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 00:00:00 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:18:11 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:45:47 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,17 @@ char	*find_executable(char *cmd, t_shell *shell)
 {
 	char	**paths;
 	char	*path_env;
+	char	*path;
 	char	*res;
 	int		i;
 
 	if (!cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
+	{
+		path = ft_strdup(cmd);
+		return (path);
+	}
 	path_env = get_env_var(shell->env, "PATH");
 	if (!path_env)
 		return (NULL);
@@ -46,18 +50,8 @@ char	*find_executable(char *cmd, t_shell *shell)
 	res = NULL;
 	while (paths[i] && !res)
 		res = try_path(paths[i++], cmd);
-	free_paths(paths);
+	free_arr(paths);
 	return (res);
-}
-
-static void	free_envp_partial(char **envp, int i)
-{
-	while (i > 0)
-	{
-		--i;
-		free(envp[i]);
-	}
-	free(envp);
 }
 
 char	**build_envp(t_shell *shell)
@@ -96,7 +90,10 @@ int	exec_external(t_shell *shell, t_cmd *cmd)
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), 1);
+	{
+		perror("fork");
+		return (1);
+	}
 	if (pid == 0)
 	{
 		setup_child_io(shell);
@@ -104,7 +101,10 @@ int	exec_external(t_shell *shell, t_cmd *cmd)
 	}
 	reset_io(shell);
 	if (waitpid(pid, &tmp, 0) == -1)
-		return (perror("waitpid"), 1);
+	{
+		perror("waitpid");
+		return (1);
+	}
 	status = get_exit_status(tmp);
 	return (status);
 }

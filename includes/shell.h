@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:43:36 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/09 20:56:51 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 22:13:43 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,6 @@ int				get_sign_and_advance(const char **str);
 long			get_max_digit(int sign);
 int				check_overflow_and_add(long *result,
 					long digit, long max_digit);
-void			print_exit_error(const char *arg);
-int				handle_no_arg_exit(t_shell *shell);
-int				handle_invalid_arg_exit(t_shell *shell);
 
 /*---------------------------------------------------------------------------*/
 /*  ERROR UTILS                                                              */
@@ -218,7 +215,8 @@ void			handle_error(t_error_type error, char *cmd,
 void			free_ptr(void **ptr);
 void			free_env_list(t_env *env);
 void			free_shell(t_shell *shell);
-void			free_paths(char **paths);
 void			free_child(char *exec_path, char **envp, char **empty_envp);
+void			free_envp_partial(char **envp, int i);
+void			free_arr(char **arr);
 
 #endif

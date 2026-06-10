@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exec.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osousa-d <osousa-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/05 05:32:29 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/08 23:29:20 by mtakiyos         ###   ########.fr       */
+/*   Created: 2026/04/29 19:34:32 by osousa-d          #+#    #+#             */
+/*   Updated: 2026/06/09 20:57:01 by osousa-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shell.h"
+#include "../includes/shell.h"
 
-void	free_paths(char **paths)
+void	free_arr(char **arr)
 {
 	int	i;
 
+	if (!arr)
+		return ;
 	i = 0;
-	while (paths[i])
+	while (arr[i])
 	{
-		free(paths[i]);
+		free(arr[i]);
 		i++;
 	}
-	free(paths);
+	free(arr);
 }
 
-void	free_envp(char **envp)
+void	free_envp_partial(char **envp, int i)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
+	while (i > 0)
 	{
+		--i;
 		free(envp[i]);
-		i++;
 	}
 	free(envp);
 }
@@ -43,5 +42,5 @@ void	free_child(char *exec_path, char **envp, char **empty_envp)
 	if (exec_path)
 		free(exec_path);
 	if (envp && envp != empty_envp)
-		free_envp(envp);
+		free_arr(envp);
 }
