@@ -6,7 +6,7 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 11:33:05 by osousa-d          #+#    #+#             */
-/*   Updated: 2026/06/09 22:31:14 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/10 03:32:35 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	exec_builtin(t_shell *shell, t_cmd *cmd)
 {
-	int	status;
+	int		status;
+	t_cmd	*saved_cmd;
 
+	saved_cmd = shell->cmd;
+	shell->cmd = cmd;
 	status = 1;
 	if (cmd->builtin == ECHO)
 		status = builtin_echo(cmd);
@@ -31,6 +34,7 @@ int	exec_builtin(t_shell *shell, t_cmd *cmd)
 		status = builtin_env(shell);
 	else if (cmd->builtin == EXIT)
 		status = builtin_exit(shell);
+	shell->cmd = saved_cmd;
 	return (status);
 }
 

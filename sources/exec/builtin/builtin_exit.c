@@ -83,7 +83,7 @@ static int	handle_exit_args(t_shell *shell)
 	}
 	else if (parse_exit_arg(shell->cmd->args[1], &val))
 	{
-		shell->exit_code = 255;
+		shell->exit_code = 2;
 		shell->exit_shell = 1;
 		handle_error(ERR_NUM_REQUIRED, "exit", shell->cmd->args[1], 0);
 		return (shell->exit_code);

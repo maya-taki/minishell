@@ -12,10 +12,11 @@
 
 #include "../../includes/shell.h"
 
-void	setup_pipe_io(t_shell *shell, t_cmd *cmd)
+int	setup_pipe_io(t_shell *shell, t_cmd *cmd)
 {
 	reset_shell_io(shell);
-	apply_redir(NULL, cmd, shell);
+	if (apply_redir(NULL, cmd, shell) != 0)
+		return (1);
 	if (shell->pipe.prev_pipe != -1
 		&& shell->std_in == STDIN_FILENO)
 	{
@@ -26,22 +27,24 @@ void	setup_pipe_io(t_shell *shell, t_cmd *cmd)
 		&& shell->std_out == STDOUT_FILENO)
 		shell->std_out = shell->pipe.fd[1];
 	setup_child_io(shell);
+	return (0);
 }
 
 static void	run_pipeline_child(t_shell *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 
-	setup_pipe_io(shell, cmd);
+	if (setup_pipe_io(shell, cmd) != 0)
+		exit(shell->exit_code);
 	if (shell->pipe.prev_pipe != -1)
 		close(shell->pipe.prev_pipe);
 	if (shell->pipe.fd[1] != -1)
 		close(shell->pipe.fd[1]);
 	if (cmd->builtin != NONE)
 	{
+		pid = exec_builtin(shell, cmd);
 		free_env_list(shell->env);
 		free_tokens(shell->tokens);
-		pid = exec_builtin(shell, cmd);
 		free_all_cmds(cmd);
 		exit(pid);
 	}

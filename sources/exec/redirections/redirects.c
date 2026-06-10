@@ -68,7 +68,10 @@ int	apply_redir(t_token *token, t_cmd *init_cmd, t_shell *shell)
 	while (redir)
 	{
 		if (handle_redir(shell, redir) != 0)
+		{
+			shell->exit_code = 1;
 			return (1);
+		}
 		redir = redir->next;
 	}
 	return (0);

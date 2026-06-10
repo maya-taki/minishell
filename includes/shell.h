@@ -132,7 +132,7 @@ char			*find_executable(char *cmd, t_shell *shell);
 char			**build_envp(t_shell *shell);
 void			reset_shell_io(t_shell *shell);
 int				wait_all(pid_t *pids, int n);
-void			setup_pipe_io(t_shell *shell, t_cmd *cmd);
+int				setup_pipe_io(t_shell *shell, t_cmd *cmd);
 
 /*---------------------------------------------------------------------------*/
 /*  BUILTINS                                                                 */
