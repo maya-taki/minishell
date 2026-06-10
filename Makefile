@@ -25,15 +25,15 @@ SRC				= \
 					sources/init/init.c \
 					sources/lexer/lexer.c \
 					sources/lexer/lexer_inputs.c \
-					sources/lexer/lexer_utils.c \
-					sources/lexer/lexer_free.c \
+					sources/utils/lexer_utils.c \
+					sources/clean/lexer_free.c \
 					sources/lexer/tokens.c \
 					sources/parser/parser.c \
 					sources/parser/parser_handler.c \
 					sources/parser/syntax.c \
-					sources/parser/parser_utils.c \
-					sources/parser/parser_frees.c \
-					sources/expander/expander_utils.c \
+					sources/utils/parser_utils.c \
+					sources/clean/parser_frees.c \
+					sources/utils/expander_utils.c \
 					sources/expander/expander.c \
 					sources/expander/append.c \
 					sources/exec/redirections/redirects.c \
@@ -94,7 +94,6 @@ fclean: clean
 
 libft: $(LIBFT)
 	
-
 re: fclean all
 
 val: readline.supp all
@@ -107,50 +106,5 @@ val: readline.supp all
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME}
 
-# TEST_EXPANDER = tests/test_expander.c
-# TEST_EXPANDER_NAME = test_expander
-# TEST_REDIRECTS = tests/test_redirects.c
-# TEST_REDIRECTS_NAME = test_redirects
-# TEST_HEREDOC = tests/test_heredoc_utils.c
-# TEST_HEREDOC_NAME = test_heredoc
-
-TEST_EXEC = tests/test_exec_builtins.c
-TEST_EXEC_NAME = test_exec_builtins
-# TEST_ALL_REDIRECTS = test_redirects.c
-# TEST_ALL_REDIRECTS_NAME = test_redirects
-
-# test-expander: $(LIBFT)
-# 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXPANDER) sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c sources/utils/env_utils.c sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXPANDER_NAME)
-
-# test-redirects: $(LIBFT)
-# 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_REDIRECTS) sources/exec/redirections/redirects.c $(LIB_FLAGS) -o $(TEST_REDIRECTS_NAME)
-
-# test-redirects: $(LIBFT)
-# 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_REDIRECTS) sources/exec/redirections/redirects.c $(LIB_FLAGS) -o $(TEST_REDIRECTS_NAME)
-
-# test-heredoc-utils: $(LIBFT)
-# 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_HEREDOC) sources/exec/redirections/heredoc.c sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c $(LIB_FLAGS) -o $(TEST_HEREDOC_NAME)
-
-# test-all-redirects: $(LIBFT)
-# 	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_ALL_REDIRECTS) sources/init/init.c sources/exec/redirections/redirects.c sources/exec/redirections/redir_utils.c sources/exec/redirections/heredoc.c sources/expander/expander.c sources/expander/expander_utils.c sources/lexer/lexer_utils.c $(LIB_FLAGS) -o $(TEST_ALL_REDIRECTS_NAME)
-
-test-exec-builtins: $(LIBFT)
-	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_EXEC) \
-		sources/exec/exec.c \
-		sources/exec/exec_fork.c \
-		sources/exec/builtin/builtin_cd.c \
-		sources/exec/builtin/builtin_echo.c \
-		sources/exec/builtin/builtin_pwd.c \
-		sources/exec/builtin/builtin_export.c \
-		sources/exec/builtin/builtin_unset.c \
-		sources/exec/builtin/builtin_env.c \
-		sources/exec/builtin/builtin_exit.c \
-		sources/lexer/lexer_free.c \
-		sources/utils/env_utils.c \
-		sources/utils/cd_utils.c \
-		sources/utils/error_utils.c \
-		sources/init/init.c \
-		sources/parser/parser_frees.c \
-		sources/clean/free_init.c $(LIB_FLAGS) -o $(TEST_EXEC_NAME)
 
 .PHONY: norminette make fclean clean re test-expander test-redirects test-heredoc-utils
