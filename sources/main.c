@@ -6,14 +6,14 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:09:20 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/09 19:03:23 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/09 22:24:31 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 #include <termios.h>
 
-void proper_exit(t_shell *shell)
+void	proper_exit(t_shell *shell)
 {
 	ft_printf("exit\n");
 	free_all_cmds(shell->cmd);
@@ -25,7 +25,7 @@ void proper_exit(t_shell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_shell			shell;
 	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
@@ -76,4 +76,4 @@ int	main(int argc, char **argv, char **envp)
 	clear_history();
 	free_shell(&shell);
 	return (shell.exit_code);
-} //TODO
+}
