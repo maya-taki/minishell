@@ -107,4 +107,4 @@ val: readline.supp all
 				./${NAME}
 
 
-.PHONY: norminette make fclean clean re test-expander test-redirects test-heredoc-utils
+.PHONY: norminette make fclean clean re
