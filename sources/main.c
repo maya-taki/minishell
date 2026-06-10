@@ -6,12 +6,12 @@
 /*   By: mtakiyos <mtakiyos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 00:16:40 by mtakiyos          #+#    #+#             */
-/*   Updated: 2026/06/10 02:34:01 by mtakiyos         ###   ########.fr       */
+/*   Updated: 2026/06/10 02:51:12 by mtakiyos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-# include <termios.h>
+#include <termios.h>
 
 void	proper_exit(t_shell *shell)
 {
@@ -23,40 +23,45 @@ void	proper_exit(t_shell *shell)
 	exit(0);
 }
 
-static int manage_input(t_shell *shell, struct termios *term)
-{
-	shell->tokens = lexer(shell->input);
-	if (!shell->tokens)
-	{
-		free(shell->input);
-		shell->input = NULL;
-		tcsetattr(STDIN_FILENO, TCSANOW, term);
-		return (0);
-	}
-	shell->cmd = parser(shell);
-	return (0);
-}
-
-static int	shell_cycle(t_shell *shell, struct termios *term)
+static int	prepare_cycle(t_shell *shell)
 {
 	setup_signals();
-
 	shell->input = readline("minishell> ");
+	if (!shell->input)
+		return (-1);
 	if (g_signal == 130)
 	{
 		shell->exit_code = 130;
 		g_signal = 0;
-		free(shell->input);
-		shell->input = NULL;
+		free_ptr((void **)&shell->input);
 		return (0);
 	}
-	if (!shell->input)
-		return (-1);
 	add_history(shell->input);
-	manage_input(shell, term);
+	return (1);
+}
+
+static void	exec_cycle(t_shell *shell)
+{
+	shell->tokens = lexer(shell->input);
+	if (!shell->tokens)
+		return ;
+	shell->cmd = parser(shell);
 	expand_all(shell->cmd, shell);
 	if (shell->cmd)
 		shell->exit_code = execute(shell);
+}
+
+static int	shell_cycle(t_shell *shell, struct termios *term)
+{
+	int	status;
+
+	status = prepare_cycle(shell);
+	if (status != 1)
+	{
+		tcsetattr(STDIN_FILENO, TCSANOW, term);
+		return (status);
+	}
+	exec_cycle(shell);
 	if (shell->tokens)
 	{
 		free_tokens(shell->tokens);
@@ -74,8 +79,8 @@ static int	shell_cycle(t_shell *shell, struct termios *term)
 
 int	main(int argc, char **argv, char **envp)
 {
-	 t_shell		shell;
- 	struct termios	term;
+	t_shell			shell;
+	struct termios	term;
 
 	(void)argc;
 	(void)argv;
